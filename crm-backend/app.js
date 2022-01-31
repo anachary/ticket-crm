@@ -25,7 +25,7 @@ const mongoose = require('mongoose')
     mongoDb.on("open", () => {
         console.log("MongoDb connection is successful")
     })
-    mongoDb.on("error",() => {
+    mongoDb.on("error",(error) => {
         console.log(error)
     })
 }
@@ -38,7 +38,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
 
 
-const port = process.env.PORT || 3001
+const port = process.env.PORT || 5000
 
 //Load routers 
 const userRouter = require("./src/routers/user.router")
