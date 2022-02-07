@@ -4,6 +4,7 @@ const router = express.Router()
 const {insertUser, getUserByEmail} = require("../model/user/User.model")
 const {hashPassword,comparePassword} = require("../helpers/bcrypthelper")
 const UserSchema = require("../model/user/User.schema")
+const { createJWT, refreshJWT } = require("../helpers/jwt.helper")
     
 
 
@@ -55,8 +56,11 @@ router.post("/login", async (req,res)=>{
         if(!passwordMatch){
             res.json({message:"Invalid combination of email and password. Please sign up or reset password", status: "error"})
         }
+         
+        const accessToken = await createJWT(user.email)
+        const refreshToken = await refreshJWT(user.email)
     
-        res.json({message:"Succesfully Login", status:"success"})
+        res.json({message:"Succesfully Login", status:"success", accessToken, refreshToken})
         
     } catch (error) {
         console.log(error)
