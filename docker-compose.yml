@@ -32,6 +32,7 @@ services:
       - ./crm-backend/src:/usr/app/src
     depends_on:
       - db
+      - cache
     environment:
       - MONGO_URL=mongodb://db:27017
       - CLIENT=http://localhost:3000
@@ -46,6 +47,15 @@ services:
       - mern-network
     volumes:
       - mongo-data:/data/db
+  
+  cache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+    volumes: 
+      - cache:/data
    
 networks:
   mern-network:
@@ -53,4 +63,6 @@ networks:
 
 volumes:
   mongo-data:
+    driver: local
+  cache:
     driver: local

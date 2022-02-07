@@ -57,7 +57,7 @@ router.post("/login", async (req,res)=>{
             res.json({message:"Invalid combination of email and password. Please sign up or reset password", status: "error"})
         }
          
-        const accessToken = await createJWT(user.email)
+        const accessToken = await createJWT(user.email,`${user._id}`)
         const refreshToken = await refreshJWT(user.email)
     
         res.json({message:"Succesfully Login", status:"success", accessToken, refreshToken})
