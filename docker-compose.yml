@@ -18,9 +18,8 @@ services:
       - REACT_APP_SERVER=http://localhost:5000
       - CHOKIDAR_USEPOLLING=true
     command: npm start
-    stdin_open: true
-    tty: true
-  
+   
+      
   server:
     build:
       context: ./crm-backend
@@ -36,7 +35,8 @@ services:
     environment:
       - MONGO_URL=mongodb://db:27017
       - CLIENT=http://localhost:3000
-    command: /usr/app/node_modules/.bin/nodemon -L src/index.js
+    command: /usr/app/node_modules/.bin/nodemon -L src/app.js
+   
 
   db:
     image: mongo:3.6.19-xenial
@@ -46,7 +46,7 @@ services:
       - mern-network
     volumes:
       - mongo-data:/data/db
-
+   
 networks:
   mern-network:
     driver: bridge
