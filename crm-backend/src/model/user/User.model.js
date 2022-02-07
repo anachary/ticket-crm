@@ -27,7 +27,26 @@ const getUserByEmail = async email =>{
     }
 }
 
+const storeUserRefreshJWT= async (_id, token) =>{
+    try{
+        let data = await UserSchema.findByIdAndUpdate(
+            {_id},
+            {
+                $set:{"refreshJWT.token":token,
+                "refreshJWT.addedAt":Date.now()},
+            },
+            {
+                new:true
+            })
+        return data
+    }
+    catch (err) {
+        throw err;
+    }
+}
+
 module.exports = {
     insertUser,
-    getUserByEmail
+    getUserByEmail,
+    storeUserRefreshJWT
 }

@@ -58,7 +58,7 @@ router.post("/login", async (req,res)=>{
         }
          
         const accessToken = await createJWT(user.email,`${user._id}`)
-        const refreshToken = await refreshJWT(user.email)
+        const refreshToken = await refreshJWT(user.email,`${user._id}`)
     
         res.json({message:"Succesfully Login", status:"success", accessToken, refreshToken})
         
