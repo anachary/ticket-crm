@@ -1,21 +1,82 @@
-import React from 'react';
-import {Container, Row, Col, Form, Button} from 'react-bootstrap'
+import React , {useState}from 'react';
+import {Container, Row, Col, Form, Button, Spinner, Alert} from 'react-bootstrap'
+import PropTypes from 'prop-types'; // ES6
+import {loginPending,loginSuccess, loginFail} from './loginSlice'
+import {useDispatch, useSelector} from 'react-redux'
+
+import {userLogin} from "../../api/userApi"
 
 export const Login = () => {
+  const dispatch = useDispatch() 
+  const {isLoading,isAuth, error } = useSelector(state =>state.login)
+  const [email, setEmail] = useState('a@a.com')
+  const [password,setPassword] = useState('secret$1234')
+
+  const handleOnChange = e =>{
+    const{name, value} = e.target
+    switch(name){
+      case 'email':
+        setEmail(value)
+        break;
+
+      case 'password':
+        setPassword(value)
+        break;
+
+        default:
+          break;
+
+    }
+    console.log(name, value)
+  }
+  
+  const handleOnSubmit = async e => {
+		e.preventDefault();
+
+		if (!email || !password) {
+			return alert("Fill up all the form!");
+		}
+
+		dispatch(loginPending());
+
+		try {
+			const isAuth = await userLogin({ email, password });
+
+			if (isAuth.status === "error") {
+				return dispatch(loginFail(isAuth.message));
+			}
+      else{
+        alert("Successfully logged in")
+      }
+    
+			dispatch(loginSuccess());
+
+      //return alert("Successfully logged in")
+			//dispatch(getUserProfile());
+			//history.push("/dashboard");
+		} catch (error) {
+			dispatch(loginFail(error.message));
+		}
+	};
   return(<Container>
       <Row>
            <Col>
             <h1 className='text-center tc-primary'>LOGIN</h1>
             <hr />
            </Col>
-           <Form>
+           {error && <Alert variant={"danger"}>"Please Check the credential and Sing up' if you dont have account.</Alert>}
+           
+           <Form autoComplete="off" onSubmit={handleOnSubmit}>
                <Form.Group>
-                   <Form.Label>UserName/Email Address</Form.Label>
+                   <Form.Label>Email Address:</Form.Label>
                    <Form.Control 
                      type="email"
                      name="email"
                      placeholder="Enter Email"
                      required
+                     value ={email}
+                     onChange={handleOnChange}
+                     
                    />
                </Form.Group>
                <Form.Group>
@@ -25,10 +86,14 @@ export const Login = () => {
                      name="password"
                      placeholder="Password"
                      required
+                     value={password}
+                     onChange={handleOnChange}
+                     required
                    />
                </Form.Group>
                 <div className='text-center mb-2 mt-2'>
                     <Button type="submit" className='w-100'>Login</Button>
+                    {isLoading && <Spinner variant ="primary" animation="border" />}
                 </div>
            </Form>
            <hr />

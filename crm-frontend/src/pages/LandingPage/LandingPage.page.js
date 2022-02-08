@@ -1,5 +1,4 @@
 import React from 'react';
-import { Card } from 'react-bootstrap';
 import {Login} from '../../components/login/Login.comp'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
@@ -15,7 +14,7 @@ export const LandingPage = () => {
     </div>
     <div className='login-form-div'>
       <div className='landing-page jumbotron form-box'>
-        <Login></Login>
+        <Login ></Login>
       </div>
     </div>
   </div>;
