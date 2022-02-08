@@ -35,8 +35,25 @@ const UserSchema = new Schema({
     "role": {
         type: "String",
         maxlength: 10,
-        required: true
+        required: true,
+        default:'client'
+    },
+    refreshJWT:{
+        token:{
+            type:String,
+            minlength:8,
+            maxlength: 100,
+            required: true,
+            default:''
+        },
+        addedAt:{
+            type:Date,
+            required:true,
+            default:Date.now()
+        }
+
     }
+
 })
 
 module.exports = {
