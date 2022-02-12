@@ -13,3 +13,29 @@
  .primary {
    color:#107DAC !important;
  }
+
+
+ .defult-layout {
+   display:grid;
+   grid-template-rows:"10vh" auto 3vh;
+   grid-template-areas:
+  "header",
+  "main",
+  "footer"
+ }
+
+ header {
+   grid-area: "header";
+ }
+
+ main {
+   grid-area: "main";
+   min-height: 87vh;
+ }
+
+ footer {
+   grid-area: "footer";
+   padding: "0.5rem";
+   background-color: black;
+   color:white
+ }

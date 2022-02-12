@@ -8,8 +8,8 @@ export const LandingPage = () => {
   return <div className='root'>
     <div className='dashboard-header'>
       <div className='dashboard-content'>
-        <div><FontAwesomeIcon icon={faStar}/></div>
-        <div>Ticket CRM SYSTEM</div>
+       <div><FontAwesomeIcon icon={faStar}/></div>
+        <div>Ticket CRM SYSTEM</div> 
       </div>
     </div>
     <div className='login-form-div'>
