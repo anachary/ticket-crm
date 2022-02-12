@@ -1,0 +1,27 @@
+.dashboard-header {
+    background-color: #005073;
+    height: 10vh;
+}
+
+.dashboard-content-header  {
+    color: #f4f4f4 ;
+    font-size: 3.5vh;
+    stroke: #cccccc;
+    display: flex;
+    font-family: sans-serif;
+    margin: 15px 5px 0px 0px;
+    background: #005073;
+}
+.dashboard-content  {
+    color: #f4f4f4;
+    font-size: 2.5vh;
+    stroke: #cccccc;
+    display: flex;
+    font-family: sans-serif;
+    margin-left:auto
+}
+
+.dashboard-content-link{
+    color:#f4f4f4 !important;
+}
+
