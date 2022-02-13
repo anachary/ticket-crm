@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import "./landingPage.style.css"
 
-export const LandingPage = () => {
+export const LandingPage = ({history}) => {
   return <div className='root'>
     <div className='dashboard-header'>
       <div className='dashboard-content'>
@@ -14,7 +14,7 @@ export const LandingPage = () => {
     </div>
     <div className='login-form-div'>
       <div className='landing-page jumbotron form-box'>
-        <Login ></Login>
+        <Login history={history} ></Login>
       </div>
     </div>
   </div>;
