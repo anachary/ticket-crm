@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
             phone,
             email,
             password: hashPwd,
-            role
+            role,
         }
         const result = await insertUser(newUser);
         console.log(result)
@@ -58,7 +58,7 @@ router.post("/login", async (req, res) => {
 
         } else {
             const accessToken = await createJWT(user.email, `${user._id}`)
-            const refreshToken = await refreshJWT(user.email)
+            const refreshToken = await refreshJWT(user.email, `${user._id}`)
 
             res.status(200).json({ message: "Succesfully Login", status: "success", accessToken, refreshToken })
         }
