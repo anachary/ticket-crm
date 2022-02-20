@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Row, Col, Form, Button } from 'react-bootstrap'
+import { Container, Row, Col, Form, Button, Spinner} from 'react-bootstrap'
+import { newUserRegistration } from "./userRegAction";
+import { useDispatch, useSelector } from "react-redux";
 
 const initializeState = {
     name: '',
@@ -27,12 +29,16 @@ const requiredVerificationError = {
 }
 
 export const RegistrationForm = () => {
-
+    const dispatch = useDispatch();
     const [newUser, setNewUser] = useState(initializeState)
     const [passwordError, setPasswordError] = useState(passVerificationError)
     const [requiredError, setRequiredError] = useState(requiredVerificationError)
-
-    useEffect(() => { }, [newUser])
+   
+    const { isLoading, status, message } = useSelector(
+        (state) => state.registration
+      );
+   
+      useEffect(() => { }, [newUser])
 
     const handleOnChange = e => {
         const { name, value } = e.target
@@ -70,7 +76,23 @@ export const RegistrationForm = () => {
 
     }
 
-    console.log(newUser);
+    const handleOnSubmit = (e) => {
+        e.preventDefault();
+      
+        // console.log(newUser);
+        const { name, phone, email, company, address, password } = newUser;
+    
+        const newRegistration = {
+          name,
+          phone,
+          email,
+          company,
+          address,
+          password,
+          role:"client"
+        };
+        dispatch(newUserRegistration(newRegistration));
+      };
     return (
         <Container>
             <Row>
@@ -81,7 +103,17 @@ export const RegistrationForm = () => {
             <hr />
             <Row>
                 <Col>
-                    <Form>
+                {message && (
+                    <Alert variant={status === "success" ? "success" : "danger"}>
+                    {message}
+                    </Alert>
+                )}
+                </Col>
+            </Row>
+
+            <Row>
+                <Col>
+                    <Form onSubmit={handleOnSubmit}>
  
                         <Form.Group>
                             <Form.Label>Full Name</Form.Label>
@@ -136,6 +168,7 @@ export const RegistrationForm = () => {
                             <Button variant="primary" type="submit" disabled={Object.values(passwordError).includes(false) || Object.values(requiredError).includes(false) }>
                                 Register 
                             </Button>
+                            {isLoading && <Spinner variant="info" animation="border" />}
                         </Form.Group>
                     </Form>
                 </Col>
