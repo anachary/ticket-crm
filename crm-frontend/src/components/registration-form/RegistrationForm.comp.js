@@ -83,19 +83,14 @@ export const RegistrationForm = () => {
                 <Col>
                     <Form>
  
-                        <Form.Group className='mt-1'>
+                        <Form.Group>
                             <Form.Label>Full Name</Form.Label>
                             <Form.Control type="text" name="name" value={newUser.name} onChange={handleOnChange} required placeholder="Enter Full Name" 
                             isInvalid={ !requiredError.isValidName}/>
                         </Form.Group>
 
-                        <Form.Group className='mt-1'>
-                            <Form.Label>Email address</Form.Label> 
-                            <Form.Control type="email" name="email" value={newUser.email} onChange={handleOnChange} required placeholder="Enter email"
-                             isInvalid={ !requiredError.isValidEmail} />
-                        </Form.Group>
-
-                        <Form.Group className='mt-1' >
+ 
+                        <Form.Group>
                             <Form.Label>Company</Form.Label>
                             <Form.Control as="select" name="company" value={newUser.company} onChange={handleOnChange} required
                              isInvalid={!requiredError.isValidCompany}>
@@ -106,22 +101,22 @@ export const RegistrationForm = () => {
                             </Form.Control>
                         </Form.Group>
 
-                        <Form.Group className='mt-1'>
+                        <Form.Group>
                             <Form.Label>Phone</Form.Label>
                             <Form.Control type="number" name="phone" value={newUser.phone} onChange={handleOnChange} placeholder="Phone" />
                         </Form.Group>
 
-                        <Form.Group className='mt-1'>
+                        <Form.Group>
                             <Form.Label>Address</Form.Label>
                             <Form.Control type="text" name="address" value={newUser.address} onChange={handleOnChange} placeholder="Enter Address" />
                         </Form.Group>
 
-                        <Form.Group className='mt-1'>
+                        <Form.Group>
                             <Form.Label>Password</Form.Label>
                             <Form.Control type="password" name="password" value={newUser.password} onChange={handleOnChange} placeholder="Password" />
                         </Form.Group>
 
-                        <Form.Group className='mt-1'>
+                        <Form.Group>
                             <Form.Label>Confirm Password</Form.Label>
                             <Form.Control type="password" name="confirmPassword" value={newUser.confirmPassword} onChange={handleOnChange} placeholder="Confirm Password" />
                         </Form.Group>
@@ -145,7 +140,7 @@ export const RegistrationForm = () => {
                     </Form>
                 </Col>
             </Row>
-            <Row className='mt-3 text-center'>
+            <Row className='mt-1 text-center'>
                 <Col>
                     Already have an account ? <a href ='/'>Login Now</a>
                 </Col>
