@@ -1,7 +1,6 @@
 import './App.css';
 import { Button } from "react-bootstrap"
 import { LandingPage } from './pages/LandingPage/LandingPage.page';
-import { DefaultLayout } from './components/layout/DefaultLayout.comp'
 import { Registration } from './pages/registration/Registration.page';
 import { createBrowserHistory } from 'history'
 import {
@@ -9,7 +8,7 @@ import {
   Routes,
   Route
 } from 'react-router-dom'
-
+import {PrivateRoute} from './components/private-router/PrivateRoute.comp'
 function App() {
   const history = createBrowserHistory()
   return (
@@ -18,25 +17,21 @@ function App() {
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path ="/registration" element ={<Registration />} />
+          {/* PrivateRoutes */}
           <Route
             path="/dashboard"
             element={
-              <DefaultLayout>Dashboard Component will be Coming Soon </DefaultLayout>
+              <PrivateRoute><div>Dashboard Component will be Coming Soon </div></PrivateRoute>
               } />
             <Route
               path="/company"
               element={
-                <DefaultLayout>Company Component will be Coming Soon </DefaultLayout>
+                <PrivateRoute><div>Company Component will be Coming Soon </div></PrivateRoute>
                 } />  
             <Route
               path="/tickets"
               element={
-                <DefaultLayout > Tickets will be comming soon</DefaultLayout>
-              } />
-              <Route
-              path="/logout"
-              element={
-                <DefaultLayout>logout</DefaultLayout>
+                <PrivateRoute><div>Tickets Component will be Coming Soon </div></PrivateRoute>
               } />
         </Routes>
       </Router>
