@@ -28,12 +28,22 @@ router.post("/", async (req, res) => {
             role,
         }
         const result = await insertUser(newUser);
-        console.log(result)
+        console.log(result)     
+
+        /*
+         Email verification as extention of functionality when register
+        */ 
         res.json({ message: "New user created", result })
 
     } catch (error) {
         console.log(error)
-        res.json({ status: "error", message: error.message })
+
+		let message =
+			"Unable to create new user at the moment, Please try agin or contact administration!";
+		if (error.message.includes("duplicate key error collection")) {
+			message = "this email already has an account";
+		}
+		res.json({ status: "error", message });
     }
 })
 

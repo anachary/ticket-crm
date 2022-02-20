@@ -1,8 +1,9 @@
 import axios from 'axios'
+const rootUrl = "http://localhost:5000/v1/";
+const loginUrl = rootUrl + "user/login";
+const userProfileUrl = rootUrl + "user";
 
-const loginUrl = "http://localhost:5000/v1/user/login"
-
-export const userLogin= async(data) => {
+export const userLogin= async (data) => {
     try{
      let res = await axios.post(loginUrl,data)
      return res
@@ -13,3 +14,14 @@ export const userLogin= async(data) => {
     return
 }
 
+export const userRegistration = async (frmData) => {
+      try {
+
+        const res = await axios.post(userProfileUrl, frmData);
+        return res
+    }
+    catch(error){
+        console.log(error.message)
+    }
+    return
+}
