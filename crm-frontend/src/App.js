@@ -1,7 +1,8 @@
 import './App.css';
 import { Button } from "react-bootstrap"
 import { LandingPage } from './pages/LandingPage/LandingPage.page';
-import { DefaultLayout } from './components/Layout/DefaultLayout.comp'
+import { DefaultLayout } from './components/layout/DefaultLayout.comp'
+import { Registration } from './pages/registration/Registration.page';
 import { createBrowserHistory } from 'history'
 import {
   BrowserRouter as Router,
@@ -16,6 +17,7 @@ function App() {
       <Router history={history} >
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
+          <Route exact path ="/registration" element ={<Registration />} />
           <Route
             path="/dashboard"
             element={
