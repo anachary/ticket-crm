@@ -18,10 +18,11 @@ export const userRegistration = async (frmData) => {
       try {
 
         const res = await axios.post(userProfileUrl, frmData);
-        return res
+        return res.data
     }
     catch(error){
         console.log(error.message)
+        return res.data
     }
     return
 }

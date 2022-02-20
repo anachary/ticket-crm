@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Row, Col, Form, Button, Spinner} from 'react-bootstrap'
+import { Container, Row, Col, Form, Button, Spinner, Alert} from 'react-bootstrap'
 import { newUserRegistration } from "./userRegAction";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -50,8 +50,8 @@ export const RegistrationForm = () => {
             const hasLower = /[a-z]/.test(value)
             const hasNumber = /[0-1]/.test(value)
             const hasSpecialCharacter = /[!, @, #, $, %, ^, *, (, _, ),]/.test(value)
-           
-            setPasswordError({ ...passwordError, isLengthy, hasUpper, hasLower, hasNumber, hasSpecialCharacter })
+            const confirmPassword = (value === newUser.confirmPassword)
+            setPasswordError({ ...passwordError, isLengthy, hasUpper, hasLower, hasNumber, hasSpecialCharacter, confirmPassword })
         }
 
         else if(name==="confirmPassword"){
@@ -104,7 +104,7 @@ export const RegistrationForm = () => {
             <Row>
                 <Col>
                 {message && (
-                    <Alert variant={status === "success" ? "success" : "danger"}>
+                    <Alert variant={status === "error" ? "danger" : "success"}>
                     {message}
                     </Alert>
                 )}
@@ -115,16 +115,22 @@ export const RegistrationForm = () => {
                 <Col>
                     <Form onSubmit={handleOnSubmit}>
  
-                        <Form.Group>
-                            <Form.Label>Full Name</Form.Label>
-                            <Form.Control type="text" name="name" value={newUser.name} onChange={handleOnChange} required placeholder="Enter Full Name" 
+                        <Form.Group className="mt-1">
+                            <Form.Label className="fs-sm mb-0">Full Name</Form.Label>
+                            <Form.Control size="sm" type="text" name="name" value={newUser.name} onChange={handleOnChange} required placeholder="Enter Full Name" 
                             isInvalid={ !requiredError.isValidName}/>
                         </Form.Group>
 
+                        <Form.Group className="mt-1">
+                            <Form.Label className="fs-sm mb-0">Email address</Form.Label> 
+                            <Form.Control type="email" size="sm" name="email" value={newUser.email} onChange={handleOnChange} required placeholder="Enter email"
+                             isInvalid={ !requiredError.isValidEmail} />
+                        </Form.Group>
+
  
-                        <Form.Group>
-                            <Form.Label>Company</Form.Label>
-                            <Form.Control as="select" name="company" value={newUser.company} onChange={handleOnChange} required
+                        <Form.Group className="mt-1">
+                            <Form.Label className="fs-sm mb-0">Company</Form.Label>
+                            <Form.Control as="select" size="sm" name="company" value={newUser.company} onChange={handleOnChange} required
                              isInvalid={!requiredError.isValidCompany}>
                                 <option value="">Select a Company</option>
                                 <option value="Google">Google</option>
@@ -133,24 +139,24 @@ export const RegistrationForm = () => {
                             </Form.Control>
                         </Form.Group>
 
-                        <Form.Group>
-                            <Form.Label>Phone</Form.Label>
-                            <Form.Control type="number" name="phone" value={newUser.phone} onChange={handleOnChange} placeholder="Phone" />
+                        <Form.Group className="mt-2">
+                            <Form.Label className="fs-sm mb-0">Phone</Form.Label>
+                            <Form.Control type="number" size="sm" name="phone" value={newUser.phone} onChange={handleOnChange} placeholder="Phone" />
                         </Form.Group>
 
-                        <Form.Group>
-                            <Form.Label>Address</Form.Label>
-                            <Form.Control type="text" name="address" value={newUser.address} onChange={handleOnChange} placeholder="Enter Address" />
+                        <Form.Group className="mt-2">
+                            <Form.Label className="fs-sm mb-0 mt-1">Address</Form.Label>
+                            <Form.Control type="text" size="sm" name="address" value={newUser.address} onChange={handleOnChange} placeholder="Enter Address" />
                         </Form.Group>
 
-                        <Form.Group>
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" name="password" value={newUser.password} onChange={handleOnChange} placeholder="Password" />
+                        <Form.Group className="mt-2">
+                            <Form.Label className="fs-sm mb-0 mt-1">Password</Form.Label>
+                            <Form.Control type="password" size="sm" name="password" value={newUser.password} onChange={handleOnChange} placeholder="Password" />
                         </Form.Group>
 
-                        <Form.Group>
-                            <Form.Label>Confirm Password</Form.Label>
-                            <Form.Control type="password" name="confirmPassword" value={newUser.confirmPassword} onChange={handleOnChange} placeholder="Confirm Password" />
+                        <Form.Group className="mt-2">
+                            <Form.Label className="fs-sm mb-0 mt-1">Confirm Password</Form.Label>
+                            <Form.Control type="password" size="sm" name="confirmPassword" value={newUser.confirmPassword} onChange={handleOnChange} placeholder="Confirm Password" />
                         </Form.Group>
 
                         <Form.Group className='mt-2 ml-2'>
@@ -165,7 +171,7 @@ export const RegistrationForm = () => {
                         </Form.Group>
                         
                         <Form.Group className='text-center'>
-                            <Button variant="primary" type="submit" disabled={Object.values(passwordError).includes(false) || Object.values(requiredError).includes(false) }>
+                            <Button variant="primary" type="submit"  size="sm" disabled={Object.values(passwordError).includes(false) || Object.values(requiredError).includes(false) }>
                                 Register 
                             </Button>
                             {isLoading && <Spinner variant="info" animation="border" />}

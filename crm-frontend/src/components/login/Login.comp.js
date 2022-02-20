@@ -62,7 +62,7 @@ export const Login = ({history}) => {
             <h1 className='text-center tc-primary'>LOGIN</h1>
             <hr />
            </Col>
-           {error && <Alert variant={"danger"}>"Please Check the credential and Sign up' if you dont have account.</Alert>}
+           {error && <Alert variant={"danger"}>"Please Check the credentials . Please Register if you dont have registered account.</Alert>}
            
            <Form autoComplete="off" onSubmit={handleOnSubmit}>
                <Form.Group>
