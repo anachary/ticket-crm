@@ -6,7 +6,7 @@ const { hashPassword, comparePassword } = require("../helpers/bcrypthelper")
 const UserSchema = require("../model/user/User.schema")
 const { createJWT, refreshJWT } = require("../helpers/jwt.helper")
 
-
+const {userAuthorization} = require("../middlewares/authorization.middleware")
 
 
 router.all("/", (req, res, next) => {
@@ -78,6 +78,22 @@ router.post("/login", async (req, res) => {
         res.status(500).json({ status: "error", message: error.message })
     }
 })
+
+// Get user profile router
+router.get("/", userAuthorization, async (req, res) => {
+	//this data coming form database
+	const _id = req.userId;
+
+	const userProf = await getUserById(_id);
+	const { name, email } = userProf;
+	res.json({
+		user: {
+			_id,
+			name,
+			email,
+		},
+	});
+});
 
 
 module.exports = router 

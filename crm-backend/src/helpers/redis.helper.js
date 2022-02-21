@@ -25,7 +25,19 @@ const getJWT = async (key)=>{
     }
 }
 
+const deleteJWT =async (key) => {
+    try {
+        if(!client.isOpen){
+            await client.connect()
+        }
+      client.del(key);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 module.exports ={
     setJWT,
-    getJWT
+    getJWT,
+    deleteJWT
 }
