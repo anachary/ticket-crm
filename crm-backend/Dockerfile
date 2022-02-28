@@ -11,10 +11,13 @@ WORKDIR /usr/src/app
 # Install Dependencies
 COPY package*.json ./
 
-RUN npm install
 
 # Copy app source code
 COPY . .
+
+RUN rm -fr node_modules
+RUN npm install
+RUN npm install -g nodemon  #this was needed in order to make it work
 
 CMD ["npm","start"]
 
