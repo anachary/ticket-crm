@@ -1,8 +1,9 @@
 import React from 'react'
-import './registrationPage.style.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
-import { RegistrationForm } from '../../components/registration-form/RegistrationForm.comp'
+import { RegistrationForm } from '../../components/registration-form/RegistrationForm.comp.js'
+import './registrationPage.style.css'
+
 export const Registration = () => {
   return (
     <div className='root'>

@@ -17,7 +17,6 @@ function App() {
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path ="/registration" element ={<Registration />} />
-          {/* PrivateRoutes */}
           <Route
             path="/dashboard"
             element={
