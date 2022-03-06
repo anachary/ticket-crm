@@ -10,6 +10,7 @@ import {
 } from 'react-router-dom'
 import {PrivateRoute} from './components/private-router/PrivateRoute.comp'
 import { Dashboard } from './pages/DashboardPage/Dashboard.page';
+import { TicketLists } from './pages/ticket-list/TicketLists.page';
 function App() {
   const history = createBrowserHistory()
   return (
@@ -32,7 +33,7 @@ function App() {
             <Route
               path="/tickets"
               element={
-                <PrivateRoute><div>Tickets Component will be Coming Soon </div></PrivateRoute>
+                <PrivateRoute><TicketLists></TicketLists></PrivateRoute>
               } />
         </Routes>
       </Router>
