@@ -1,0 +1,102 @@
+[
+    {
+        "id": "1",
+        "subject": "SSL certificate needed",
+        "status": "UnAssigned",
+        "updatedDate": "2022-03-07",
+        "updatedBy": "John Doe",
+        "assignedDate": "",
+        "priority": "High",
+        "assignedTo": "Akash"
+    },
+    {
+        "id": "2",
+        "subject": "VM infrastruture provisioning request",
+        "status": "Assigned",
+        "updatedDate": "2022-03-07",
+        "updatedBy": "John Doe",
+        "assignedDate": "",
+        "priority": "High",
+        "assignedTo": "Akash"
+    },
+    {
+        "id": "3",
+        "subject": "Description",
+        "status": "InProgress",
+        "updatedDate": "2022-03-07",
+        "updatedBy": "John Doe",
+        "assignedDate": "",
+        "priority": "High",
+        "assignedTo": "Akash"
+    },
+    {
+        "id": "4",
+        "subject": "Description",
+        "status": "Resolved",
+        "updatedDate": "2022-03-07",
+        "updatedBy": "John Doe",
+        "assignedDate": "",
+        "priority": "High",
+        "assignedTo": "Akash"
+    },
+    {
+        "id": "5",
+        "subject": "Description",
+        "status": "InProgress",
+        "updatedDate": "2022-03-07",
+        "updatedBy": "John Doe",
+        "assignedDate": "",
+        "priority": "High",
+        "assignedTo": "Akash"
+    },
+    {
+        "id": "6",
+        "subject": "Description",
+        "status": "UnAssigned",
+        "updatedDate": "2022-03-07",
+        "updatedBy": "John Doe",
+        "assignedDate": "",
+        "priority": "High",
+        "assignedTo": "Akash"
+    },
+    {
+        "id": "7",
+        "subject": "Description",
+        "status": "UnAssigned",
+        "updatedDate": "2022-03-07",
+        "updatedBy": "John Doe",
+        "assignedDate": "",
+        "priority": "High",
+        "assignedTo": "Akash"
+    },
+    {
+        "id": "8",
+        "subject": "Description",
+        "status": "UnAssigned",
+        "updatedDate": "2022-03-07",
+        "updatedBy": "John Doe",
+        "assignedDate": "",
+        "priority": "High",
+        "assignedTo": "Akash"
+    },
+    {
+        "id": "9",
+        "subject": "Description",
+        "status": "UnAssigned",
+        "updatedDate": "2022-03-07",
+        "updatedBy": "John Doe",
+        "assignedDate": "",
+        "priority": "High",
+        "assignedTo": "Akash"
+    },
+    {
+        "id": "10",
+        "subject": "Description",
+        "status": "UnAssigned",
+        "updatedDate": "2022-03-07",
+        "updatedBy": "John Doe",
+        "assignedDate": "",
+        "priority": "High",
+        "assignedTo": "Akash"
+    }
+]

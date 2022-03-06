@@ -4,7 +4,7 @@ const { setJWT } = require('./redis.helper')
 
 const createJWT = async (email, _id) => {
     try {
-        const accessToken = jwt.sign({ email }, process.env.JWT_ACCESS_SECRETE, { expiresIn: '15m' })
+        const accessToken = jwt.sign({ email }, process.env.JWT_ACCESS_SECRET, { expiresIn: '15m' })
         await setJWT(accessToken, _id)
         return Promise.resolve(accessToken)
     }
@@ -14,7 +14,7 @@ const createJWT = async (email, _id) => {
 }
 
 const refreshJWT = async (email, _id) => {
-    const refreshToken = jwt.sign({ email }, process.env.JWT_REFRESH_SECRETE, { expiresIn: '30d' })
+    const refreshToken = jwt.sign({ email }, process.env.JWT_REFRESH_SECRET, { expiresIn: '30d' })
     await storeUserRefreshJWT(_id,refreshToken)
     return Promise.resolve(refreshToken)
 }
