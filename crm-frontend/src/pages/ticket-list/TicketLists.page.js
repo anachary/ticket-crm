@@ -4,7 +4,7 @@ import {PageBreadcrumb} from "../../components/breadcrumb/Breadcrumb.comp.js"
 import { SearchForm } from '../../components/search-form/SearchForm.comp.js'
 import { TicketTable } from '../../components/ticket-table/TicketTable.comp.js'
 import tickets from "../../assets/data/dummy.tickets.json"
-
+import { Link } from "react-router-dom"
 
 export const TicketLists = () => {
 
@@ -34,9 +34,11 @@ useEffect(()=>{
         </Row>
         <Row className='mt-4'> 
             <Col>
-                <Button varint="info">
+                <Link to="/add-ticket">
+                <Button>
                     Add New Ticket
                 </Button>
+                </Link>
             </Col>
             <Col className='text-end'>
                 <SearchForm handleOnChange={handleOnChange} str={str}>
@@ -45,11 +47,11 @@ useEffect(()=>{
         </Row>
         <hr/>
         <Row>
-                    <Col className="ticket-table">
-                        <TicketTable tickets={displyTicketList}>
-                        </TicketTable>
-                    </Col>
-                </Row>
+            <Col className="ticket-table">
+                <TicketTable tickets={displyTicketList}>
+                </TicketTable>
+            </Col>
+        </Row>
     </Container>
   )
 }
