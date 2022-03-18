@@ -12,6 +12,7 @@ import {PrivateRoute} from './components/private-router/PrivateRoute.comp.js'
 import { Dashboard } from './pages/DashboardPage/Dashboard.page.js';
 import { TicketLists } from './pages/ticket-list/TicketLists.page.js';
 import { AddTicket } from './pages/new-ticket/AddTicket.page.js';
+import {Ticket} from './pages/ticket/Ticket.page.js'
 function App() {
   const history = createBrowserHistory()
   return (
@@ -40,6 +41,12 @@ function App() {
               path="/add-ticket"
               element={
                 <PrivateRoute><AddTicket></AddTicket></PrivateRoute>
+              } 
+              ></Route>
+                <Route
+              path="/ticket:id"
+              element={
+                <PrivateRoute><Ticket></Ticket></PrivateRoute>
               } 
               ></Route>
         </Routes>

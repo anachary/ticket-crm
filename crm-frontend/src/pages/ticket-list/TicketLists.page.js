@@ -6,6 +6,7 @@ import { TicketTable } from '../../components/ticket-table/TicketTable.comp.js'
 import tickets from "../../assets/data/dummy.tickets.json"
 import { Link } from "react-router-dom"
 
+
 export const TicketLists = () => {
 
 const [str, setStr]= useState('')

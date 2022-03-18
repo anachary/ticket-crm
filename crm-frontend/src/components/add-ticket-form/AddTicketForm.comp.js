@@ -7,7 +7,7 @@ import { shortText  } from '../../util/validation';
 const initialFrmDt = {
   subject: "",
   issueDate: "",
-  message: "",
+  description: "",
   priority:"Low",
   status:"UnAssigned",
   assignedTo:"",
@@ -16,7 +16,7 @@ const initialFrmDt = {
 const initialFrmDtValid = {
     subject: false,
     issueDate: false,
-    message: false,
+    description: false,
     assignedTo:true ,
     assignedDate:true,
   };
@@ -25,7 +25,7 @@ export const AddTicketForm = () => {
 
   const [frmData, setFrmData] = useState(initialFrmDt);
   const [frmDtValid, setFrmDtValid] = useState(initialFrmDtValid);
-  useEffect(() => { }, [frmData]);
+  useEffect(() => { }, [frmData, frmDtValid]);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -37,7 +37,7 @@ export const AddTicketForm = () => {
    
     newFrmDtValid.subject = shortText(newfrmData.subject)
     newFrmDtValid.issueDate = newfrmData.issueDate.length > 0
-    newFrmDtValid.message =  newfrmData.message.length > 0
+    newFrmDtValid.message =  newfrmData.description.length > 0
     newFrmDtValid.assignedTo = (newfrmData.status !== "Assigned")||(newfrmData.assignedTo && newfrmData.assignedTo.length>0)
     newFrmDtValid.assignedDate=(newfrmData.status !== "Assigned")||(newfrmData.assignedDate && newfrmData.assignedDate.length>0)
      
@@ -143,16 +143,16 @@ export const AddTicketForm = () => {
 
 
         <Form.Group  as={Row} className='mb-2'> 
-          <Form.Label>Descriptions</Form.Label>
+          <Form.Label>Description</Form.Label>
           <Form.Control
             as="textarea"
-            name="message"
+            name="description"
             rows="12"
             className='ml-1 mr-1'
-            value={frmData.message}
+            value={frmData.description}
             onChange={handleOnChange}
             size="sm"
-            isInvalid={ !frmDtValid.message}
+            isInvalid={ !frmDtValid.description}
           />
         </Form.Group>
         <div className='mt-2 text-center'>

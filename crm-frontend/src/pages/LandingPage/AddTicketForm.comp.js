@@ -81,10 +81,10 @@ export const AddTicketForm = ({handleOnSubmit}) => {
           <Form.Label>Descriptions</Form.Label>
           <Form.Control
             as="textarea"
-            name="message"
+            name="description"
             rows="5"
             className='ml-1 mr-1'
-            value={frmData.message}
+            value={frmData.description}
             onChange={handleOnChange}
             required
           />
