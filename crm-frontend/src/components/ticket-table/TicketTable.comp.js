@@ -18,7 +18,7 @@ export const TicketTable = ({ tickets }) => {
             {
             tickets.length ? (tickets.map(row => (<tr key={row._id}> 
                 <td>
-                <Link to={`/ticket/${row._id}`}>{row.id}</Link>
+                <Link to={`/ticket:${row._id}`}>{row.id}</Link>
                 </td>
                 <td>{row.subject}</td>
                 <td>{row.status}</td>
