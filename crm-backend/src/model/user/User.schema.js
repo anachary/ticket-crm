@@ -38,19 +38,24 @@ const UserSchema = new Schema({
         required: true,
         default:'client'
     },
-    refreshJWT:{
-        token:{
+    "refreshJWT": {
+        "token":{
             type:String,
             maxlength: 500,
             default:''
         },
-        addedAt:{
+        "addedAt":{
             type:Date,
             required:true,
             default:Date.now()
         }
 
-    }
+    },
+    "isVerified": {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
 
 })
 

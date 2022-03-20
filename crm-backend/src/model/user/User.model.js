@@ -27,6 +27,21 @@ const getUserByEmail = async email =>{
     }
 }
 
+const getUserById = async _id =>{
+    try {
+     if(!_id){
+         return false;
+     }
+     const user = await UserSchema.findOne({_id});
+     console.log(user);
+     return user
+    }
+    catch(err){
+      console.log(err)
+      throw err
+    }
+}
+
 const storeUserRefreshJWT= async (_id, token) =>{
     try{
         let data = await UserSchema.findByIdAndUpdate(
@@ -45,8 +60,32 @@ const storeUserRefreshJWT= async (_id, token) =>{
     }
 }
 
+const verifyUser = (_id, email) => {
+    return new Promise((resolve, reject) => {
+      try {
+        UserSchema.findOneAndUpdate(
+          { _id, email, isVerified: false },
+          {
+            $set: { isVerified: true },
+          },
+          { new: true }
+        )
+          .then((data) => resolve(data))
+          .catch((error) => {
+            console.log(error.message);
+            reject(error);
+          });
+      } catch (error) {
+        console.log(error.message);
+        reject(error);
+      }
+    });
+  };
+  
 module.exports = {
     insertUser,
     getUserByEmail,
-    storeUserRefreshJWT
+    getUserById,
+    storeUserRefreshJWT,
+    verifyUser
 }

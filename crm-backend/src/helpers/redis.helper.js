@@ -18,14 +18,23 @@ const getJWT = async (key)=>{
         if(!client.isOpen){
             await client.connect()
         }
-        await client.get(key)    
+        return await client.get(key)    
     } 
     catch (error) {
        throw error; 
     }
 }
 
+const deleteJWT = (key) => {
+    try {
+      client.del(key);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 module.exports ={
     setJWT,
-    getJWT
+    getJWT,
+    deleteJWT
 }
