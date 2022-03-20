@@ -37,7 +37,7 @@ export const AddTicketForm = () => {
    
     newFrmDtValid.subject = shortText(newfrmData.subject)
     newFrmDtValid.issueDate = newfrmData.issueDate.length > 0
-    newFrmDtValid.message =  newfrmData.description.length > 0
+    newFrmDtValid.description =  newfrmData.description.length > 0
     newFrmDtValid.assignedTo = (newfrmData.status !== "Assigned")||(newfrmData.assignedTo && newfrmData.assignedTo.length>0)
     newFrmDtValid.assignedDate=(newfrmData.status !== "Assigned")||(newfrmData.assignedDate && newfrmData.assignedDate.length>0)
      

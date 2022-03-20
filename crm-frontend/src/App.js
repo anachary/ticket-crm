@@ -44,7 +44,7 @@ function App() {
               } 
               ></Route>
                 <Route
-              path="/ticket:id"
+              path="/ticket/:tId"
               element={
                 <PrivateRoute><Ticket></Ticket></PrivateRoute>
               } 

@@ -7,7 +7,9 @@ import { MessageHistory } from '../../components/message-history/MessageHistory.
 
 import { UpdateTicket } from '../update-ticket/UpdateTicket.page.js';
 
-const initialTicket = tickets[0]
+import { useParams } from 'react-router-dom';
+
+
 const initialTicketValid = {
   subject: false,
   issueDate: false,
@@ -22,19 +24,23 @@ const validateTicket = (newFrmDtValid, newTicket) => {
   newFrmDtValid.subject = shortText(newTicket.subject)
   newFrmDtValid.issueDate = newTicket.issueDate.length > 0
   newFrmDtValid.description = newTicket.description.length > 0
-  newFrmDtValid.assignedTo = (newTicket.status !== "Assigned") || (newTicket.assignedTo && newTicket.assignedTo.length > 0)
-  newFrmDtValid.assignedDate = (newTicket.status !== "Assigned") || (newTicket.assignedDate && newTicket.assignedDate.length > 0)
+  newFrmDtValid.assignedTo = (newTicket.status === "UnAssigned") || (newTicket.assignedTo && newTicket.assignedTo.length > 0)
+  newFrmDtValid.assignedDate = (newTicket.status === "UnAssigned") || (newTicket.assignedDate && newTicket.assignedDate.length > 0)
   return newFrmDtValid
 }
 export const Ticket = () => {
-  const currentTicketValid = validateTicket(initialTicketValid, initialTicket)
+  const {tId} = useParams()
 
-  const [ticket, setTicket] = useState(initialTicket);
-  const [ticketValid, setTicketValid] = useState(currentTicketValid);
+  const [ticket, setTicket] = useState('');
+  const [ticketValid, setTicketValid] = useState(initialTicketValid);
   const [comment, setComment] = useState('')
 
   useEffect(() => {
-  }, [ticket, comment]);
+    const currentTicket = tickets.find(v=> v.id == tId)
+    const currentTicketValid = validateTicket(ticketValid, currentTicket)
+    setTicketValid(currentTicketValid)
+    setTicket(currentTicket)
+  }, [ comment, tId]);
   const handleOnChange = (e) => {
     const { name, value } = e.target;
 
