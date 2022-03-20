@@ -1,19 +1,23 @@
 import React from 'react'
-import { Navbar, Nav, NavbarBrand } from 'react-bootstrap'
+import { Navbar, Nav } from 'react-bootstrap'
 import NavbarCollapse from 'react-bootstrap/esm/NavbarCollapse'
 import NavbarToggle from 'react-bootstrap/esm/NavbarToggle'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faStar} from '@fortawesome/free-solid-svg-icons'
 import "./Header.style.css"
 import { useNavigate } from 'react-router-dom';
+import { userLogout } from "../../../api/userApi.js";
 
 
 
 export const Header = () => {
   const navigate = useNavigate()
 
-  const logMeOut = () => {
+  const logMeOut = async () => {
     //call endpoint to remove access token from mongodb and redis.
+    await userLogout();
+    sessionStorage.removeItem("accessJWT");
+    localStorage.removeItem("crmSite");
     navigate("/");
   };
 
