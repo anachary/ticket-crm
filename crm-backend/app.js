@@ -18,7 +18,7 @@ app.use(cors())
 
 //Mongodb Setup
 const mongoose = require('mongoose')
- mongoose.connect(process.env.MONGO_URI)
+ mongoose.connect(process.env.MONGO_URI)go
 
  if(process.env.NODE_ENV !== "production"){
     const mongoDb = mongoose.connection

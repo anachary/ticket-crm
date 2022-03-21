@@ -5,7 +5,7 @@ const { insertUser, getUserByEmail, getUserById } = require("../model/user/User.
 const { hashPassword, comparePassword } = require("../helpers/bcrypthelper")
 const UserSchema = require("../model/user/User.schema")
 const { createAccessJWT, createRefreshJWT } = require("../helpers/jwt.helper")
-const {userAuthorization} =require ("../middleware/authorization.middleware.js")
+const {userAuthorization} =require ("../middlewares/authorization.middleware.js")
 
 
 
