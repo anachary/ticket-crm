@@ -52,7 +52,7 @@ router.post(
     userAuthorization,
     async (req, res) => {
       try {
-        const { subject, sender, message } = req.body;
+        const { subject, sender, description,issueDate, status, priority, message, assignedTo, assignedDate} = req.body;
   
         const userId = req.userId;
   
@@ -63,6 +63,8 @@ router.post(
           issueDate,
           status,
           priority,
+          assignedTo,
+          assignedDate,
           conversations: [
             {
               sender,
