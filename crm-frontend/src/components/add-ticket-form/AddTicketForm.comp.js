@@ -1,8 +1,19 @@
 import React,{useState, useEffect} from 'react'
-import {Container, Row, Col, Form,Button } from 'react-bootstrap'
 import "./add-ticket-form.style.css";
 import "../../App.css"
 import { shortText  } from '../../util/validation';
+import { useDispatch, useSelector } from "react-redux";
+import {
+  Form,
+  Row,
+  Col,
+  Button,
+  Spinner,
+  Alert,
+} from "react-bootstrap";
+import { openNewTicket } from "./addTicketAction";
+import { restSuccessMSg } from "./addTicketSlicer";
+
 
 const initialFrmDt = {
   subject: "",
@@ -22,10 +33,17 @@ const initialFrmDtValid = {
   };
 
 export const AddTicketForm = () => {
+  const dispatch = useDispatch();
+
+  const {
+    user: { name },
+  } = useSelector((state) => state.user);
+
 
   const [frmData, setFrmData] = useState(initialFrmDt);
   const [frmDtValid, setFrmDtValid] = useState(initialFrmDtValid);
-  useEffect(() => { }, [frmData, frmDtValid]);
+  useEffect(() => {
+  }, [dispatch, frmData, frmDtValid]);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -46,10 +64,10 @@ export const AddTicketForm = () => {
     
   };
 
-  const handleOnSubmit = (e)=>{
-      e.preventDefault()
-      console.log("form data:", frmData)
-  }
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+     dispatch(openNewTicket({ ...frmData, sender: name }));
+  };
 
   return (
      <div>

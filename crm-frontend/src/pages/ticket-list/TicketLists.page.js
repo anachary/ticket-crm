@@ -1,30 +1,40 @@
-import React ,{useState, useEffect} from 'react'
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { fetchAllTickets } from "./ticketsAction";
+
 import {Container, Row, Col,Button} from 'react-bootstrap'
 import {PageBreadcrumb} from "../../components/breadcrumb/Breadcrumb.comp.js"
 import { SearchForm } from '../../components/search-form/SearchForm.comp.js'
 import { TicketTable } from '../../components/ticket-table/TicketTable.comp.js'
-import tickets from "../../assets/data/dummy.tickets.json"
 import { Link } from "react-router-dom"
+
 
 
 export const TicketLists = () => {
 
-const [str, setStr]= useState('')
-const[displyTicketList, setTicketList] = useState(tickets)
-useEffect(()=>{
+const dispatch = useDispatch();
 
-},[str, displyTicketList])
+useEffect(() => {
+    dispatch(fetchAllTickets());
+}, [dispatch]);
 
- const handleOnChange = e =>{
-     setStr(e.target.value)
-     searchTicket(e.target.value)
-     console.log(e.target)
- }
 
- const searchTicket =sstr =>{
-    const displayTickets = tickets.filter(row => row.subject.toLowerCase().includes(sstr.toLowerCase()))
-    setTicketList(displayTickets)
- }
+// const [str, setStr]= useState('')
+// const[displyTicketList, setTicketList] = useState(tickets)
+// useEffect(()=>{
+
+// },[str, displyTicketList])
+
+//  const handleOnChange = e =>{
+//      setStr(e.target.value)
+//      searchTicket(e.target.value)
+//      console.log(e.target)
+//  }
+
+//  const searchTicket =sstr =>{
+//     const displayTickets = tickets.filter(row => row.subject.toLowerCase().includes(sstr.toLowerCase()))
+//     setTicketList(displayTickets)
+//  }
 
   return (
     <Container>
@@ -42,14 +52,14 @@ useEffect(()=>{
                 </Link>
             </Col>
             <Col className='text-end'>
-                <SearchForm handleOnChange={handleOnChange} str={str}>
+                <SearchForm>
                 </SearchForm>
                 </Col>
         </Row>
         <hr/>
         <Row>
             <Col className="ticket-table">
-                <TicketTable tickets={displyTicketList}>
+                <TicketTable>
                 </TicketTable>
             </Col>
         </Row>
