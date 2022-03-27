@@ -5,7 +5,7 @@ const bodyParser = require("body-parser")
 const cors = require("cors")
 const helmet= require("helmet")
 const morgan = require("morgan")
-
+const autoIncrement = require('mongoose-auto-increment');
 
 
 //API Security 
@@ -24,6 +24,7 @@ const mongoose = require('mongoose')
     const mongoDb = mongoose.connection
     mongoDb.on("open", () => {
         console.log("MongoDb connection is successful")
+        autoIncrement.initialize(mongoDb);
     })
     mongoDb.on("error",(error) => {
         console.log(error)

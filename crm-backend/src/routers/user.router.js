@@ -5,9 +5,9 @@ const { insertUser, getUserByEmail, getUserById } = require("../model/user/User.
 const { hashPassword, comparePassword } = require("../helpers/bcrypthelper")
 const UserSchema = require("../model/user/User.schema")
 const { createAccessJWT, createRefreshJWT } = require("../helpers/jwt.helper")
-const {userAuthorization} =require ("../middlewares/authorization.middleware.js")
+const {userAuthorization} =require ("../middleware/authorization.middleware.js")
 
-
+const { getJWT, deleteJWT } = require("../helpers/redis.helper")
 
 router.all("/", (req, res, next) => {
     //res.json({message:"user router is healthy"})
@@ -146,7 +146,7 @@ router.delete("/logout", userAuthorization, async (req, res) => {
 	const _id = req.userId;
 
 	// 2. delete accessJWT from redis database
-	deleteJWT(authorization);
+	await deleteJWT(authorization);
 
 	// 3. delete refreshJWT from mongodb
 	const result = await storeUserRefreshJWT(_id, "");

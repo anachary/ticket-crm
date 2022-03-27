@@ -3,7 +3,7 @@ const { TicketSchema } = require("./Ticket.schema");
 const getTickets = (clientId) => {
   return new Promise((resolve, reject) => {
     try {
-      TicketSchema.find({ clientId })
+      TicketSchema.find()
         .then((data) => resolve(data))
         .catch((error) => reject(error));
     } catch (error) {
@@ -29,14 +29,15 @@ const insertTicket = (ticketObj) => {
     try {
       TicketSchema(ticketObj)
         .save()
-        .then((data) => resolve(data))
+        .then((data) => {
+          console.log(data)
+          resolve(data)})
         .catch((error) => reject(error));
     } catch (error) {
       reject(error);
     }
   });
 };
-
 
 
 module.exports = {

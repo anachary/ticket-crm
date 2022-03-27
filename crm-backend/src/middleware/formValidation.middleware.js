@@ -10,7 +10,7 @@ const createNewTicketValidation = (req, res, next) => {
         description: longStr.required(),
         status: shortStr.required(),
         priority: shortStr.required(),
-		assignedTo: shortStr.required(),
+        assignedTo:shortStr.required(),
 		assignedDate: dt.required(),
 		sender: shortStr.required()
 	});

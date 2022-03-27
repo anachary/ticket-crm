@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const autoIncrement = require('mongoose-auto-increment');
 
 const TicketSchema = new Schema({
   clientId: {
     type: Schema.Types.ObjectId,
   },
-
   subject: {
     type: String,
     maxlength: 100,
@@ -85,7 +85,8 @@ const TicketSchema = new Schema({
     },
   ],
 });
-
+autoIncrement.initialize(mongoose.connection)
+TicketSchema.plugin(autoIncrement.plugin, 'Ticket');
 module.exports = {
   TicketSchema: mongoose.model("Ticket", TicketSchema),
 };
