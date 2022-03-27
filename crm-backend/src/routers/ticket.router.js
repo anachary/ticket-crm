@@ -7,6 +7,7 @@ const {
   } = require("../model/ticket/Ticket.model");
 
 const { userAuthorization} = require("../middlewares/authorization.middleware");
+const {createNewTicketValidation} = require("../middlewares/formValidation.middleware.js")
 
 router.all("/", (req,res,next) =>{
  res.json({message:"ticket router is healthy"})
