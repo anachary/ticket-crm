@@ -25,6 +25,24 @@ const createNewTicketValidation = (req, res, next) => {
 	next();
 };
 
+const replyTicketMessageValidation = (req, res, next) => {
+	const schema = Joi.object({
+		sender: shortStr.required(),
+		message: longStr.required(),
+	});
+
+	console.log(req.body);
+	const value = schema.validate(req.body);
+
+	if (value.error) {
+		return res.json({ status: "error", message: value.error.message });
+	}
+
+	next();
+};
+
+
 module.exports = {
 	createNewTicketValidation,
+	replyTicketMessageValidation
 };

@@ -1,8 +1,15 @@
-import React from 'react'
-import { Table } from 'react-bootstrap'
-import { Link } from "react-router-dom";
+import React from "react";
+import { useSelector } from "react-redux";
 
-export const TicketTable = ({ tickets }) => {
+import { Table } from "react-bootstrap";
+
+import { Link } from "react-router-dom";
+export const TicketTable = () => {
+    const { searchTicketList, isLoading, error } = useSelector(
+        (state) => state.tickets
+      );
+      if (isLoading) return <h3>Loading ...</h3>;
+      if (error) return <h3>{error}</h3>;
     return (<Table striped bordered hover>
         <thead>
             <th>#</th>
@@ -16,9 +23,9 @@ export const TicketTable = ({ tickets }) => {
         </thead>
         <tbody>
             {
-            tickets.length ? (tickets.map(row => (<tr key={row._id}> 
+            searchTicketList.length ? (searchTicketList.map(row => (<tr key={row._id}> 
                 <td>
-                <Link to={`/ticket/${row.id}`}>{row.id}</Link>
+                <Link to={`/ticket/${row._id}`}>{row._id}</Link>
                 </td>
                 <td>{row.subject}</td>
                 <td>{row.status}</td>
