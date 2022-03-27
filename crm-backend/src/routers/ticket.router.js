@@ -6,11 +6,13 @@ const {
     insertTicket
   } = require("../model/ticket/Ticket.model");
 
-const { userAuthorization} = require("../middlewares/authorization.middleware");
+const { userAuthorization} = require("../middlewares/authorization.middleware");3
 const {createNewTicketValidation} = require("../middlewares/formValidation.middleware.js")
 
 router.all("/", (req,res,next) =>{
- res.json({message:"ticket router is healthy"})
+ //res.json({message:"ticket router is healthy"})
+
+ next();
 })
 
 // Get all tickets for a specific user
@@ -64,14 +66,11 @@ router.post(
           issueDate,
           status,
           priority,
-          assignedTo,
+          assignedTo: assignedTo,
           assignedDate,
-          conversations: [
-            {
-              sender,
-              message,
-            },
-          ],
+          updatedBy:sender,
+          updateDate: Date.now(),
+          conversations: [],
         };
   
         const result = await insertTicket(ticketObj);

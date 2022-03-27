@@ -26,20 +26,18 @@ const getTicketById = (_id, clientId) => {
 
 const insertTicket = (ticketObj) => {
   return new Promise((resolve, reject) => {
-    upsertTicket(ticketObj);
+    try {
+      TicketSchema(ticketObj)
+        .save()
+        .then((data) => resolve(data))
+        .catch((error) => reject(error));
+    } catch (error) {
+      reject(error);
+    }
   });
 };
 
-const upsertTicket = (ticketObj) => {
-  try {
-    TicketSchema(ticketObj)
-      .save()
-      .then((data) => resolve(data))
-      .catch((error) => reject(error));
-  } catch (error) {
-    reject(error);
-  }
-}
+
 
 module.exports = {
   getTickets,
