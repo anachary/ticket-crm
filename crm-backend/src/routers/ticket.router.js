@@ -38,7 +38,7 @@ router.get("/", userAuthorization, async (req, res) => {
       const { _id } = req.params;
   
       const clientId = req.userId;
-      const result = await getTicketById(_id, clientId);
+      const result = await getTicketById(_id);
   
       return res.json({
         status: "success",
@@ -71,7 +71,6 @@ router.post(
           assignedTo: assignedTo,
           assignedDate,
           updatedBy:sender,
-          updateDate: Date.now(),
           conversations: [],
         };
   
@@ -102,8 +101,10 @@ router.post("/update-ticket/:_id", userAuthorization, async (req, res) => {
     const { subject, sender, description,issueDate, status, priority, assignedTo, assignedDate} = req.body;
   
         const userId = req.userId;
+        const { _id } = req.params;
   
         const ticketObj = {
+          _id,
           clientId: userId,
           subject,
           description,
@@ -116,7 +117,7 @@ router.post("/update-ticket/:_id", userAuthorization, async (req, res) => {
           updateDate: Date.now(),
         };
   
-        const result = await updateTicket(ticketObj, message);
+        const result = await updateTicket({_id, ticketObj});
         
         if (result._id) {
           return res.json({
@@ -136,16 +137,16 @@ router.post("/update-ticket/:_id", userAuthorization, async (req, res) => {
 
 
 // update reply message form client
-router.put(
-    "/:_id",
+router.post(
+    "/reply/:_id",
     replyTicketMessageValidation,
     userAuthorization,
     async (req, res) => {
       try {
         const { message, sender } = req.body;
         const { _id } = req.params;
-  
-        const result = await updateClientReply({ _id, message, sender });
+        
+        const result = await updateClientReply({_id, message, sender});
   
         if (result._id) {
           return res.json({

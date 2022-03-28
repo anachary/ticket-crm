@@ -8,10 +8,10 @@ export const MessageHistory = ({msg}) => {
     <div key ={i} className='message-history mt-3'>
         <div className='send font-weight-bold text-secondary'>
             <div className='sender'>
-               {row.messageBy}
+               {row.sender}
             </div>
             <div className='date'>
-                {row.date}
+                {row.msgAt}
             </div>
         </div>
         <div className='message'>{row.message}</div>

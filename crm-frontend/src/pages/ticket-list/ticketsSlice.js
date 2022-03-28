@@ -6,7 +6,7 @@ const initialState = {
   error: "",
   replyTicketError: "",
   searchTicketList: [],
-  selectedTicket: {},
+  selectedTicket: '',
   replyMsg: "",
 };
 
@@ -45,8 +45,14 @@ const ticketListSlice = createSlice({
       state.isLoading = false;
       state.error = payload;
     },
-  },
+    resetResponseMsg: (state) => {
+      state.isLoading = false;
+      state.replyTicketError = "";
+      state.replyMsg = "";
+    }
+  }
 });
+
 
 const { reducer, actions } = ticketListSlice;
 
@@ -58,6 +64,7 @@ export const {
   fetchSingleTicketSuccess,
   fetchSingleTicketFail,
   searchTickets,
+  resetResponseMsg
 } = actions;
 
 export default reducer;

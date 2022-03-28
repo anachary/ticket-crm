@@ -19,23 +19,6 @@ useEffect(() => {
 }, [dispatch]);
 
 
-// const [str, setStr]= useState('')
-// const[displyTicketList, setTicketList] = useState(tickets)
-// useEffect(()=>{
-
-// },[str, displyTicketList])
-
-//  const handleOnChange = e =>{
-//      setStr(e.target.value)
-//      searchTicket(e.target.value)
-//      console.log(e.target)
-//  }
-
-//  const searchTicket =sstr =>{
-//     const displayTickets = tickets.filter(row => row.subject.toLowerCase().includes(sstr.toLowerCase()))
-//     setTicketList(displayTickets)
-//  }
-
   return (
     <Container>
         <Row>
