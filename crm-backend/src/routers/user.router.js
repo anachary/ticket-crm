@@ -76,14 +76,7 @@ router.post("/login", async (req, res) => {
         const user = await getUserByEmail(email);
         console.log(user)
         
-        // if (!user.isVerified) {
-        //     return res.json({
-        //         status: "error",
-        //         message:
-        //             "You account has not been verified. Please check your email and verify you account before able to login!",
-        //     });
-        // }
-        
+       
         const hashPwd = user && user._id ? user.password : null
 
         if (!hashPwd) {

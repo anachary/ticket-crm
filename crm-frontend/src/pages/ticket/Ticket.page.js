@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { Container, Row, Col, Form, Button } from 'react-bootstrap'
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Container, Row, Col, Form, Spinner, Alert } from "react-bootstrap";
 import { PageBreadcrumb } from '../../components/breadcrumb/Breadcrumb.comp'
 import tickets from "../../assets/data/dummy.tickets.json"
 import { shortText } from '../../util/validation';
@@ -9,7 +10,12 @@ import { UpdateTicket } from '../update-ticket/UpdateTicket.page.js';
 
 import { useParams } from 'react-router-dom';
 
+import { fetchSingleTicket} from "../ticket-list/ticketsAction";
+import { resetResponseMsg, fetchTicketSuccess } from "../ticket-list/ticketsSlice";
 
+import {
+  getSingleTicket, updateReplyTicket, updateTicket
+} from "../../api/ticketApi"
 const initialTicketValid = {
   subject: false,
   issueDate: false,
@@ -17,30 +23,53 @@ const initialTicketValid = {
   assignedTo: true,
   assignedDate: true,
 };
-
-
 const validateTicket = (newFrmDtValid, newTicket) => {
-
+  if(newTicket){
   newFrmDtValid.subject = shortText(newTicket.subject)
   newFrmDtValid.issueDate = newTicket.issueDate.length > 0
   newFrmDtValid.description = newTicket.description.length > 0
   newFrmDtValid.assignedTo = (newTicket.status === "UnAssigned") || (newTicket.assignedTo && newTicket.assignedTo.length > 0)
   newFrmDtValid.assignedDate = (newTicket.status === "UnAssigned") || (newTicket.assignedDate && newTicket.assignedDate.length > 0)
+  }
   return newFrmDtValid
 }
+
 export const Ticket = () => {
   const {tId} = useParams()
+  const dispatch = useDispatch();
+	const {
+		isLoading,
+		error,
+		selectedTicket,
+		replyMsg,
+		replyTicketError,
+	} = useSelector(state => state.tickets);
 
-  const [ticket, setTicket] = useState('');
-  const [ticketValid, setTicketValid] = useState(initialTicketValid);
+   const [ticket, setTicket] = useState(selectedTicket)
+   let currentTicketValid=initialTicketValid 
+   if(ticket){
+   currentTicketValid = validateTicket(initialTicketValid, ticket)
+  }
+  
+  const [ticketValid, setTicketValid] = useState(currentTicketValid);
   const [comment, setComment] = useState('')
 
   useEffect(() => {
-    const currentTicket = tickets.find(v=> v.id == tId)
-    const currentTicketValid = validateTicket(ticketValid, currentTicket)
-    setTicketValid(currentTicketValid)
-    setTicket(currentTicket)
-  }, [ comment, tId]);
+    getSingleTicket(tId).then((result)=>{
+      if( result.data.result.length && result.data.result[0]){
+      let sticket = result.data.result[0]
+      sticket.issueDate = new Date(sticket.issueDate).toISOString().slice(0,10)
+      sticket.assignedDate = new Date(sticket.assignedDate).toISOString().slice(0,10)
+      sticket.updatedDate = new Date(sticket.updatedDate).toISOString().slice(0,10)
+      setTicket(sticket)
+      }
+    })
+    dispatch(fetchSingleTicket(tId))
+    return () => {
+			(replyMsg || replyTicketError) && dispatch(resetResponseMsg());
+		};
+   
+  },[tId, dispatch, replyMsg, replyTicketError]);
   const handleOnChange = (e) => {
     const { name, value } = e.target;
 
@@ -54,16 +83,21 @@ export const Ticket = () => {
 
   };
 
-  const handleOnSubmit = (e) => {
-    console.log("form data:", ticket)
-    console.log('comment', comment)
-    alert('form submitted')
+  const handleOnSubmit = async(e) => {
+    try{
+    console.log("form data:", selectedTicket)
+    await updateTicket(selectedTicket._id, ticket)
+    await updateReplyTicket(ticket._id, {message:comment, sender: 'Akash Acharya'})
+    console.log('ticket saved submitted')
+    }
+    catch(error){
+      console.log(error.message)
+    }
   }
 
   const handleOnChangeComment =(e)=>{
     setComment(e.target.value);
   }
-
 
   return (
     <Container>
@@ -72,7 +106,16 @@ export const Ticket = () => {
           <PageBreadcrumb page='Ticket' />
         </Col>
       </Row>
-     
+      <Row>
+				<Col>
+					{isLoading && <Spinner variant="primary" animation="border" />}
+					{error && <Alert variant="danger">{error}</Alert>}
+					{replyTicketError && (
+						<Alert variant="danger">{replyTicketError}</Alert>
+					)}
+					{replyMsg && <Alert variant="success">{replyMsg}</Alert>}
+				</Col>
+        </Row>
         <Form.Group as={Row} className='mb-2'>
           <Form.Label column sm={2}>
             Subject
@@ -80,7 +123,7 @@ export const Ticket = () => {
           <Col sm={4}>
             <Form.Control
               name="subject"
-              value={ticket.subject}
+              value={ticket?ticket.subject:''}
               isInvalid={!ticketValid.subject}
               onChange={handleOnChange}
               placeholder="Subject"
@@ -90,7 +133,7 @@ export const Ticket = () => {
           <Form.Label l column sm={2}>Status</Form.Label>
           <Col sm={4}>
             <Form.Control as="select" size="sm" name="status"
-              value={ticket.status}
+              value={ticket?ticket.status:'UnAssigned'}
               onChange={handleOnChange} required >
               <option value="UnAssigned">UnAssigned</option>
               <option value="Assigned">Assigned</option>
@@ -109,7 +152,7 @@ export const Ticket = () => {
               name="issueDate"
               size="sm"
               isInvalid={!ticketValid.issueDate}
-              value={ticket.issueDate}
+              value={ticket?ticket.issueDate:''}
               onChange={handleOnChange}
               required
             />
@@ -117,7 +160,7 @@ export const Ticket = () => {
           <Form.Label l column sm={2}>Priority</Form.Label>
           <Col sm={4}>
             <Form.Control as="select" size="sm" name="priority"
-              value={ticket.priority}
+              value={ticket?ticket.priority:''}
               onChange={handleOnChange} required >
               <option value="Low">Low</option>
               <option value="Medium">Medium</option>
@@ -134,7 +177,7 @@ export const Ticket = () => {
           <Col sm={4}>
             <Form.Control
               name="assignedTo"
-              value={ticket.assignedTo}
+              value={ticket?ticket.assignedTo:''}
               isInvalid={!ticketValid.assignedTo}
               onChange={handleOnChange}
               placeholder="Assigned To"
@@ -148,7 +191,7 @@ export const Ticket = () => {
             <Form.Control
               name="assignedDate"
               type="date"
-              value={ticket.assignedDate}
+              value={ticket?ticket.assignedDate:''}
               isInvalid={!ticketValid.assignedDate}
               onChange={handleOnChange}
               size="sm"
@@ -162,7 +205,7 @@ export const Ticket = () => {
           <Col sm={4}>
             <Form.Control
               name="assignedTo"
-              value={ticket.assignedTo}
+              value={ticket?ticket.updatedBy:''}
               placeholder="Updated By"
               size="sm"
               disabled
@@ -175,7 +218,7 @@ export const Ticket = () => {
             <Form.Control
               name="assignedDate"
               type="date"
-              value={ticket.assignedDate}
+              value={ticket?ticket.updatedDate:''}
               size="sm"
               disabled
             />
@@ -188,7 +231,7 @@ export const Ticket = () => {
             name="description"
             rows="5"
             className='ml-1 mr-1'
-            value={ticket.description}
+            value={ticket?ticket.description:''}
             onChange={handleOnChange}
             size="sm"
             isInvalid={!ticketValid.description}
@@ -198,7 +241,7 @@ export const Ticket = () => {
           <Row>
             <Col>
               <div className='font-weight-bold lg underline'>Conversation History</div>
-              <MessageHistory msg={ticket.history} />
+              <MessageHistory msg={ticket.conversations} />
               <UpdateTicket buttonDisabled={Object.values(ticketValid).includes(false)}  comment ={comment} handleOnChange ={handleOnChangeComment} handleOnSubmit={handleOnSubmit}/>
             </Col>
           </Row>

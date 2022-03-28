@@ -17,7 +17,7 @@ export const Dashboard = () => {
       }
     }, [tickets, dispatch]);
   
-    const pendingTickets = tickets.filter((row) => row.status !== "resolved");
+    const pendingTickets = tickets.filter((row) => row.status.toLowerCase() !== "resolved");
     const totlatTickets = tickets.length;
     return (
         <div>

@@ -79,7 +79,6 @@ const TicketSchema = new Schema({
       },
       msgAt: {
         type: Date,
-        required: true,
         default: Date.now(),
       },
     },
