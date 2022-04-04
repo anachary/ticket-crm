@@ -1,20 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import './message-history.style.css'
-export const MessageHistory = ({msg}) => {
+
+export const MessageHistory = ({msg, disabled}) => {
   if (!msg)
    return null;
   return msg.map((row,i) =>(
-    <div key ={i} className='message-history mt-3'>
-        <div className='send font-weight-bold text-secondary'>
-            <div className='sender'>
+    <div key ={i} className={'message-history mt-3'} >
+        <div className={'send font-weight-bold text-secondary'}>
+            <div className={'sender'}>
                {row.sender}
             </div>
-            <div className='date'>
+            <div className={'date'}>
                 {row.msgAt}
             </div>
         </div>
-        <div className='message'>{row.message}</div>
+        <div className= {disabled ?'message disabled' :'message'}>{row.message}</div>
     </div>)
   )
 }
