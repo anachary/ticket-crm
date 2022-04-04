@@ -17,9 +17,8 @@ import { AddTicket } from './pages/new-ticket/AddTicket.page.js';
 import {Ticket} from './pages/ticket/Ticket.page.js'
 
 function App() {
-	const  isAuth  = sessionStorage.getItem("accessJWT") &&
-  localStorage.getItem("crmSite");
-  
+	const  isAuth  = sessionStorage.getItem("accessJWT") &&  localStorage.getItem("crmSite");
+  const {user} = useSelector(state => state.user)
   const history = createBrowserHistory()
   return (
     <div className="App">
@@ -36,6 +35,7 @@ function App() {
             <Route
               path="/company"
               element={
+                user.role ==="admin" &&
                 <PrivateRoute><div>Company Component will be Coming Soon </div></PrivateRoute>
                 } />  
             <Route
