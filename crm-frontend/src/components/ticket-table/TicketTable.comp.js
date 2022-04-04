@@ -8,7 +8,7 @@ export const TicketTable = () => {
     const { searchTicketList, isLoading, error } = useSelector(
         (state) => state.tickets
       );
-      if (isLoading) return <h3>Loading ...</h3>;
+      //if (isLoading) return <h3>Loading ...</h3>;
       if (error) return <h3>{error}</h3>;
     return (<Table striped bordered hover>
         <thead>
