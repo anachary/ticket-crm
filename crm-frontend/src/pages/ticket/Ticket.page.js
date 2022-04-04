@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Row, Col, Form, Spinner, Alert } from "react-bootstrap";
 import { PageBreadcrumb } from '../../components/breadcrumb/Breadcrumb.comp'
-import tickets from "../../assets/data/dummy.tickets.json"
 import { shortText } from '../../util/validation';
 import { MessageHistory } from '../../components/message-history/MessageHistory.comp.js';
 
@@ -45,6 +44,8 @@ export const Ticket = () => {
 		replyTicketError,
 	} = useSelector(state => state.tickets);
 
+   const {user} =useSelector(state=>state.user)
+   
    const [ticket, setTicket] = useState(selectedTicket)
    let currentTicketValid=initialTicketValid 
    if(ticket){
@@ -53,6 +54,8 @@ export const Ticket = () => {
   
   const [ticketValid, setTicketValid] = useState(currentTicketValid);
   const [comment, setComment] = useState('')
+  
+  const disabled = user.role === 'client' && ticket && ticket.status.toLowerCase() === 'resolved'
 
   useEffect(() => {
     getSingleTicket(tId).then((result)=>{
@@ -87,7 +90,7 @@ export const Ticket = () => {
     try{
     console.log("form data:", selectedTicket)
     await updateTicket(selectedTicket._id, ticket)
-    await updateReplyTicket(ticket._id, {message:comment, sender: 'Akash Acharya'})
+    await updateReplyTicket(ticket._id, {message:comment, sender: user.email})
     console.log('ticket saved submitted')
     }
     catch(error){
@@ -123,6 +126,7 @@ export const Ticket = () => {
           <Col sm={4}>
             <Form.Control
               name="subject"
+              disabled ={disabled}
               value={ticket?ticket.subject:''}
               isInvalid={!ticketValid.subject}
               onChange={handleOnChange}
@@ -134,6 +138,7 @@ export const Ticket = () => {
           <Col sm={4}>
             <Form.Control as="select" size="sm" name="status"
               value={ticket?ticket.status:'UnAssigned'}
+              disabled ={disabled}
               onChange={handleOnChange} required >
               <option value="UnAssigned">UnAssigned</option>
               <option value="Assigned">Assigned</option>
@@ -151,6 +156,7 @@ export const Ticket = () => {
               type="date"
               name="issueDate"
               size="sm"
+              disabled ={disabled}
               isInvalid={!ticketValid.issueDate}
               value={ticket?ticket.issueDate:''}
               onChange={handleOnChange}
@@ -161,6 +167,7 @@ export const Ticket = () => {
           <Col sm={4}>
             <Form.Control as="select" size="sm" name="priority"
               value={ticket?ticket.priority:''}
+              disabled ={disabled}
               onChange={handleOnChange} required >
               <option value="Low">Low</option>
               <option value="Medium">Medium</option>
@@ -177,6 +184,7 @@ export const Ticket = () => {
           <Col sm={4}>
             <Form.Control
               name="assignedTo"
+              disabled ={disabled}
               value={ticket?ticket.assignedTo:''}
               isInvalid={!ticketValid.assignedTo}
               onChange={handleOnChange}
@@ -191,6 +199,7 @@ export const Ticket = () => {
             <Form.Control
               name="assignedDate"
               type="date"
+              disabled ={disabled}
               value={ticket?ticket.assignedDate:''}
               isInvalid={!ticketValid.assignedDate}
               onChange={handleOnChange}
@@ -205,6 +214,7 @@ export const Ticket = () => {
           <Col sm={4}>
             <Form.Control
               name="assignedTo"
+              disabled ={disabled}
               value={ticket?ticket.updatedBy:''}
               placeholder="Updated By"
               size="sm"
@@ -231,6 +241,7 @@ export const Ticket = () => {
             name="description"
             rows="5"
             className='ml-1 mr-1'
+            disabled ={disabled}
             value={ticket?ticket.description:''}
             onChange={handleOnChange}
             size="sm"
@@ -241,8 +252,8 @@ export const Ticket = () => {
           <Row>
             <Col>
               <div className='font-weight-bold lg underline'>Conversation History</div>
-              <MessageHistory msg={ticket.conversations} />
-              <UpdateTicket buttonDisabled={Object.values(ticketValid).includes(false)}  comment ={comment} handleOnChange ={handleOnChangeComment} handleOnSubmit={handleOnSubmit}/>
+              <MessageHistory msg={ticket.conversations} disabled={disabled} />
+              <UpdateTicket buttonDisabled={(!disabled && Object.values(ticketValid).includes(false))|| disabled } disabled={disabled}  comment ={comment} handleOnChange ={handleOnChangeComment} handleOnSubmit={handleOnSubmit}/>
             </Col>
           </Row>
         </Form.Group>

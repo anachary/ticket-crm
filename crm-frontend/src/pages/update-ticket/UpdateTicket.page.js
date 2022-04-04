@@ -2,12 +2,13 @@ import React from 'react'
 import { Form, Button } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
-export const UpdateTicket = ({buttonDisabled, comment, handleOnChange, handleOnSubmit}) => {
+export const UpdateTicket = ({buttonDisabled, disabled, comment, handleOnChange, handleOnSubmit}) => {
     return (
         <Form  autoComplete="off" onSubmit={handleOnSubmit}>
             <Form.Text>Comment</Form.Text>
             <Form.Control
             value ={comment}
+            disabled = {disabled}
             onChange ={handleOnChange}
             name="detail" 
             as="textarea" 
