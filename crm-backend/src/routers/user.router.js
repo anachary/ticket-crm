@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 
-const { insertUser, getUserByEmail, getUserById } = require("../model/user/User.model")
+const { insertUser, getUserByEmail, getUserById, storeUserRefreshJWT } = require("../model/user/User.model")
 const { hashPassword, comparePassword } = require("../helpers/bcrypthelper")
 const UserSchema = require("../model/user/User.schema")
 const { createAccessJWT, createRefreshJWT } = require("../helpers/jwt.helper")
@@ -20,12 +20,13 @@ router.get("/", userAuthorization, async (req,res)=>{
 	const _id = req.userId;
 
 	const userProf = await getUserById(_id);
-	const { name, email } = userProf;
+	const { name, email,role } = userProf;
 	res.json({
 		user: {
 			_id,
 			name,
 			email,
+			role,
 		},
 	});
 
