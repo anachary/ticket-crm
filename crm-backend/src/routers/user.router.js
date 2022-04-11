@@ -1,13 +1,29 @@
 const express = require("express")
 const router = express.Router()
-
-const { insertUser, getUserByEmail, getUserById, storeUserRefreshJWT } = require("../model/user/User.model")
+const {insertUser,
+	getUserByEmail,
+	getUserById,
+	updatePassword,
+	storeUserRefreshJWT,
+	verifyUser } = require("../model/user/User.model")
 const { hashPassword, comparePassword } = require("../helpers/bcrypthelper")
 const UserSchema = require("../model/user/User.schema")
 const { createAccessJWT, createRefreshJWT } = require("../helpers/jwt.helper")
 const {userAuthorization} =require ("../middleware/authorization.middleware.js")
 
 const { getJWT, deleteJWT } = require("../helpers/redis.helper")
+
+const {
+	setPasswordRestPin,
+	getPinByEmailPin,
+	deletePin,
+} = require("../model/restPin/RestPin.model");
+const { emailProcessor } = require("../helpers/email.helper");
+const {
+	resetPassReqValidation,
+	updatePassValidation,
+	newUserValidation,
+} = require("../middleware/formValidation.middleware");
 
 router.all("/", (req, res, next) => {
     //res.json({message:"user router is healthy"})
@@ -49,9 +65,12 @@ router.post("/", async (req, res) => {
         const result = await insertUser(newUser);
         console.log(result)     
 
-        /*
-         Email verification as extention of functionality when register
-        */ 
+		await emailProcessor({
+			email,
+			type: "new-user-confirmation-required",
+			verificationLink: verificationURL + result._id + "/" + email,
+		});
+
         res.json({ message: "New user created", result })
 
     } catch (error) {
@@ -152,6 +171,70 @@ router.delete("/logout", userAuthorization, async (req, res) => {
 	res.json({
 		status: "error",
 		message: "Unable to logg you out, plz try again later",
+	});
+});
+
+
+router.post("/reset-password", resetPassReqValidation, async (req, res) => {
+	const { email } = req.body;
+
+	const user = await getUserByEmail(email);
+
+	if (user && user._id) {
+		/// crate// 2. create unique 6 digit pin
+		const setPin = await setPasswordRestPin(email);
+		await emailProcessor({
+			email,
+			pin: setPin.pin,
+			type: "request-new-password",
+		});
+	}
+
+	res.json({
+		status: "success",
+		message:
+			"If the email is exist in our database, the password reset pin will be sent shortly.",
+	});
+});
+
+router.patch("/reset-password", updatePassValidation, async (req, res) => {
+	const { email, pin, newPassword } = req.body;
+
+	const getPin = await getPinByEmailPin(email, pin);
+	// 2. validate pin
+	if (getPin?._id) {
+		const dbDate = getPin.addedAt;
+		const expiresIn = 1;
+
+		let expDate = dbDate.setDate(dbDate.getDate() + expiresIn);
+
+		const today = new Date();
+
+		if (today > expDate) {
+			return res.json({ status: "error", message: "Invalid or expired pin." });
+		}
+
+		// encrypt new password
+		const hashedPass = await hashPassword(newPassword);
+
+		const user = await updatePassword(email, hashedPass);
+
+		if (user._id) {
+			// send email notification
+			await emailProcessor({ email, type: "update-password-success" });
+
+			////delete pin from db
+			deletePin(email, pin);
+
+			return res.json({
+				status: "success",
+				message: "Your password has been updated",
+			});
+		}
+	}
+	res.json({
+		status: "error",
+		message: "Unable to update your password. plz try again later",
 	});
 });
 
