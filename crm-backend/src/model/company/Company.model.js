@@ -5,7 +5,10 @@ const getCompanies = () => {
       try {
         CompanySchema.find()
           .then((data) => resolve(data))
-          .catch((error) => reject(error));
+          .catch((error) => {
+            console.log(error)
+          reject(error)
+        });
       } catch (error) {
         reject(error);
       }
@@ -32,7 +35,10 @@ const getCompanies = () => {
           .then((data) => {
             console.log(data)
             resolve(data)})
-          .catch((error) => reject(error));
+          .catch((error) => {
+            console.log(error)
+          reject(error)
+        });
       } catch (error) {
         reject(error);
       }

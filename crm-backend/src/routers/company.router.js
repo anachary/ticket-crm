@@ -7,7 +7,7 @@ const {
     updateCompany
   } = require("../model/company/Company.model");
 
-const { userAuthorization} = require("../middleware/authorization.middleware");3
+const { userAuthorization} = require("../middleware/authorization.middleware");
 const {createNewCompanyValidation } = require("../middleware/formValidation.middleware.js")
 
 router.all("/", (req,res,next) =>{
@@ -119,3 +119,5 @@ router.post("/update-company/:_id", userAuthorization, async (req, res) => {
         res.json({ status: "error", message: error.message });
       }
   });
+
+  module.exports = router 

@@ -51,7 +51,7 @@ const companyRouter = require("./src/routers/company.router");
 app.use('/v1/user', userRouter)
 app.use("/v1/ticket", ticketRouter)
 app.use("/v1/tokens", tokensRouter)
-app.use("/v1/tokens", companyRouter)
+app.use("/v1/company", companyRouter)
 
 
 const handleError = require("./src/utils/errorHandler")
