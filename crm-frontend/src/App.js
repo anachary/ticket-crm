@@ -13,8 +13,11 @@ import {
 import {PrivateRoute} from './components/private-router/PrivateRoute.comp.js'
 import { Dashboard } from './pages/DashboardPage/Dashboard.page.js';
 import { TicketLists } from './pages/ticket-list/TicketLists.page.js';
+import { CompanyLists } from './pages/company-list/CompanyLists.page.js';
 import { AddTicket } from './pages/new-ticket/AddTicket.page.js';
 import {Ticket} from './pages/ticket/Ticket.page.js'
+import {Company} from './pages/company/Company.page.js'
+import { AddCompany } from './pages/new-company/AddCompany.page.js';
 import { UserVerification } from "./pages/user-verification/UserVerification.page";
 import { PasswordOtpForm } from "./pages/password-reset/PasswordOtpForm.page";
 function App() {
@@ -39,8 +42,7 @@ function App() {
             <Route
               path="/company"
               element={
-                user.role ==="admin" &&
-                <PrivateRoute><div>Company Component will be Coming Soon </div></PrivateRoute>
+               <PrivateRoute><CompanyLists></CompanyLists></PrivateRoute>
                 } />  
             <Route
               path="/tickets"
@@ -59,7 +61,20 @@ function App() {
                 <PrivateRoute><Ticket></Ticket></PrivateRoute>
               } 
               ></Route>
-              
+               <Route
+              path="/company/:tId"
+              element={
+                user.role ==="admin" &&
+                <PrivateRoute><Company></Company></PrivateRoute>
+              } 
+              ></Route>
+              <Route
+              path="/add-company"
+              element={
+                user.role ==="admin" &&
+                <PrivateRoute ><AddCompany></AddCompany></PrivateRoute>
+              } 
+              ></Route>
         </Routes>
       </Router>
     </div>

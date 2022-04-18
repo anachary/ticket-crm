@@ -100,7 +100,7 @@ export const Login = ({history}) => {
           <Col>
           <div className="d-flex justify-content-between">
             <div>
-              <a href=''>Forgot Password?</a>
+            <a href="/password-reset">Forget Password?</a>
             </div>
             <div>
                 Don't have an account? <a href='/registration'>Sign Up</a>
