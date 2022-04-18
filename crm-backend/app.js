@@ -45,11 +45,14 @@ const port = process.env.PORT || 5000
 const userRouter = require("./src/routers/user.router")
 const ticketRouter = require("./src/routers/ticket.router")
 const tokensRouter = require("./src/routers/tokens.router");
+const companyRouter = require("./src/routers/company.router");
 
 //User Router
 app.use('/v1/user', userRouter)
 app.use("/v1/ticket", ticketRouter)
 app.use("/v1/tokens", tokensRouter)
+app.use("/v1/tokens", companyRouter)
+
 
 const handleError = require("./src/utils/errorHandler")
 const { application } = require('express')

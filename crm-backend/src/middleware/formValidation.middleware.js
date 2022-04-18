@@ -89,7 +89,24 @@ const newUserValidation = (req, res, next) => {
 	next();
 };
 
+const createNewCompanyValidation = (req, res, next) => {
+	const schema = Joi.object({
+		name: shortStr.required(),
+		status: shortStr.required()
+	});
+
+	console.log(req.body);
+	const value = schema.validate(req.body);
+
+	if (value.error) {
+		return res.json({ status: "error", message: value.error.message });
+	}
+
+	next();
+};
+
 module.exports = {
+	createNewCompanyValidation,
 	createNewTicketValidation,
 	replyTicketMessageValidation,
 	resetPassReqValidation,
