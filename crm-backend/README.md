@@ -1,7 +1,7 @@
 # CRM Backend APi
 This is  backned of ticket crm  system with MERN Stacke 
 
-# HOW TO RUN the node serve
+# HOW TO RUN the node server
 git clone
 cd crm-backend
 npm i (if depency are not install for first time)
