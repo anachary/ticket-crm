@@ -7,7 +7,7 @@ const CompanySchema = new Schema({
         maxlength: 50,
         required: true
     },
-    "Status": {
+    "status": {
         type: "String",
         maxlength: 50,
         required: true
