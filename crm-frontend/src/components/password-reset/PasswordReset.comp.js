@@ -34,7 +34,7 @@ export const ResetPassword = () => {
 		<Container>
 			<Row>
 				<Col>
-					<h1 className="text-info text-center">Reset Password</h1>
+					<h1 className='text-center tc-primary'>Reset Password</h1>
 					<hr />
 
 					{message && (
@@ -57,8 +57,8 @@ export const ResetPassword = () => {
 								required
 							/>
 						</Form.Group>
-
-						<Button type="submit" className="text-center mb-2 mt-2">Reset Password</Button>
+						<div className='mt-1 text-center'><Button type="submit" className="text-center mb-2 mt-2 w-100">Reset Password</Button></div>
+						
 					</Form>
 					<hr />
 				</Col>

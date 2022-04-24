@@ -55,7 +55,7 @@ export const Ticket = () => {
   const [ticketValid, setTicketValid] = useState(currentTicketValid);
   const [comment, setComment] = useState('')
   
-  const disabled = user.role === 'client' && ticket && ticket.status.toLowerCase() === 'resolved'
+  const disabled = user.role === 'client' && selectedTicket && selectedTicket.status.toLowerCase() === 'resolved'
 
   useEffect(() => {
     getSingleTicket(tId).then((result)=>{
@@ -134,7 +134,7 @@ export const Ticket = () => {
               size="sm"
             />
           </Col>
-          <Form.Label l column sm={2}>Status</Form.Label>
+          <Form.Label  column sm={2}>Status</Form.Label>
           <Col sm={4}>
             <Form.Control as="select" size="sm" name="status"
               value={ticket?ticket.status:'UnAssigned'}
@@ -163,7 +163,7 @@ export const Ticket = () => {
               required
             />
           </Col>
-          <Form.Label l column sm={2}>Priority</Form.Label>
+          <Form.Label  column sm={2}>Priority</Form.Label>
           <Col sm={4}>
             <Form.Control as="select" size="sm" name="priority"
               value={ticket?ticket.priority:''}

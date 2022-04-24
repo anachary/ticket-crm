@@ -12,7 +12,7 @@ const { createAccessJWT, createRefreshJWT } = require("../helpers/jwt.helper")
 const {userAuthorization} =require ("../middleware/authorization.middleware.js")
 
 const { getJWT, deleteJWT } = require("../helpers/redis.helper")
-
+const verificationURL = "http://localhost:3000/verification/";
 const {
 	setPasswordRestPin,
 	getPinByEmailPin,

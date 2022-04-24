@@ -19,7 +19,7 @@ router.all("/", (req,res,next) =>{
 // Get all companies for a specific user
 router.get("/", userAuthorization, async (req, res) => {
     try {
-      const userId = req.userId;
+     
       const result = await getCompanies();
   
       return res.json({
@@ -62,7 +62,7 @@ router.post(
           name,
           status,
           updatedBy:req.userId,
-          updatedDate: Date.now,
+          updatedDate: Date.now(),
         };
   
         const result = await insertCompany(companyObj);

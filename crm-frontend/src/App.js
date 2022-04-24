@@ -5,7 +5,7 @@ import { LandingPage } from './pages/LandingPage/LandingPage.page.js';
 import { Registration } from './pages/registration/Registration.page.js';
 import { createBrowserHistory } from 'history'
 import {
-  BrowserRouter as Router,
+  BrowserRouter,
   Routes,
   Route,
   Navigate
@@ -21,23 +21,21 @@ import { AddCompany } from './pages/new-company/AddCompany.page.js';
 import { UserVerification } from "./pages/user-verification/UserVerification.page";
 import { PasswordOtpForm } from "./pages/password-reset/PasswordOtpForm.page";
 function App() {
-	const  isAuth  = sessionStorage.getItem("accessJWT") &&  localStorage.getItem("crmSite");
+ 
   const {user} = useSelector(state => state.user)
-  const history = createBrowserHistory()
   return (
     <div className="App">
-      <Router history={history} >
+       <BrowserRouter forceRefresh>
         <Routes>
-          <Route exact path="/" element={!isAuth ?<LandingPage />:<Navigate to="/dashboard" />} />
+          <Route exact path="/" element={<LandingPage></LandingPage>} />
           <Route exact path ="/registration" element ={<Registration />} />
          
           <Route exact path="/password-reset" element={ <PasswordOtpForm />   }/>
 					<Route exact path="/verification/:_id/:email" element={	<UserVerification />} />
-           {/* PrivateRoutes */}
           <Route
             path="/dashboard"
             element={
-              <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
+                <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
               } />
             <Route
               path="/company"
@@ -62,10 +60,10 @@ function App() {
               } 
               ></Route>
                <Route
-              path="/company/:tId"
+              path="/company/:cId"
               element={
                 user.role ==="admin" &&
-                <PrivateRoute><Company></Company></PrivateRoute>
+                  <PrivateRoute><Company></Company></PrivateRoute>
               } 
               ></Route>
               <Route
@@ -76,7 +74,7 @@ function App() {
               } 
               ></Route>
         </Routes>
-      </Router>
+      </BrowserRouter>
     </div>
   );
 }

@@ -10,8 +10,8 @@ import { useNavigate } from 'react-router-dom';
 export const Login = ({history}) => {
   const dispatch = useDispatch() 
   const {isLoading,isAuth, error } = useSelector(state =>state.login)
-  const [email, setEmail] = useState('test2@test.com')
-  const [password,setPassword] = useState('secretPassword_1')
+  const [email, setEmail] = useState('akashnacharya@gmail.com')
+  const [password,setPassword] = useState('P@ssw0rd')
   const navigate = useNavigate()
 
   const handleOnChange = e =>{

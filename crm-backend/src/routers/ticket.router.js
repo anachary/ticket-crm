@@ -69,7 +69,7 @@ router.post(
           status,
           priority,
           assignedTo: assignedTo,
-          assignedDate,
+          assignedDate: assignedDate||Date.now(),
           updatedBy:sender,
           conversations: [],
         };
@@ -111,8 +111,8 @@ router.post("/update-ticket/:_id", userAuthorization, async (req, res) => {
           issueDate,
           status,
           priority,
-          assignedTo: assignedTo,
-          assignedDate,
+          assignedTo: assignedTo ||'',
+          assignedDate :assignedDate || Date.now(),
           updatedBy:sender,
           updateDate: Date.now(),
         };

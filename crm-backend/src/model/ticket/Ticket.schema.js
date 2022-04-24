@@ -40,13 +40,14 @@ const TicketSchema = new Schema({
   assignedTo: {
     type:String,
     maxlength: 30,
-    default:null
+    default:'',
+    required: false,
   },
 
   assignedDate: {
     type: Date,
-    required: true,
-    default: Date.now(),
+    required: false,
+    default: Date.now()
   },
 
   status: {

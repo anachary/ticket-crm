@@ -84,7 +84,7 @@ const UpdatePasswordForm = () => {
 		<Container>
 			<Row>
 				<Col>
-					<h1 className="text-info">Update Password</h1>
+					<h1 className='text-center tc-primary'>Update Password</h1>
 				</Col>
 			</Row>
 			<hr />
@@ -180,14 +180,15 @@ const UpdatePasswordForm = () => {
 								At least on of the special characters i.e @ # $ % &{" "}
 							</li>
 						</ul>
-
+						<div className='mt-1 text-center'>
 						<Button
-							variant="primary"
 							type="submit"
+						    className ="w-100"
 							disabled={Object.values(passwordError).includes(false)}
 						>
 							Submit
 						</Button>
+						</div>
 					</Form>
 				</Col>
 			</Row>

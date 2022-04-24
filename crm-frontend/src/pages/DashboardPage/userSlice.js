@@ -16,6 +16,7 @@ const userSlice = createSlice({
     getUserSuccess: (state, { payload }) => {
       state.isLoading = false;
       state.user = payload;
+      state.user.authenticated = sessionStorage.getItem("accessJWT") !== null &&  localStorage.getItem("crmSite") !== null;
       state.error = "";
     },
     getUserFail: (state, { payload }) => {

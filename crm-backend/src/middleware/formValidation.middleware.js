@@ -1,3 +1,4 @@
+const { string } = require("joi");
 const Joi = require("joi");
 const shortStr = Joi.string().min(2).max(50);
 const longStr = Joi.string().min(2).max(1000);
@@ -19,8 +20,8 @@ const createNewTicketValidation = (req, res, next) => {
         description: longStr.required(),
         status: shortStr.required(),
         priority: shortStr.required(),
-        assignedTo:shortStr.required(),
-		assignedDate: dt.required(),
+        assignedTo: Joi.optional(),
+		assignedDate: Joi.optional(),
 		sender: shortStr.required()
 	});
 

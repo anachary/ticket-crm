@@ -22,7 +22,8 @@ export const Header = () => {
    
     localStorage.removeItem("crmSite");
     sessionStorage.removeItem("accessJWT");
-    navigate("/");
+    navigate("/")
+    
   };
 
   return (

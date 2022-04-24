@@ -16,12 +16,10 @@ import {
 } from "../../api/companyApi"
 const initialCompanyValid = {
   name: false,
-  status: false,
 };
 const validateCompany = (newFrmDtValid, newCompany) => {
   if(newCompany){
-  newFrmDtValid.name = shortText(newTicket.name)
-  newFrmDtValid.status = newTicket.status.length > 0
+  newFrmDtValid.name = shortText(newCompany.name)
   }
   return newFrmDtValid
 }
@@ -44,22 +42,22 @@ export const Company = () => {
    currentCompanyValid = validateCompany(initialCompanyValid, company)
   }
   
-  const [companyValid, setCompanyValid] = useState(currentTicketValid);
+  const [companyValid, setCompanyValid] = useState(currentCompanyValid);
   
   useEffect(() => {
     getSingleCompany(cId).then((result)=>{
       if( result.data.result.length && result.data.result[0]){
       let sCompany = result.data.result[0]
-      sCompany.updatedDate = new Date(sticket.updatedDate).toISOString().slice(0,10)
+      sCompany.updatedDate = new Date(newCompany.updatedDate).toISOString().slice(0,10)
       setCompany(sCompany)
       }
     })
-    dispatch(fetchSingleCompany(tId))
+    dispatch(fetchSingleCompany(cId))
     return () => {
 			(replyMsg || replyCompanyError) && dispatch(resetResponseMsg());
 		};
    
-  },[tId, dispatch, replyMsg, replyCompanyError]);
+  },[cId, dispatch, replyMsg, replyCompanyError]);
   const handleOnChange = (e) => {
     const { name, value } = e.target;
 
@@ -95,8 +93,8 @@ export const Company = () => {
 				<Col>
 					{isLoading && <Spinner variant="primary" animation="border" />}
 					{error && <Alert variant="danger">{error}</Alert>}
-					{replyTicketError && (
-						<Alert variant="danger">{replyTicketError}</Alert>
+					{replyCompanyError && (
+						<Alert variant="danger">{replyCompanyError}</Alert>
 					)}
 					{replyMsg && <Alert variant="success">{replyMsg}</Alert>}
 				</Col>
@@ -108,11 +106,10 @@ export const Company = () => {
           <Col sm={4}>
             <Form.Control
               name="name"
-              disabled ={disabled}
               value={company?company.name:''}
               isInvalid={!companyValid.name}
               onChange={handleOnChange}
-              placeholder="Copany Name"
+              placeholder="Company Name"
               size="sm"
             />
           </Col>
@@ -121,48 +118,17 @@ export const Company = () => {
           <Form.Label l column sm={2}>Status</Form.Label>
           <Col sm={4}>
             <Form.Control as="select" size="sm" name="status"
-              value={ticket?ticket.status:'UnAssigned'}
-              disabled ={disabled}
+              value={company?company.status:'InActive'}
               onChange={handleOnChange} required >
               <option value="Active">Active</option>
               <option value="InActive">InActive</option>
             </Form.Control>
           </Col>
         </Form.Group>
-        <Form.Group as={Row} className='mb-2'>
-          <Form.Label column sm={2}>
-            Updated By
-          </Form.Label>
-          <Col sm={4}>
-            <Form.Control
-              name="assignedTo"
-              disabled ={disabled}
-              value={ticket?ticket.updatedBy:''}
-              placeholder="Updated By"
-              size="sm"
-              disabled
-            />
-          </Col>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label column sm={2}>
-            Updated Date
-          </Form.Label>
-          <Col sm={4}>
-            <Form.Control
-              name="assignedDate"
-              type="date"
-              value={ticket?ticket.updatedDate:''}
-              size="sm"
-              disabled
-            />
-          </Col>
-        </Form.Group>
         <Form.Group>
           <Row>
             <Col>
-              <div className='font-weight-bold lg underline'>Conversation History</div>
-              <UpdateCompany buttonDisabled={(!disabled && Object.values(companyValid).includes(false))|| disabled } disabled={disabled}   handleOnChange ={handleOnChangeComment} handleOnSubmit={handleOnSubmit}/>
+              <UpdateCompany buttonDisabled={(Object.values(companyValid).includes(false)) } handleOnSubmit={handleOnSubmit}/>
             </Col>
           </Row>
         </Form.Group>

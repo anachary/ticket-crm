@@ -13,6 +13,7 @@ import {
 } from "react-bootstrap";
 import { openNewTicket } from "./addTicketAction";
 import { restSuccessMSg } from "./addTicketSlicer";
+import { useNavigate } from 'react-router-dom';
 
 
 const initialFrmDt = {
@@ -34,7 +35,7 @@ const initialFrmDtValid = {
 
 export const AddTicketForm = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const {
     user: { name },
   } = useSelector((state) => state.user);
@@ -67,6 +68,7 @@ export const AddTicketForm = () => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
      dispatch(openNewTicket({ ...frmData, sender: name }));
+     navigate("/dashboard")
   };
 
   return (
@@ -106,7 +108,7 @@ export const AddTicketForm = () => {
           </Col>
         </Form.Group>
         <Form.Group as={Row} className='mb-2'>
-            <Form.Label l column sm={3}>Priority</Form.Label>
+            <Form.Label column sm={3}>Priority</Form.Label>
             <Col sm={5}>
             <Form.Control as="select" size="sm" name="priority"  
                 value={frmData.priority}
@@ -118,7 +120,7 @@ export const AddTicketForm = () => {
             </Col>
         </Form.Group>
         <Form.Group as={Row} className='mb-2'>
-            <Form.Label l column sm={3}>Status</Form.Label>
+            <Form.Label  column sm={3}>Status</Form.Label>
             <Col sm={5}>
             <Form.Control as="select" size="sm" name="status"  
                 value={frmData.status}
@@ -174,7 +176,7 @@ export const AddTicketForm = () => {
           />
         </Form.Group>
         <div className='mt-2 text-center'>
-        <Button type="submit"  block size="sm" disabled={Object.values(frmDtValid).includes(false) }>
+        <Button type="submit" block="true" size="sm" disabled={Object.values(frmDtValid).includes(false) }>
           Open Ticket
         </Button>
         </div>
