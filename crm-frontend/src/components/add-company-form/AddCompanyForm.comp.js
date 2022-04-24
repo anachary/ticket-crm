@@ -34,6 +34,7 @@ export const AddCompanyForm = () => {
 
   const [frmData, setFrmData] = useState(initialFrmDt);
   const [frmDtValid, setFrmDtValid] = useState(initialFrmDtValid);
+  const [companySuccess,setCompanySuccess] = useState('')
   useEffect(() => {
   }, [dispatch, frmData, frmDtValid]);
 
@@ -57,12 +58,14 @@ export const AddCompanyForm = () => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
      dispatch(openNewCompany({ ...frmData }));
+     setCompanySuccess('New Company is cretated.')
   };
 
   return (
      <div>
         <h1 className="text-center" style={{"color": "#005073"}}>Add New Company</h1>
       <hr />
+      {companySuccess && <Alert>{companySuccess}</Alert>}
       <Form autoComplete="off" onSubmit={handleOnSubmit}>
         <Form.Group as={Row} className='mb-2'>
           <Form.Label column sm={3}>

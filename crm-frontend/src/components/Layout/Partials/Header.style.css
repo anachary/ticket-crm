@@ -18,7 +18,8 @@
     stroke: #cccccc;
     display: flex;
     font-family: sans-serif;
-    margin-left:auto
+    margin-left:auto;
+    flex-direction:end;
 }
 
 .dashboard-content-link{

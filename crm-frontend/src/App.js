@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import './App.css';
 import { LandingPage } from './pages/LandingPage/LandingPage.page.js';
@@ -21,15 +21,13 @@ import { AddCompany } from './pages/new-company/AddCompany.page.js';
 import { UserVerification } from "./pages/user-verification/UserVerification.page";
 import { PasswordOtpForm } from "./pages/password-reset/PasswordOtpForm.page";
 function App() {
- 
   const {user} = useSelector(state => state.user)
   return (
     <div className="App">
        <BrowserRouter forceRefresh>
         <Routes>
-          <Route exact path="/" element={<LandingPage></LandingPage>} />
+          <Route exact path="/" element={ user && user.authenticated ? <Dashboard/>:<LandingPage/>} />
           <Route exact path ="/registration" element ={<Registration />} />
-         
           <Route exact path="/password-reset" element={ <PasswordOtpForm />   }/>
 					<Route exact path="/verification/:_id/:email" element={	<UserVerification />} />
           <Route
@@ -62,15 +60,13 @@ function App() {
                <Route
               path="/company/:cId"
               element={
-                user.role ==="admin" &&
-                  <PrivateRoute><Company></Company></PrivateRoute>
+                  <PrivateRoute> {user.role ==="admin" ?<Company></Company>:<Navigate to='/' />}</PrivateRoute>
               } 
               ></Route>
               <Route
               path="/add-company"
               element={
-                user.role ==="admin" &&
-                <PrivateRoute ><AddCompany></AddCompany></PrivateRoute>
+                <PrivateRoute >{ user.role ==="admin" ? <AddCompany></AddCompany>:<Navigate to='/' />}</PrivateRoute>
               } 
               ></Route>
         </Routes>

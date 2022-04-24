@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Row, Col, Form, Spinner, Alert } from "react-bootstrap";
+import { Container, Row, Col, Form, Spinner, Alert,  Button } from "react-bootstrap";
 import { PageBreadcrumb } from '../../components/breadcrumb/Breadcrumb.comp'
 import { shortText } from '../../util/validation';
 
-import { UpdateCompany } from '../update-company/UpdateCompany.page.js';
-
 import { useParams } from 'react-router-dom';
 
-import { fetchSingleCompany} from "../company-list/companiesAction";
-import { resetResponseMsg, fetchCompanySuccess } from "../company-list/companiesSlice";
+import { fetchSingleCompany } from "../company-list/companiesAction";
+import { resetResponseMsg, fetchSingleCompanySuccess, fetchSingleCompanyFail } from "../company-list/companiesSlice";
 
 import {
   getSingleCompany, updateCompany
@@ -18,46 +16,44 @@ const initialCompanyValid = {
   name: false,
 };
 const validateCompany = (newFrmDtValid, newCompany) => {
-  if(newCompany){
-  newFrmDtValid.name = shortText(newCompany.name)
+  if (newCompany) {
+    newFrmDtValid.name = shortText(newCompany.name)
   }
   return newFrmDtValid
 }
 
 export const Company = () => {
-  const {cId} = useParams()
+  const { cId } = useParams()
   const dispatch = useDispatch();
-	const {
-		isLoading,
-		error,
-		selectedCompany,
-    replyMsg,
-		replyCompanyError,
-	} = useSelector(state => state.companies);
 
-   
-   const [company, setCompany] = useState(selectedCompany)
-   let currentCompanyValid=initialCompanyValid 
-   if(company){
-   currentCompanyValid = validateCompany(initialCompanyValid, company)
+  const {
+    isLoading,
+    error,
+    selectedCompany,
+  
+  } = useSelector(state => state.companies);
+
+
+  const [company, setCompany] = useState(selectedCompany)
+  const [replyCompanyError,setReplyCompanyError] = useState('')
+  const [replyMsg, setReplyMsg] = useState('')
+  
+  let currentCompanyValid = initialCompanyValid
+  if (company) {
+    currentCompanyValid = validateCompany(initialCompanyValid, company)
   }
-  
+
   const [companyValid, setCompanyValid] = useState(currentCompanyValid);
-  
+
   useEffect(() => {
     getSingleCompany(cId).then((result)=>{
-      if( result.data.result.length && result.data.result[0]){
-      let sCompany = result.data.result[0]
-      sCompany.updatedDate = new Date(newCompany.updatedDate).toISOString().slice(0,10)
-      setCompany(sCompany)
+      if (result.data.result.length && result.data.result[0]) {
+        let sCompany = result.data.result[0]
+        sCompany.updatedDate = new Date(sCompany.updatedDate).toISOString().slice(0, 10)
+        setCompany(sCompany)
       }
     })
-    dispatch(fetchSingleCompany(cId))
-    return () => {
-			(replyMsg || replyCompanyError) && dispatch(resetResponseMsg());
-		};
-   
-  },[cId, dispatch, replyMsg, replyCompanyError]);
+  }, [cId]);
   const handleOnChange = (e) => {
     const { name, value } = e.target;
 
@@ -71,17 +67,19 @@ export const Company = () => {
 
   };
 
-  const handleOnSubmit = async(e) => {
-    try{
-    console.log("form data:", selectedCompany)
-    await updateCompany(selectedCompany._id, company)
-    console.log('Company saved submitted')
+  const handleOnSubmit = async (e) => {
+    try {
+      e.preventDefault()
+      console.log("form data:", selectedCompany)
+      await updateCompany(company._id, company)
+      setReplyMsg('Company has been updated')
     }
-    catch(error){
+    catch (error) {
       console.log(error.message)
+      setReplyCompanyError(error.message)
+      }
     }
-  }
- 
+
   return (
     <Container>
       <Row>
@@ -90,15 +88,15 @@ export const Company = () => {
         </Col>
       </Row>
       <Row>
-				<Col>
-					{isLoading && <Spinner variant="primary" animation="border" />}
-					{error && <Alert variant="danger">{error}</Alert>}
-					{replyCompanyError && (
-						<Alert variant="danger">{replyCompanyError}</Alert>
-					)}
-					{replyMsg && <Alert variant="success">{replyMsg}</Alert>}
-				</Col>
-        </Row>
+        <Col>
+          {isLoading && <Spinner variant="primary" animation="border" />}
+          {replyCompanyError && (
+            <Alert variant="danger">{replyCompanyError}</Alert>
+          )}
+          {replyMsg && <Alert variant="success">{replyMsg}</Alert>}
+        </Col>
+      </Row>
+      <Form  autoComplete="off"  onSubmit={handleOnSubmit} >
         <Form.Group as={Row} className='mb-2'>
           <Form.Label column sm={2}>
             Company Name:
@@ -106,19 +104,19 @@ export const Company = () => {
           <Col sm={4}>
             <Form.Control
               name="name"
-              value={company?company.name:''}
+              value={company ? company.name : ''}
               isInvalid={!companyValid.name}
               onChange={handleOnChange}
               placeholder="Company Name"
               size="sm"
             />
           </Col>
-          </Form.Group>
-          <Form.Group>
-          <Form.Label l column sm={2}>Status</Form.Label>
+        </Form.Group>
+        <Form.Group as={Row} className='mb-2'>
+          <Form.Label column sm={2}>Status</Form.Label>
           <Col sm={4}>
             <Form.Control as="select" size="sm" name="status"
-              value={company?company.status:'InActive'}
+              value={company ? company.status : 'InActive'}
               onChange={handleOnChange} required >
               <option value="Active">Active</option>
               <option value="InActive">InActive</option>
@@ -128,10 +126,13 @@ export const Company = () => {
         <Form.Group>
           <Row>
             <Col>
-              <UpdateCompany buttonDisabled={(Object.values(companyValid).includes(false)) } handleOnSubmit={handleOnSubmit}/>
+              <div className='text-center width=100% mt-4'>
+                <Button type="submit" disabled={(Object.values(companyValid).includes(false))}>Save Company</Button>
+              </div>
             </Col>
           </Row>
         </Form.Group>
+      </Form>
     </Container>
   )
 }

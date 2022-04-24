@@ -33,11 +33,14 @@ import {
     dispatch(fetchSingleCompanyLoading());
     try {
       const result = await getSingleCompany(_id);
-      dispatch(
-        fetchSingleCompanySuccess(
-          result.data.result.length && result.data.result[0]
-        )
-      );
+      if (result.data.result.length && result.data.result[0]) {
+        let sCompany = result.data.result[0]
+        sCompany.updatedDate = new Date(sCompany.updatedDate).toISOString().slice(0, 10)
+        dispatch( fetchSingleCompanySuccess(sCompany))
+      }
+      else {
+      dispatch(fetchSingleCompanyFail('No Company Exists'));
+     }
     } catch (error) {
       dispatch(fetchSingleCompanyFail(error.message));
     }

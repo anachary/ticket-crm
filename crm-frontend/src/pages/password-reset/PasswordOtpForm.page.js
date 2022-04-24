@@ -12,7 +12,7 @@ export const PasswordOtpForm = () => {
 	const { showUpdatePassForm } = useSelector(state => state.password);
 	return ( <div className='root'>
     <div className='dashboard-header'>
-      <div className='dashboard-content'>
+      <div className='dashboard-content-1'>
        <div><FontAwesomeIcon icon={faStar}/></div>
         <div>Ticket CRM SYSTEM</div> 
       </div>
