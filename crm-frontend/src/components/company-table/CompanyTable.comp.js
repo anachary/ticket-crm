@@ -1,5 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash} from '@fortawesome/free-solid-svg-icons'
 
 import { Table } from "react-bootstrap";
 
@@ -19,6 +21,7 @@ export const CompanyTable = ({companyNameSearch}) => {
                 <th>Status</th>
                 <th>Updated Date</th>
                 <th>Updated By</th> 
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -29,8 +32,9 @@ export const CompanyTable = ({companyNameSearch}) => {
                 </td>
                 <td>{row.name}</td>
                 <td>{row.status}</td>
-                <td>{row.updatedDate}</td>
-                <td>{row.udatedBy}</td>
+                <td>{(new Date(row.updatedDate)).toLocaleDateString()+ " " + (new Date(row.updatedDate)).toLocaleTimeString()}</td>
+                <td>{row.updatedBy}</td>
+                <td><div className='text-center'><FontAwesomeIcon icon={faTrash} /></div></td>
             </tr>
             ))) :
                 (<tr><td colSpan="8"  className="text-center">No Rows to display</td></tr>)}

@@ -26,5 +26,5 @@ export const PrivateRoute = ({children, ...rest}) => {
 		!isAuth && sessionStorage.getItem("accessJWT") && dispatch(loginSuccess());
 	}, [dispatch, isAuth, user._id]);
 
-  return (isAuth ? <DefaultLayout>{children}</DefaultLayout>:<LandingPage/>)
+  return (isAuth && user && user.authenticated  ? <DefaultLayout>{children}</DefaultLayout>:<LandingPage/>)
 }

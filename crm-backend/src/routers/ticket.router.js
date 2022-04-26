@@ -8,7 +8,7 @@ const {
     updateClientReply
   } = require("../model/ticket/Ticket.model");
 
-const { userAuthorization} = require("../middleware/authorization.middleware");3
+const { userAuthorization} = require("../middleware/authorization.middleware");
 const {createNewTicketValidation, replyTicketMessageValidation} = require("../middleware/formValidation.middleware.js")
 
 router.all("/", (req,res,next) =>{
