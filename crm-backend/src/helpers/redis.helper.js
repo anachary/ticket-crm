@@ -1,5 +1,21 @@
 const redis = require("redis")
-const client = redis.createClient()
+
+const REDIS_HOST = process.env.REDIS_HOST || 'localhost'
+
+const REDIS_PORT = process.env.REDIS_PORT || 6379
+const client = redis.createClient({
+    port : REDIS_PORT,
+    host : REDIS_HOST
+});
+
+client.on('connect', function () {
+    console.log("Redis Connected")
+});
+
+client.on('error', function (err) {
+    console.log(err)
+});
+
 //redis://localhost:6397
 const setJWT = async (key,value) =>{
     try {

@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 services:
 
   client:
@@ -18,15 +18,23 @@ services:
       - REACT_APP_SERVER=http://localhost:5000
       - CHOKIDAR_USEPOLLING=true
     command: npm start
-   
-      
+
+  db:
+      image: mongo:latest
+      ports:
+        - 27017:27017
+      networks:
+        - mern-network
+      volumes:
+        - mongo-data:/data/db
+    
   server:
     build:
       context: ./crm-backend
       dockerfile: Dockerfile
     ports:
       - 5000:5000
-    networks:
+    networks:e
       - mern-network
     volumes:
       - ./crm-backend/src:/usr/app/src
@@ -34,29 +42,26 @@ services:
       - db
       - cache
     environment:
-      - MONGO_URL=mongodb://db:27017
-      - CLIENT=http://localhost:3000
-    command: /usr/app/node_modules/.bin/nodemon -L src/app.js
-   
-
-  db:
-    image: mongo:3.6.19-xenial
-    ports:
-      - 27017:27017
-    networks:
-      - mern-network
-    volumes:
-      - mongo-data:/data/db
+      - NODE_ENV=production 
+      - MONGO_URI=mongodb+srv://capstone:Y0uD3pl0y@cluster0.zncig.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+      - CLIENT= http://localhost:3000
+      - REDIS_URL= redis://redis-cache:6379
+      - JWT_ACCESS_SECRET=lwsjerjkjkhashfkjasdfajksh
+      - JWT_REFRESH_SECRET=dlsgjkldhsgkjhskghkadshgkjhdkghjsdhg
+      - REDIS_HOST='redis-cache' 
+      - REDIS_PORT=6379
   
   cache:
-    image: redis:6.2-alpine
-    restart: always
+    image: redis
+    container_name: redis-cache
     ports:
       - '6379:6379'
-    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+    #command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
     volumes: 
       - cache:/data
-   
+    networks:
+        - mern-network  
+
 networks:
   mern-network:
     driver: bridge

@@ -6,11 +6,11 @@ const getTransporter = async ()=>{
   //const testAccount = await nodemailer.createTestAccount();
   //console.log(testAccount)
   return  transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
+    host: "smtp-relay.sendinblue.com",
     port: 587,
     auth: {
-      user: 'em66yqt6mcytryoy@ethereal.email',
-      pass: 'WB9jy9RhJK29wFzAkf',
+      user: 'akashnacharya@gmail.com',
+      pass: 'jdwfq7r4HV6gsF9C',
     },
   });
   
