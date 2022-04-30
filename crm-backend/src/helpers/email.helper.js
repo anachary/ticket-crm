@@ -42,7 +42,7 @@ const emailProcessor = ({ email, pin, type, verificationLink = "" }) => {
   switch (type) {
     case "request-new-password":
       info = {
-        from: '"CMR Company" <abe.kohler59@ethereal.email>', // sender address
+        from: '"TICKET CRM CAPSTONE" <abe.kohler59@ethereal.email>', // sender address
         to: email, // list of receivers
         subject: "Password rest Pin", // Subject line
         text:
@@ -61,7 +61,7 @@ const emailProcessor = ({ email, pin, type, verificationLink = "" }) => {
 
     case "update-password-success":
       info = {
-        from: '"CMR Company" <abe.kohler59@ethereal.email>', // sender address
+        from: '"TICKET CRM CAPSTONE" <abe.kohler59@ethereal.email>', // sender address
         to: email, // list of receivers
         subject: "Password updated", // Subject line
         text: "Your new password has been update", // plain text body
