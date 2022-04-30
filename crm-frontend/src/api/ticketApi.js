@@ -1,13 +1,13 @@
 import axios from "axios";
 
-const rootUrl = "http://localhost:5000/v1/";
+const rootUrl = "http://107.23.73.19:5000/v1/";
 const ticketUlr = rootUrl + "ticket/";
 const updateTicketUrl = rootUrl + "ticket/update-ticket/";
 
 export const getAllTickets = () => {
   return new Promise(async (resolve, reject) => {
     try {
-      const result = await axios.get("http://localhost:5000/v1/ticket", {
+      const result = await axios.get("http://107.23.73.19:5000/v1/ticket", {
         headers: {
           Authorization: sessionStorage.getItem("accessJWT"),
         },
