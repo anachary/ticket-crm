@@ -43,26 +43,13 @@ services:
     environment:
       - NODE_ENV=production 
       - MONGO_URI=mongodb+srv://capstone:Y0uD3pl0y@cluster0.zncig.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
-      - CLIENT= http://localhost:3000
-      - REDIS_URL= redis://localhost:6379
+      - CLIENT= http://107.23.73.19:3000
+      - REDIS_URL= redis://107.23.73.19:6379
       - JWT_ACCESS_SECRET=lwsjerjkjkhashfkjasdfajksh
       - JWT_REFRESH_SECRET=dlsgjkldhsgkjhskghkadshgkjhdkghjsdhg
       - REDIS_HOST=' redis-cache' 
       - REDIS_PORT=6379
   
-  cache:
-    image: "redis:alpine"
-    container_name: redis-cache
-    restart: always
-    ports:
-      - '6379:6379'
-    expose:
-      - 6379
-    #command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
-    volumes: 
-      - cache:/data
-    networks:
-        - mern-network  
 
 networks:
   mern-network:
