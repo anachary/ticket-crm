@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {DefaultLayout} from '../Layout/DefaultLayout.comp'
+import {DefaultLayout} from '../layout/DefaultLayout.comp'
 import { LandingPage } from '../../pages/LandingPage/LandingPage.page';
 import { getUserProfile } from "../../pages/DashboardPage/userAction.js";
 import { fetchNewAccessJWT } from "../../api/userApi.js";
