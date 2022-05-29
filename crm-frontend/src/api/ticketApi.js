@@ -1,13 +1,13 @@
 import axios from "axios";
 
-const rootUrl = "http://107.23.73.19:5000/v1/";
-const ticketUlr = rootUrl + "ticket/";
+const rootUrl = `http://${process.env.REACT_APP_BACKEND_SERVER_IP}:${process.env.REACT_APP_PORT}/v1/`;
+const ticketUrl = rootUrl + "ticket/";
 const updateTicketUrl = rootUrl + "ticket/update-ticket/";
 
 export const getAllTickets = () => {
   return new Promise(async (resolve, reject) => {
     try {
-      const result = await axios.get("http://107.23.73.19:5000/v1/ticket", {
+      const result = await axios.get(ticketUrl, {
         headers: {
           Authorization: sessionStorage.getItem("accessJWT"),
         },
@@ -23,7 +23,7 @@ export const getAllTickets = () => {
 export const getSingleTicket = (_id) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const result = await axios.get(ticketUlr + _id, {
+      const result = await axios.get(ticketUrl + _id, {
         headers: {
           Authorization: sessionStorage.getItem("accessJWT"),
         },
@@ -41,7 +41,7 @@ export const getSingleTicket = (_id) => {
 export const updateReplyTicket = (_id, msgObj) => {
     return axios({
       method: 'post',
-      url: ticketUlr+"/reply/"+_id,
+      url: ticketUrl+"/reply/"+_id,
       headers: {
         'Content-Type': ' application/json',
         'Authorization': sessionStorage.getItem("accessJWT")
@@ -76,7 +76,7 @@ export const createNewTicket = (frmData) => {
   console.log("from api", frmData);
   return new Promise(async (resolve, reject) => {
     try {
-      const result = await axios.post(ticketUlr, frmData, {
+      const result = await axios.post(ticketUrl, frmData, {
         headers: {
           Authorization: sessionStorage.getItem("accessJWT"),
         },

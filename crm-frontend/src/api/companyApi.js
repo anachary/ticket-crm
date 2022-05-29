@@ -1,13 +1,13 @@
 import axios from "axios";
 
-const rootUrl = "http://107.23.73.19:5000/v1/";
-const companyUlr = rootUrl + "company/";
+const rootUrl = `http://${process.env.REACT_APP_BACKEND_SERVER_IP}:${process.env.REACT_APP_PORT}/v1/`;
+const companyUrl = rootUrl + "company/";
 const updateCompanyUrl = rootUrl + "company/update-company/";
 
 export const getAllCompanies = () => {
   return new Promise(async (resolve, reject) => {
     try {
-      const result = await axios.get("http://107.23.73.19:5000/v1/company", {
+      const result = await axios.get(companyUrl, {
         headers: {
           Authorization: sessionStorage.getItem("accessJWT"),
         },
@@ -23,7 +23,7 @@ export const getAllCompanies = () => {
 export const getSingleCompany = (_id) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const result = await axios.get(companyUlr + _id, {
+      const result = await axios.get(companyUrl + _id, {
         headers: {
           Authorization: sessionStorage.getItem("accessJWT"),
         },
@@ -59,7 +59,7 @@ export const createNewCompany = (frmData) => {
   console.log("from api", frmData);
   return new Promise(async (resolve, reject) => {
     try {
-      const result = await axios.post(companyUlr, frmData, {
+      const result = await axios.post(companyUrl, frmData, {
         headers: {
           Authorization: sessionStorage.getItem("accessJWT"),
         },
