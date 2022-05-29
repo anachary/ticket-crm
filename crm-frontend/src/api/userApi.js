@@ -7,7 +7,7 @@ const logoutUrl = rootUrl + "user/logout";
 const newAccessJWT = rootUrl + "tokens";
 const userVerificationUrl = userProfileUrl + "/verify";
 
-export const userLogin= async (data) => {
+export async function userLogin(data) {
     try{
      let res = await axios.post(loginUrl,data)
      if (res.data.status === "success") {
@@ -25,13 +25,12 @@ export const userLogin= async (data) => {
     return
 }
 
-export const fetchUser = () => {
-    return new Promise(async (resolve, reject) => {
+export async function fetchUser(){
       try {
         const accessJWT = sessionStorage.getItem("accessJWT");
   
         if (!accessJWT) {
-          reject("Token not found!");
+          return "Token not found!";
         }
   
         const res = await axios.get(userProfileUrl, {
@@ -40,21 +39,20 @@ export const fetchUser = () => {
           },
         });
   
-        resolve(res.data);
+        return res.data;
       } catch (error) {
         console.log(error);
-        reject(error.message);
+        throw error
       }
-    });
   };
   
-  export const fetchNewAccessJWT = () => {
+  export async function fetchNewAccessJWT() {
     return new Promise(async (resolve, reject) => {
       try {
         const { refreshJWT } = JSON.parse(localStorage.getItem("crmSite"));
   
         if (!refreshJWT) {
-          reject("Token not found!");
+          return "Token not found!";
         }
   
         const res = await axios.get(newAccessJWT, {
@@ -67,18 +65,18 @@ export const fetchUser = () => {
           sessionStorage.setItem("accessJWT", res.data.accessJWT);
         }
   
-        resolve(true);
+       return true;
       } catch (error) {
         if (error.message === "Request failed with status code 403") {
           localStorage.removeItem("crmSite");
         }
   
-        reject(false);
+        return false;
       }
     });
   };
   
-  export const userLogout = async () => {
+  export async function userLogout(){
     try {
       await axios.delete(logoutUrl, {
         headers: {
@@ -87,11 +85,12 @@ export const fetchUser = () => {
       });
     } catch (error) {
       console.log(error);
+      throw error
     }
   };
   
 
-export const userRegistration = async (frmData) => {
+export async function userRegistration(frmData){
       try {
 
         const res = await axios.post(userProfileUrl, frmData);
@@ -104,19 +103,17 @@ export const userRegistration = async (frmData) => {
     return
 }
 
-export const userRegistrationVerification = (frmData) => {
-  return new Promise(async (resolve, reject) => {
+export async function userRegistrationVerification(frmData) {
     try {
       const res = await axios.patch(userVerificationUrl, frmData);
-
-      resolve(res.data);
+      
       if (res.data.status === "success") {
-        resolve(res.data);
+       return res.data;
       }
+      return({ status: "result.data.status", message:""})
     } catch (error) {
-      reject({ status: "error", message: error.error });
+      return({ status: "error", message: error.error });
     }
-  });
 };
 
 

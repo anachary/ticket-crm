@@ -4,88 +4,83 @@ const rootUrl = `http://${process.env.REACT_APP_BACKEND_SERVER_IP}:${process.env
 const ticketUrl = rootUrl + "ticket/";
 const updateTicketUrl = rootUrl + "ticket/update-ticket/";
 
-export const getAllTickets = () => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const result = await axios.get(ticketUrl, {
-        headers: {
-          Authorization: sessionStorage.getItem("accessJWT"),
-        },
-      });
-
-      resolve(result);
-    } catch (error) {
-      reject(error);
-    }
-  });
+export async function getAllTickets() {
+  try {
+    const result = await axios.get(ticketUrl, {
+      headers: {
+        Authorization: sessionStorage.getItem("accessJWT"),
+      },
+    });
+    return result;
+  } catch (error) {
+    throw error
+  }
 };
 
-export const getSingleTicket = (_id) => {
-  return new Promise(async (resolve, reject) => {
+export async function getSingleTicket(_id) {
     try {
       const result = await axios.get(ticketUrl + _id, {
         headers: {
           Authorization: sessionStorage.getItem("accessJWT"),
         },
       });
-
-      resolve(result);
+      return result;
     } catch (error) {
       console.log(error.message);
-      reject(error);
+      throw error
     }
-  });
 };
 
 
-export const updateReplyTicket = (_id, msgObj) => {
-    return axios({
+export async function updateReplyTicket(_id, msgObj) {
+  try {
+    const response = await axios({
       method: 'post',
-      url: ticketUrl+"/reply/"+_id,
+      url: ticketUrl + "/reply/" + _id,
       headers: {
         'Content-Type': ' application/json',
         'Authorization': sessionStorage.getItem("accessJWT")
       },
-      data:{...msgObj}
-    }).then((response) => {
-      console.log(response)
-    }).catch(error => {
-      console.log(error)
+      data: { ...msgObj }
     })
-  };
-
-
-export const updateTicket = (_id, ticketObj) => {
-  return axios({
-    method: 'post',
-    url: updateTicketUrl+_id,
-    headers: {
-      'Content-Type': ' application/json',
-      'Authorization': sessionStorage.getItem("accessJWT")
-    },
-    data:{...ticketObj}
-  }).then((response) => {
-    console.log(response)
-  }).catch(error =>
-    { 
-      console.log(error)
-    })
+    return response
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
 };
 
-export const createNewTicket = (frmData) => {
-  console.log("from api", frmData);
-  return new Promise(async (resolve, reject) => {
-    try {
-      const result = await axios.post(ticketUrl, frmData, {
-        headers: {
-          Authorization: sessionStorage.getItem("accessJWT"),
-        },
-      });
 
-      resolve(result.data);
-    } catch (error) {
-      console.log(error.message);
-      reject(error);
-    }
-  });
+export async function updateTicket(_id, ticketObj) {
+  try {
+    const response = await axios({
+      method: 'post',
+      url: updateTicketUrl + _id,
+      headers: {
+        'Content-Type': ' application/json',
+        'Authorization': sessionStorage.getItem("accessJWT")
+      },
+      data: { ...ticketObj }
+    })
+    console.log(response)
+    return response
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
+};
+
+export async function createNewTicket(frmData) {
+  console.log("from api", frmData);
+  try {
+    const result = await axios.post(ticketUrl, frmData, {
+      headers: {
+        Authorization: sessionStorage.getItem("accessJWT"),
+      },
+    });
+    return result.data
+  } catch (error) {
+    console.log(error.message);
+    throw error
+  }
 };
