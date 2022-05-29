@@ -4,28 +4,26 @@ const rootUrl = `http://${process.env.REACT_APP_BACKEND_SERVER_IP}:${process.env
 const otpReqUrl = rootUrl + "user/reset-password";
 const updatePassUrl = rootUrl + "user/reset-password";
 
-export const reqPasswordOtp = email => {
-	return new Promise(async (resolve, reject) => {
-		try {
-			const { data } = await axios.post(otpReqUrl, { email });
+export async function reqPasswordOtp(email) {
 
-			console.log(data);
-			resolve(data);
-		} catch (error) {
-			reject(error);
-		}
-	});
+	try {
+		const { data } = await axios.post(otpReqUrl, { email });
+
+		console.log(data);
+		return data;
+	} catch (error) {
+		throw error
+	}
 };
 
-export const updateUserPassword = passObj => {
-	return new Promise(async (resolve, reject) => {
-		try {
-			const { data } = await axios.patch(updatePassUrl, passObj);
+export async function updateUserPassword(passObj) {
 
-			console.log(data);
-			resolve(data);
-		} catch (error) {
-			reject(error);
-		}
-	});
+	try {
+		const { data } = await axios.patch(updatePassUrl, passObj);
+
+		console.log(data);
+		return data
+	} catch (error) {
+		throw error
+	}
 };
