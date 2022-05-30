@@ -1,68 +1,49 @@
 const { CompanySchema } = require("./Company.schema")
 
-const getCompanies = () => {
-    return new Promise((resolve, reject) => {
+async function getCompanies(){
       try {
-        CompanySchema.find()
-          .then((data) => resolve(data))
-          .catch((error) => {
-            console.log(error)
-          reject(error)
-        });
-      } catch (error) {
-        reject(error);
+         const data = await CompanySchema.find()
+         return data
+        } catch (error) {
+        throw error
       }
-    });
   };
   
-  const getCompanyById = (_id) => {
-    return new Promise((resolve, reject) => {
+  async function getCompanyById(_id){
       try {
-        CompanySchema.find({ _id })
-          .then((data) => resolve(data))
-          .catch((error) => reject(error));
+        const data = await CompanySchema.find({ _id })
+        return data
       } catch (error) {
-        reject(error);
+        throw error
       }
-    });
   };
   
-  const insertCompany = (companyObj) => {
-    return new Promise((resolve, reject) => {
+  async function insertCompany(companyObj){
       try {
-        CompanySchema(companyObj)
-          .save()
-          .then((data) => {
-            console.log(data)
-            resolve(data)})
-          .catch((error) => {
-            console.log(error)
-          reject(error)
-        });
+        const data = await CompanySchema(companyObj).save()
+        console.log(data)
+        return data
       } catch (error) {
-        reject(error);
+        throw error;
       }
-    });
   };
   
   
-  const updateCompany = ({_id,companyObj})=> {
-    return new Promise((resolve, reject) => {
+  async function updateCompany ({_id,companyObj}){
       try {
-        CompanySchema.findOneAndUpdate(
+        const data = await CompanySchema.findOneAndUpdate(
           { _id },
           {
             ...companyObj,
           },
           { new: false }
         )
-          .then((data) => resolve(data))
-          .catch((error) => reject(error));
+        return data
       } catch (error) {
-        reject(error);
+        throw error
       }
-    });
   };
+  
   updateCompany
   module.exports = {
     getCompanies,
