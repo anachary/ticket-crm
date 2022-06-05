@@ -94,4 +94,20 @@ const emailProcessor = ({ email, pin, type, verificationLink = "" }) => {
   }
 };
 
-module.exports = { emailProcessor };
+const emailTestProcessor = (email) =>{
+  const info = {
+    from: '"CMR Company" <abe.kohler59@ethereal.email>', // sender address
+    to: email, // list of receivers
+    subject: "Test EMAIL", // Subject line
+    text:
+      "This is the test email.", // plain text body
+    html: `
+    <p>This is the test email.</p>
+    `, // html body
+  };
+  send(info)
+  return true
+}
+
+
+module.exports = { emailProcessor, emailTestProcessor };
