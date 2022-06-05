@@ -1,4 +1,4 @@
-# CRM Backend APi
+# CRM Backend API
 This is  backned of ticket crm  system with MERN Stacke 
 
 # HOW TO RUN the node server
