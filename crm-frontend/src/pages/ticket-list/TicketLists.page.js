@@ -27,14 +27,14 @@ useEffect(() => {
             </Col>
         </Row>
         <Row className='mt-4'> 
-            <Col>
+            <Col md='3' className='mt-3'>
                 <Link to="/add-ticket">
                 <Button>
                     Add New Ticket
                 </Button>
                 </Link>
             </Col>
-            <Col className='text-end'>
+            <Col ms="4">
                 <SearchForm>
                 </SearchForm>
                 </Col>
