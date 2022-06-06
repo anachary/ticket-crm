@@ -24,8 +24,8 @@ import {
     }
   };
   
-  export const filterSerachTicket = (str) => (dispatch) => {
-    dispatch(searchTickets(str));
+  export const filterSerachTicket = (searchCriteria) => (dispatch) => {
+    dispatch(searchTickets(searchCriteria));
   };
   
   //Actions for single ticket only

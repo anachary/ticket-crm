@@ -29,8 +29,20 @@ const ticketListSlice = createSlice({
     searchTickets: (state, { payload }) => {
       state.searchTicketList = state.tickets.filter((row) => {
         if (!payload) return row;
+        
+        if (!row){
+          return row
+        }
 
-        return row.subject.toLowerCase().includes(payload.toLowerCase());
+        let returnResult = true;
+        const keys = Object.keys(payload)
+        keys.forEach((key)=>{
+          if(payload[key]){
+          returnResult = (row[key].toLowerCase().includes(payload[key].toLowerCase())) && returnResult
+          }
+        })
+
+        return returnResult;
       });
     },
     fetchSingleTicketLoading: (state) => {
