@@ -38,7 +38,12 @@ const ticketListSlice = createSlice({
         const keys = Object.keys(payload)
         keys.forEach((key)=>{
           if(payload[key]){
-          returnResult = (row[key].toLowerCase().includes(payload[key].toLowerCase())) && returnResult
+            if(payload[key].toLowerCase() === "assigned"){
+              returnResult = (row[key].toLowerCase() === payload[key].toLocaleLowerCase()) && returnResult;
+            }
+            else {
+            returnResult = (row[key].toLowerCase().includes(payload[key].toLowerCase())) && returnResult
+            }
           }
         })
 

@@ -68,7 +68,7 @@ export const Ticket = () => {
       }
     })
     dispatch(fetchSingleTicket(tId))
-    return () => {
+    return () => {l
 			(replyMsg || replyTicketError) && dispatch(resetResponseMsg());
 		};
    
