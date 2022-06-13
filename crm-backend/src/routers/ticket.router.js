@@ -5,11 +5,13 @@ const {
     getTicketById,
     insertTicket,
     updateTicket,
-    updateClientReply
+    updateClientReply,
+    getTicketUsers
   } = require("../model/ticket/Ticket.model");
 
 const { userAuthorization} = require("../middleware/authorization.middleware");
-const {createNewTicketValidation, replyTicketMessageValidation} = require("../middleware/formValidation.middleware.js")
+const {createNewTicketValidation, replyTicketMessageValidation} = require("../middleware/formValidation.middleware.js");
+const { getUserSuccess } = require("../../../crm-frontend/src/pages/DashboardPage/userSlice");
 
 router.all("/", (req,res,next) =>{
  //res.json({message:"ticket router is healthy"})
@@ -118,6 +120,8 @@ router.post("/update-ticket/:_id", userAuthorization, async (req, res) => {
         };
   
         const result = await updateTicket({_id, ticketObj});
+
+        const ticketUsers = await getTicketUsers({_id, ticketObj});
         
         if (result._id) {
           return res.json({

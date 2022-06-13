@@ -78,10 +78,36 @@ const updateClientReply = ({_id, message, sender}) => {
   });
 };
 
+const getTicketUsers = (_id, ticket) => {
+  return new Promise((resolve, reject) => {
+    try {
+     
+      if (!ticket){
+      ticket = await TicketSchema.find({ _id })
+      }
+      const result =new []
+      if(ticket && ticket.assignedTo){
+        result.push(ticket.assignedTo)
+      }
+      if(ticket && ticket.updatedBy){
+        result.push(ticket.updatedBy)
+      }
+      if (ticket && ticket.conversations){
+          ticket.conversations.forEach(v=>result.push(v.sender))
+      }
+      
+      return [...new Set(result)];
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   getTickets,
   getTicketById,
   insertTicket,
   updateTicket,
-  updateClientReply
+  updateClientReply,
+  getTicketUsers,
 };
