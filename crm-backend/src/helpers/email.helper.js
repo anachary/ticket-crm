@@ -37,7 +37,7 @@ const send = (info) => {
   });
 };
 
-const emailProcessor = ({ email, pin, type, verificationLink = "" }) => {
+const emailProcessor = ({ email, pin, type, verificationLink = "" , ticketId =""}) => {
   let info = "";
   switch (type) {
     case "request-new-password":
@@ -85,6 +85,17 @@ const emailProcessor = ({ email, pin, type, verificationLink = "" }) => {
         <p>${verificationLink}</P>
         `, // html body
       };
+
+      case "update-ticket":
+        info = {
+          from: '"TICKET CRM CAPSTONE" <abe.kohler59@ethereal.email>', // sender address
+          to: email, // list of receivers
+          subject: `Ticket updated ${ticketId}`, // Subject line
+          text: "There has been update on this ticket", // plain text body
+          html: `<b>Hello </b>
+         
+        <p>There has been update on this ticket</p>`, // html body
+        };
 
       send(info);
       break;

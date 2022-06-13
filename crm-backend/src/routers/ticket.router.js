@@ -11,7 +11,7 @@ const {
 
 const { userAuthorization} = require("../middleware/authorization.middleware");
 const {createNewTicketValidation, replyTicketMessageValidation} = require("../middleware/formValidation.middleware.js");
-const { getUserSuccess } = require("../../../crm-frontend/src/pages/DashboardPage/userSlice");
+const { emailProcessor } = require("../helpers/email.helper");
 
 router.all("/", (req,res,next) =>{
  //res.json({message:"ticket router is healthy"})
@@ -123,6 +123,18 @@ router.post("/update-ticket/:_id", userAuthorization, async (req, res) => {
 
         const ticketUsers = await getTicketUsers({_id, ticketObj});
         
+         if(ticketUsers && ticketUsers.length>0){
+           ticketUsers.forEach(async (ticketUserEmail)=>{
+
+            await emailProcessor({
+              ticketUserEmail,
+              type: "update-ticket",
+              verificationLink: verificationURL + result._id + "/" + email,
+            });
+        
+           })
+         }
+
         if (result._id) {
           return res.json({
             status: "success",
