@@ -11,13 +11,12 @@ const { userAuthorization} = require("../middleware/authorization.middleware");
 const {createNewCompanyValidation } = require("../middleware/formValidation.middleware.js")
 
 router.all("/", (req,res,next) =>{
- //res.json({message:"ticket router is healthy"})
-
- next();
+  res.json({message:"ticket router is healthy"})
+  next();
 })
 
 // Get all companies for a specific user
-router.get("/", userAuthorization, async (req, res) => {
+router.get("/", async (req, res) => {
     try {
      
       const result = await getCompanies();
