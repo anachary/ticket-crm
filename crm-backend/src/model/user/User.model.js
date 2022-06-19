@@ -12,12 +12,12 @@ const insertUser = async (userObj) => {
     }
 }
 
-const getUserByEmail = async email =>{
+const getUserByEmail = async (email, company) =>{
     try {
-     if(!email){
+     if(!email||!company){
          return false;
      }
-     const user = await UserSchema.findOne({email});
+     const user =  await UserSchema.findOne({email,company});
      console.log(user);
      return user
     }

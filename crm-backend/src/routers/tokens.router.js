@@ -11,8 +11,8 @@ router.get("/", async (req, res, next) => {
   //TODO
 
   const decoded = await verifyRefreshJWT(authorization);
-  if (decoded.email) {
-    const userProf = await getUserByEmail(decoded.email);
+  if (decoded.email && decoded.company) {
+    const userProf = await getUserByEmail(decoded.email, decoded.company);
 
     if (userProf._id) {
       let tokenExp = userProf.refreshJWT.addedAt;
@@ -30,6 +30,7 @@ router.get("/", async (req, res, next) => {
 
       const accessJWT = await createAccessJWT(
         decoded.email,
+        decoded.company,
         userProf._id.toString()
       );
 

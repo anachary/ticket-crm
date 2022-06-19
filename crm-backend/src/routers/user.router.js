@@ -87,13 +87,13 @@ router.post("/", async (req, res) => {
 
 
 router.post("/login", async (req, res) => {
-    const { email, password } = req.body
+    const { email, password, company } = req.body
     try {
-        if (!email || !password) {
+        if (!email || !password || !company) {
             res.status(400).json({ message: "Email and password cannot be empty.Please check the input or reset credentials.", status: "error" })
         }
 
-        const user = await getUserByEmail(email);
+        const user = await getUserByEmail(email, company);
         console.log(user)
         
        
@@ -107,8 +107,8 @@ router.post("/login", async (req, res) => {
             res.status(500).json({ message: "Invalid combination of email and password. Please sign up or reset password", status: "error" })
 
         } else {
-            const accessToken = await createAccessJWT(user.email, `${user._id}`)
-            const refreshToken = await createRefreshJWT(user.email, `${user._id}`)
+            const accessToken = await createAccessJWT(user.email, user.company,`${user._id}`)
+            const refreshToken = await createRefreshJWT(user.email,user.company, `${user._id}`)
 
             res.status(200).json({ 
                 message: "Succesfully Login", 
