@@ -11,7 +11,6 @@ const {
 
 const { userAuthorization} = require("../middleware/authorization.middleware");
 const {createNewTicketValidation, replyTicketMessageValidation} = require("../middleware/formValidation.middleware.js");
-const { getUserSuccess } = require("../../../crm-frontend/src/pages/DashboardPage/userSlice");
 
 router.all("/", (req,res,next) =>{
  //res.json({message:"ticket router is healthy"})

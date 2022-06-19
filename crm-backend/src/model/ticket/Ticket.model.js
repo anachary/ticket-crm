@@ -78,10 +78,8 @@ const updateClientReply = ({_id, message, sender}) => {
   });
 };
 
-const getTicketUsers = (_id, ticket) => {
-  return new Promise((resolve, reject) => {
+const getTicketUsers = async (_id, ticket) => {
     try {
-     
       if (!ticket){
       ticket = await TicketSchema.find({ _id })
       }
@@ -95,12 +93,10 @@ const getTicketUsers = (_id, ticket) => {
       if (ticket && ticket.conversations){
           ticket.conversations.forEach(v=>result.push(v.sender))
       }
-      
       return [...new Set(result)];
     } catch (error) {
-      reject(error);
+    throw error;
     }
-  });
 };
 
 module.exports = {
