@@ -128,8 +128,7 @@ router.post("/update-ticket/:_id", userAuthorization, async (req, res) => {
 
             await emailProcessor({
               ticketUserEmail,
-              type: "update-ticket",
-              verificationLink: verificationURL + result._id + "/" + email,
+              type: "update-ticket"
             });
         
            })
