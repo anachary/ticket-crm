@@ -145,6 +145,7 @@ export const RegistrationForm = () => {
                             <Form.Label className="fs-sm mb-0">Company</Form.Label>
                             <Form.Control as="select" size="sm" name="company" value={newUser.company} onChange={handleOnChange} required
                              isInvalid={!requiredError.isValidCompany}>
+                                <option>Select Company</option>
                                 { companies.map(v=>(<option value={v.name}>{v.name}</option>)) }
                             </Form.Control>
                         </Form.Group>
