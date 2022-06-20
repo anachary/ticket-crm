@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Ticket_model.getTickets 0 1`] = `Promise {}`;
+
+exports[`Ticket_model.getTickets 1 1`] = `Promise {}`;
+
+exports[`Ticket_model.getTickets 2 1`] = `Promise {}`;
+
+exports[`Ticket_model.getTickets 3 1`] = `Promise {}`;
+
+exports[`Ticket_model.getTickets 4 1`] = `Promise {}`;
+
+exports[`Ticket_model.updateClientReply 0 1`] = `Promise {}`;
+
+exports[`Ticket_model.updateClientReply 1 1`] = `Promise {}`;
+
+exports[`Ticket_model.updateClientReply 2 1`] = `Promise {}`;
+
+exports[`Ticket_model.updateClientReply 3 1`] = `Promise {}`;
+
+exports[`Ticket_model.updateClientReply 4 1`] = `Promise {}`;
+
+exports[`Ticket_model.updateClientReply 5 1`] = `Promise {}`;
+
+exports[`Ticket_model.updateTicket 0 1`] = `Promise {}`;
+
+exports[`Ticket_model.updateTicket 1 1`] = `Promise {}`;
+
+exports[`Ticket_model.updateTicket 2 1`] = `Promise {}`;
+
+exports[`Ticket_model.updateTicket 3 1`] = `Promise {}`;
+
+exports[`Ticket_model.updateTicket 4 1`] = `Promise {}`;
+
+exports[`Ticket_model.updateTicket 5 1`] = `Promise {}`;
