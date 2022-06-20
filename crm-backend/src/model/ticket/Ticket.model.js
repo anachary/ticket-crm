@@ -78,12 +78,12 @@ const updateClientReply = ({_id, message, sender}) => {
   });
 };
 
-const getTicketUsers = async (_id, ticket) => {
+const getTicketUsers = async (_id, ticketObj) => {
     try {
-      if (!ticket){
-      ticket = await TicketSchema.find({ _id })
-      }
-      const result =new []
+      
+      const ticket = (await TicketSchema.find({ _id }))[0]
+    
+      const result = []
       if(ticket && ticket.assignedTo){
         result.push(ticket.assignedTo)
       }
