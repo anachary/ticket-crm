@@ -127,7 +127,7 @@ router.post("/update-ticket/:_id", userAuthorization, async (req, res) => {
            ticketUsers.forEach(async (ticketUserEmail)=>{
 
             await emailProcessor({
-              ticketUserEmail,
+              email: ticketUserEmail,
               type: "update-ticket"
             });
         

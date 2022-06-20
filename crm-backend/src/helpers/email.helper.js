@@ -75,7 +75,7 @@ const emailProcessor = ({ email, pin, type, verificationLink = "" , ticketId =""
 
     case "new-user-confirmation-required":
       info = {
-        from: '"CMR Company" <abe.kohler59@ethereal.email>', // sender address
+        from: '"CRM Company" <abe.kohler59@ethereal.email>', // sender address
         to: email, // list of receivers
         subject: "Please verify your new user", // Subject line
         text:
