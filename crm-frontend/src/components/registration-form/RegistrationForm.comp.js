@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Container, Row, Col, Form, Button, Spinner, Alert} from 'react-bootstrap'
 import { newUserRegistration } from "./userRegAction";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchAllCompanies } from '../../pages/company-list/companiesAction';
 
 const initializeState = {
     name: '',
@@ -34,11 +35,23 @@ export const RegistrationForm = () => {
     const [passwordError, setPasswordError] = useState(passVerificationError)
     const [requiredError, setRequiredError] = useState(requiredVerificationError)
    
+
     const { isLoading, status, message } = useSelector(
         (state) => state.registration
       );
+
+    const {companies} = useSelector(
+        (state) => state.companies
+      );  
    
-      useEffect(() => { }, [newUser])
+    useEffect(() => {
+       
+       }, [newUser])
+
+    useEffect(() => {
+       dispatch(fetchAllCompanies())
+    }, [])
+
 
     const handleOnChange = e => {
         const { name, value } = e.target
@@ -132,10 +145,8 @@ export const RegistrationForm = () => {
                             <Form.Label className="fs-sm mb-0">Company</Form.Label>
                             <Form.Control as="select" size="sm" name="company" value={newUser.company} onChange={handleOnChange} required
                              isInvalid={!requiredError.isValidCompany}>
-                                <option value="">Select a Company</option>
-                                <option value="Google">Google</option>
-                                <option value="Microsoft">Microsoft</option>
-                                <option value="Citrix">Citrix</option>
+                                <option>Select Company</option>
+                                { companies.map(v=>(<option value={v.name}>{v.name}</option>)) }
                             </Form.Control>
                         </Form.Group>
 
