@@ -44,7 +44,7 @@ export const Ticket = () => {
 		replyTicketError,
 	} = useSelector(state => state.tickets);
 
-   const {user} =useSelector(state=>state.user)
+   const {user} = useSelector(state=>state.user)
    
    const [ticket, setTicket] = useState(selectedTicket)
    let currentTicketValid=initialTicketValid 
@@ -182,7 +182,7 @@ export const Ticket = () => {
             Assigned To
           </Form.Label>
           <Col sm={4}>
-            <Form.Control
+            <Form.Control 
               name="assignedTo"
               disabled ={disabled}
               value={ticket?ticket.assignedTo:''}

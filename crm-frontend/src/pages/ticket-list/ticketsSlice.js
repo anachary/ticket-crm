@@ -42,7 +42,7 @@ const ticketListSlice = createSlice({
               returnResult = (row[key].toLowerCase() === payload[key].toLocaleLowerCase()) && returnResult;
             }
             else {
-            returnResult = (row[key].toLowerCase().includes(payload[key].toLowerCase())) && returnResult
+              returnResult = (row[key].toLowerCase().includes(payload[key].toLowerCase())) && returnResult
             }
           }
         })
