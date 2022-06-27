@@ -7,7 +7,7 @@ const helmet= require("helmet")
 const morgan = require("morgan")
 const autoIncrement = require('mongoose-auto-increment');
 const {Server} = require("socket.io")
-
+const http = require("http")
 
 //API Security 
 app.use(helmet())
@@ -71,7 +71,9 @@ app.use((error, req,res,next)=>{
    handleError(error, res);
 })
 
-const io = new Server(app, {
+const server = http.createServer(app)
+
+const io = new Server(server, {
     cors:{
         origin: "http://localhost:3000",
     }
@@ -79,9 +81,15 @@ const io = new Server(app, {
 
 io.on("connection", (socket)=>{
     console.log(`User Connected: ${socket.id}`)
+    socket.on("send_test_message",()=>{
+        socket.broadcast("receive_test_message",()=>{
+           { message:"Hello from server" }
+        })
 
+    })
+    
 })
 
-app.listen(port, ()=>{
+server.listen(port, ()=>{
     console.log(`API is ready on "http://localhost:${port}`)
 })
