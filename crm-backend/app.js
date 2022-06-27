@@ -6,6 +6,7 @@ const cors = require("cors")
 const helmet= require("helmet")
 const morgan = require("morgan")
 const autoIncrement = require('mongoose-auto-increment');
+const {Server} = require("socket.io")
 
 
 //API Security 
@@ -70,6 +71,16 @@ app.use((error, req,res,next)=>{
    handleError(error, res);
 })
 
+const io = new Server(app, {
+    cors:{
+        origin: "http://localhost:3000",
+    }
+});
+
+io.on("connection", (socket)=>{
+    console.log(`User Connected: ${socket.id}`)
+
+})
 
 app.listen(port, ()=>{
     console.log(`API is ready on "http://localhost:${port}`)
