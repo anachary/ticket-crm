@@ -20,8 +20,13 @@ import {Company} from './pages/company/Company.page.js'
 import { AddCompany } from './pages/new-company/AddCompany.page.js';
 import { UserVerification } from "./pages/user-verification/UserVerification.page";
 import { PasswordOtpForm } from "./pages/password-reset/PasswordOtpForm.page";
+import io from "socket.io-client"
+const socket = io.connect("http://localhost:5000")
 function App() {
   const {user} = useSelector(state => state.user)
+  const sendMessage = () =>{
+    socket.emit("test_message",{message:"Hello"})
+  }
   return (
     <div className="App">
        <BrowserRouter forceRefresh>
