@@ -79,16 +79,39 @@ const io = new Server(server, {
     }
 });
 
-io.on("connection", (socket)=>{
-    console.log(`User Connected: ${socket.id}`)
-    socket.on("send_test_message",()=>{
-        socket.broadcast("receive_test_message",()=>{
-           { message:"Hello from server" }
-        })
+let onlineUsers = [];
 
-    })
-    
-})
+const addNewUser = (id, socketId) => {
+  !onlineUsers.some((user) => user._id === id) &&
+    onlineUsers.push({id , socketId });
+};
+
+const removeUser = (socketId) => {
+  onlineUsers = onlineUsers.filter((user) => user.socketId !== socketId);
+};
+
+const getUser = (id) => {
+  return onlineUsers.find((user) => user._id === id);
+};
+
+io.on("connection", (socket) => {
+  socket.on("newUser", (id) => {
+    addNewUser(id, socket.id);
+  });
+
+  socket.on("sendNotification", ({ senderId, ticketId }) => {
+    const receiver = getUser(ticketId);
+    io.to(receiver.socketId).emit("getNotification", {
+      senderName,
+      type,
+    });
+  });
+
+   socket.on("disconnect", () => {
+    removeUser(socket.id);
+  });
+});
+
 
 server.listen(port, ()=>{
     console.log(`API is ready on "http://localhost:${port}`)
