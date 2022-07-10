@@ -12,6 +12,7 @@ const {
 const { userAuthorization} = require("../middleware/authorization.middleware");
 const {createNewTicketValidation, replyTicketMessageValidation} = require("../middleware/formValidation.middleware.js");
 const { emailProcessor } = require("../helpers/email.helper");
+const { storeUserNotification } = require("../model/user/User.model");
 
 router.all("/", (req,res,next) =>{
  //res.json({message:"ticket router is healthy"})
@@ -125,6 +126,14 @@ router.post("/update-ticket/:_id", userAuthorization, async (req, res) => {
         
          if(ticketUsers && ticketUsers.length>0){
            ticketUsers.forEach(async (ticketUserEmail)=>{
+            
+            const notification = new {
+              message:`There's is an update on ticket ${_id}`,
+              updatedBy: sender,
+              read: (sender === ticketUserEmail)
+            }
+
+            storeUserNotification(ticketUserEmail,notification)
 
             await emailProcessor({
               email: ticketUserEmail,

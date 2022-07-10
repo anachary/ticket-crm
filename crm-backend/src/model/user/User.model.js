@@ -17,13 +17,13 @@ const getUserByEmail = async email =>{
      if(!email){
          return false;
      }
-     const user = await UserSchema.findOne({email});
+     const user = await UserSchema.findOne({email})          
      console.log(user);
      return user
     }
     catch(err){
       console.log(err)
-      throw err
+      return null
     }
 }
 
@@ -32,7 +32,7 @@ const getUserById = async _id =>{
      if(!_id){
          return false;
      }
-     const user = await UserSchema.findOne({_id});
+     const user = await UserSchema.findOne({_id})
      console.log(user);
      return user
     }
@@ -82,7 +82,7 @@ const verifyUser = (_id, email) => {
     });
   };
   
-  const updatePassword = (email, newhashedPass) => {
+ const updatePassword = (email, newhashedPass) => {
     return new Promise((resolve, reject) => {
       try {
         UserSchema.findOneAndUpdate(
@@ -103,6 +103,27 @@ const verifyUser = (_id, email) => {
       }
     });
   };
+
+ const storeUserNotification= async(email, notification) =>{
+    try{
+        let user = await getUserByEmail(email)
+        if(user){
+        let _id = user._id
+        let data = await UserSchema.findByIdAndUpdate(
+            {_id},
+            {
+                $push:{"notification":{...notification}},
+            },
+            {
+                new:true
+            })
+        return data
+      }
+    }
+    catch (err) {
+        throw err;
+    }
+}
   
 module.exports = {
     insertUser,
@@ -110,5 +131,6 @@ module.exports = {
     getUserById,
     storeUserRefreshJWT,
     verifyUser,
-    updatePassword
+    updatePassword,
+    storeUserNotification
 }
