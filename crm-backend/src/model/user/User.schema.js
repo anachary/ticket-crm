@@ -54,10 +54,18 @@ const UserSchema = new Schema({
     "isVerified": {
       type: Boolean,
       required: true,
-      default: false,
+      default: false
     },
+    "notifications": [
+        {
+            message: {type: String},
+            updatedBy:{type: String},
+            updateDate: { type: Date, default: Date.now() },
+            read: { type: Boolean, default: false }
+        }
+    ]
 
-})
+  });
 
 module.exports = {
     UserSchema: mongoose.model("User", UserSchema)
