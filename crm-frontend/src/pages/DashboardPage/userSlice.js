@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import io from "socket.io-client"
 
 const initialState = {
   user: {},
+  socket: io.connect("http://localhost:5000"),
   isLoading: false,
   error: "",
 };

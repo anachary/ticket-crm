@@ -44,7 +44,7 @@ export const Ticket = () => {
 		replyTicketError,
 	} = useSelector(state => state.tickets);
 
-   const {user} = useSelector(state=>state.user)
+   const {user, socket} = useSelector(state=>state.user)
    
    const [ticket, setTicket] = useState(selectedTicket)
    let currentTicketValid=initialTicketValid 
@@ -100,6 +100,11 @@ export const Ticket = () => {
 
   const handleOnChangeComment =(e)=>{
     setComment(e.target.value);
+    socket.emit("sendNotification", {
+      senderName: user.user,
+      receiverName: post.username,
+      type,
+    });
   }
 
   return (
@@ -253,7 +258,9 @@ export const Ticket = () => {
             <Col>
               <div className='font-weight-bold lg underline'>Conversation History</div>
               <MessageHistory msg={ticket.conversations} disabled={disabled} />
-              <UpdateTicket buttonDisabled={(!disabled && Object.values(ticketValid).includes(false))|| disabled } disabled={disabled}  comment ={comment} handleOnChange ={handleOnChangeComment} handleOnSubmit={handleOnSubmit}/>
+              <UpdateTicket buttonDisabled={(!disabled && Object.values(ticketValid).includes(false))|| disabled } disabled={disabled}  comment ={comment} 
+              handleOnChange ={handleOnChangeComment} 
+              handleOnSubmit={handleOnSubmit}/>
             </Col>
           </Row>
         </Form.Group>

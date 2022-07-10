@@ -26,3 +26,18 @@
     color:#f4f4f4 !important;
 }
 
+.notification  svg {
+    fill:#f4f4f4
+}
+
+.notification {
+    background: #005073 !important;
+}
+
+.notification-container{
+    margin-right:0px !important
+}
+
+.popover-header{
+    color:#005073;
+}
