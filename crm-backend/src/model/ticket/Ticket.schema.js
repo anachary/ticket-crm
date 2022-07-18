@@ -84,6 +84,23 @@ const TicketSchema = new Schema({
       },
     },
   ],
+
+  followers:[
+    {
+    follower: {
+      type: String,
+      maxlength: 50,
+      required: true,
+      default: "",
+    },
+    
+    followedAt: {
+      type: Date,
+      default: Date.now(),
+    }
+  },
+]
+
 });
 autoIncrement.initialize(mongoose.connection)
 TicketSchema.plugin(autoIncrement.plugin, 'Ticket');

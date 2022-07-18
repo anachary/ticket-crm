@@ -7,7 +7,8 @@ const {
     updateTicket,
     updateClientReply,
     getTicketUsers,
-    deleteTicket
+    deleteTicket,
+    followTicket
   } = require("../model/ticket/Ticket.model");
 
 const { userAuthorization} = require("../middleware/authorization.middleware");
@@ -198,6 +199,22 @@ router.post("/delete-ticket/",
     return res.json({
       status: "success",
       message: "Ticket has been deleted",
+    });
+  } catch(error){
+    res.json({ status: "error", message: error.message });
+  }
+}
+)
+
+router.post("/follow-ticket/",
+  userAuthorization,
+  async (req,res)=>{
+  try{
+    const {ticket_id, user_id} = req.body
+    await followTicket(ticket_id, user_id)
+    return res.json({
+      status: "success",
+      message: "Ticket has been follow by user",
     });
   } catch(error){
     res.json({ status: "error", message: error.message });
