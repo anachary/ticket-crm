@@ -3,6 +3,7 @@ import axios from "axios";
 const rootUrl = `http://${process.env.REACT_APP_BACKEND_SERVER_IP}:${process.env.REACT_APP_PORT}/v1/`;
 const ticketUrl = rootUrl + "ticket/";
 const updateTicketUrl = rootUrl + "ticket/update-ticket/";
+const deleteTicketUrl = rootUrl + "ticket/delete-ticket/";
 
 export async function getAllTickets() {
   try {
@@ -81,6 +82,24 @@ export async function createNewTicket(frmData) {
     return result.data
   } catch (error) {
     console.log(error.message);
+    throw error
+  }
+};
+
+export async function deleteTicket(_id) {
+  try {
+      const response = await axios({
+        method: 'post',
+        url: deleteTicketUrl,
+        headers:{
+          'Content-Type': ' application/json',
+          'Authorization': sessionStorage.getItem("accessJWT")
+        },
+        data: { ticket_id:_id }
+      })
+      return response
+  } catch (error) {
+    console.log(error)
     throw error
   }
 };

@@ -1,8 +1,9 @@
 import React from 'react'
 import { Form, Button } from 'react-bootstrap'
 import PropTypes from 'prop-types'
+import "./update-ticket.css";
 
-export const UpdateTicket = ({buttonDisabled, disabled, comment, handleOnChange, handleOnSubmit}) => {
+export const UpdateTicket = ({buttonDisabled, disabled, comment, handleOnChange, handleOnSubmit, handleDelete}) => {
     return (
         <Form  autoComplete="off" onSubmit={handleOnSubmit}>
             <Form.Text>Comment</Form.Text>
@@ -13,8 +14,9 @@ export const UpdateTicket = ({buttonDisabled, disabled, comment, handleOnChange,
             name="detail" 
             as="textarea" 
             row="5" />
-            <div className='text-end width=100% mt-4'>
-                <Button type="submit" disabled={buttonDisabled}>Save</Button>
+            <div className='save-row width=100% mt-4'>
+               <div><Button onClick ={handleDelete}>Delete</Button></div>
+               <div> <Button type="submit" disabled={buttonDisabled}>Save</Button></div>
             </div>
         </Form>
     )
@@ -24,5 +26,6 @@ UpdateTicket.propTypes={
     comment : PropTypes.string.isRequired,
     buttonDisabled:PropTypes.bool.isRequired,
     handleOnChange:PropTypes.func.isRequired,
-    handleOnSubmit:PropTypes.func.isRequired
+    handleOnSubmit:PropTypes.func.isRequired,
+    handleDelete:PropTypes.func.isRequired
 }

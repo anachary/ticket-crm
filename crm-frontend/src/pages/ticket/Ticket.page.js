@@ -11,9 +11,10 @@ import { useParams } from 'react-router-dom';
 
 import { fetchSingleTicket} from "../ticket-list/ticketsAction";
 import { resetResponseMsg, fetchTicketSuccess } from "../ticket-list/ticketsSlice";
+import { useNavigate } from 'react-router-dom';
 
 import {
-  getSingleTicket, updateReplyTicket, updateTicket
+  getSingleTicket, updateReplyTicket, updateTicket, deleteTicket
 } from "../../api/ticketApi"
 const initialTicketValid = {
   subject: false,
@@ -35,6 +36,7 @@ const validateTicket = (newFrmDtValid, newTicket) => {
 
 export const Ticket = () => {
   const {tId} = useParams()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 	const {
 		isLoading,
@@ -96,6 +98,15 @@ export const Ticket = () => {
     catch(error){
       console.log(error.message)
     }
+  }
+
+  const handleDelete = (e)=>{
+      console.log("Ticket Delete")
+      deleteTicket(selectedTicket._id)
+      .then(()=>{navigate("/",{replace:true})})
+      dgit.catch(err=>{
+        console.log(error.message)
+      })
   }
 
   const handleOnChangeComment =(e)=>{
@@ -260,7 +271,9 @@ export const Ticket = () => {
               <MessageHistory msg={ticket.conversations} disabled={disabled} />
               <UpdateTicket buttonDisabled={(!disabled && Object.values(ticketValid).includes(false))|| disabled } disabled={disabled}  comment ={comment} 
               handleOnChange ={handleOnChangeComment} 
-              handleOnSubmit={handleOnSubmit}/>
+              handleOnSubmit={handleOnSubmit}
+              handleDelete={handleDelete}
+              />
             </Col>
           </Row>
         </Form.Group>
