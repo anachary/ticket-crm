@@ -2,3 +2,9 @@
     display: flex;
     justify-content: flex-end;
 }
+
+.save-row-content{
+    justify-content: space-between;
+    width: 20%;
+    display: flex;
+}

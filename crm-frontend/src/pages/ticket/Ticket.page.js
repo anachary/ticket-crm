@@ -14,7 +14,7 @@ import { resetResponseMsg, fetchTicketSuccess } from "../ticket-list/ticketsSlic
 import { useNavigate } from 'react-router-dom';
 
 import {
-  getSingleTicket, updateReplyTicket, updateTicket, deleteTicket
+  getSingleTicket, updateReplyTicket, updateTicket, deleteTicket, followTicket
 } from "../../api/ticketApi"
 const initialTicketValid = {
   subject: false,
@@ -56,7 +56,8 @@ export const Ticket = () => {
   
   const [ticketValid, setTicketValid] = useState(currentTicketValid);
   const [comment, setComment] = useState('')
-  
+  const [followMsg, setFollowMsg] = useState('')
+  const [followErr, setFollowErr] = useState('')
   const disabled = user.role === 'client' && selectedTicket && selectedTicket.status.toLowerCase() === 'resolved'
 
   useEffect(() => {
@@ -75,6 +76,7 @@ export const Ticket = () => {
 		};
    
   },[tId, dispatch, replyMsg, replyTicketError]);
+  
   const handleOnChange = (e) => {
     const { name, value } = e.target;
 
@@ -104,9 +106,22 @@ export const Ticket = () => {
       console.log("Ticket Delete")
       deleteTicket(selectedTicket._id)
       .then(()=>{navigate("/",{replace:true})})
-      dgit.catch(err=>{
+       .catch(err=>{
         console.log(error.message)
       })
+  }
+
+  const handleFollow = async (e) => {
+    try{
+    console.log("Ticket Follow")
+    await followTicket(selectedTicket._id, user.email)
+    setFollowMsg("Ticket was successfully Followed")
+    setFollowErr("")
+   }
+   catch(e){
+    setFollowMsg("")
+    setFollowErr("Ticket was not succesfully followed")
+   }
   }
 
   const handleOnChangeComment =(e)=>{
@@ -133,6 +148,10 @@ export const Ticket = () => {
 						<Alert variant="danger">{replyTicketError}</Alert>
 					)}
 					{replyMsg && <Alert variant="success">{replyMsg}</Alert>}
+          {followErr && (
+						<Alert variant="danger">{followErr}</Alert>
+					)}
+					{followMsg && <Alert variant="success">{followMsg}</Alert>}
 				</Col>
         </Row>
         <Form.Group as={Row} className='mb-2'>
@@ -273,6 +292,7 @@ export const Ticket = () => {
               handleOnChange ={handleOnChangeComment} 
               handleOnSubmit={handleOnSubmit}
               handleDelete={handleDelete}
+              handleFollow={handleFollow}
               />
             </Col>
           </Row>

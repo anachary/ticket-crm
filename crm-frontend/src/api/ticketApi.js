@@ -4,6 +4,7 @@ const rootUrl = `http://${process.env.REACT_APP_BACKEND_SERVER_IP}:${process.env
 const ticketUrl = rootUrl + "ticket/";
 const updateTicketUrl = rootUrl + "ticket/update-ticket/";
 const deleteTicketUrl = rootUrl + "ticket/delete-ticket/";
+const followTicketUrl = rootUrl + "ticket/follow-ticket/";
 
 export async function getAllTickets() {
   try {
@@ -32,7 +33,6 @@ export async function getSingleTicket(_id) {
     }
 };
 
-
 export async function updateReplyTicket(_id, msgObj) {
   try {
     const response = await axios({
@@ -50,7 +50,6 @@ export async function updateReplyTicket(_id, msgObj) {
     throw error
   }
 };
-
 
 export async function updateTicket(_id, ticketObj) {
   try {
@@ -96,6 +95,24 @@ export async function deleteTicket(_id) {
           'Authorization': sessionStorage.getItem("accessJWT")
         },
         data: { ticket_id:_id }
+      })
+      return response
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
+};
+
+export async function followTicket(ticket_id, user_id) {
+  try {
+      const response = await axios({
+        method: 'post',
+        url: followTicketUrl,
+        headers:{
+          'Content-Type': ' application/json',
+          'Authorization': sessionStorage.getItem("accessJWT")
+        },
+        data: { ticket_id, user_id:user_id }
       })
       return response
   } catch (error) {
