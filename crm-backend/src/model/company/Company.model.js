@@ -44,7 +44,6 @@ async function getCompanies(){
       }
   };
   
-  updateCompany
   module.exports = {
     getCompanies,
     getCompanyById,
