@@ -24,11 +24,6 @@ import { useNavigate } from 'react-router-dom';
 
 function App() {
   const {user} = useSelector(state => state.user)
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    navigate("/navigate", { replace: true });
-  }, []);
 
   return (
     <div className="App">
