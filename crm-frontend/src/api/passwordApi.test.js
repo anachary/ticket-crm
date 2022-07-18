@@ -4,7 +4,7 @@ describe("passwordApi.reqPasswordOtp", () => {
     
 
     test("5", async () => {
-        expect.assertions(0)
+        expect.assertions(1)
         try {
             await passwordApi.reqPasswordOtp("something.example.com")
         } catch (e) {
