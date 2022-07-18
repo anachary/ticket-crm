@@ -6,7 +6,8 @@ const {
     insertTicket,
     updateTicket,
     updateClientReply,
-    getTicketUsers
+    getTicketUsers,
+    deleteTicket
   } = require("../model/ticket/Ticket.model");
 
 const { userAuthorization} = require("../middleware/authorization.middleware");
@@ -188,4 +189,20 @@ router.post(
     }
   );
   
+router.post("/delete-ticket/",
+  userAuthorization,
+  async (req,res)=>{
+  try{
+    const {ticket_id} = req.body
+    await deleteTicket(ticket_id)
+    return res.json({
+      status: "success",
+      message: "Ticket has been deleted",
+    });
+  } catch(error){
+    res.json({ status: "error", message: error.message });
+  }
+}
+)
+
 module.exports = router 

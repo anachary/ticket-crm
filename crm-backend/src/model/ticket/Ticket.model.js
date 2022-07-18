@@ -99,6 +99,14 @@ const getTicketUsers = async (_id, ticketObj) => {
     }
 };
 
+const deleteTicket = async(_id) =>{
+  try {
+      await TicketSchema.deleteOne({ _id })
+  } catch (error) {
+  throw error;
+  }
+};
+
 module.exports = {
   getTickets,
   getTicketById,
@@ -106,4 +114,5 @@ module.exports = {
   updateTicket,
   updateClientReply,
   getTicketUsers,
+  deleteTicket
 };
