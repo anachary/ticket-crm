@@ -5,7 +5,7 @@ import { LandingPage } from './pages/LandingPage/LandingPage.page.js';
 import { Registration } from './pages/registration/Registration.page.js';
 import { createBrowserHistory } from 'history'
 import {
-  BrowserRouter,
+BrowserRouter,
   Routes,
   Route,
   Navigate
@@ -20,12 +20,19 @@ import {Company} from './pages/company/Company.page.js'
 import { AddCompany } from './pages/new-company/AddCompany.page.js';
 import { UserVerification } from "./pages/user-verification/UserVerification.page";
 import { PasswordOtpForm } from "./pages/password-reset/PasswordOtpForm.page";
+import { useNavigate } from 'react-router-dom';
 
 function App() {
   const {user} = useSelector(state => state.user)
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate("/navigate", { replace: true });
+  }, []);
+
   return (
     <div className="App">
-       <BrowserRouter forceRefresh>
+       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={ user && user.authenticated ? <Dashboard/>:<LandingPage/>} />
           <Route exact path ="/registration" element ={<Registration />} />
