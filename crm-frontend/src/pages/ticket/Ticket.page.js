@@ -12,6 +12,7 @@ import { useParams } from 'react-router-dom';
 import { fetchSingleTicket} from "../ticket-list/ticketsAction";
 import { resetResponseMsg, fetchTicketSuccess } from "../ticket-list/ticketsSlice";
 import { useNavigate } from 'react-router-dom';
+import { getUserProfile } from "../DashboardPage/userAction.js";
 
 import {
   getSingleTicket, updateReplyTicket, updateTicket, deleteTicket, followTicket
@@ -93,8 +94,9 @@ export const Ticket = () => {
   const handleOnSubmit = async(e) => {
     try{
     console.log("form data:", selectedTicket)
-    await updateTicket(selectedTicket._id, ticket)
+    await updateTicket(selectedTicket._id, ticket, user.email)
     await updateReplyTicket(ticket._id, {message:comment, sender: user.email})
+    dispatch(getUserProfile());
     console.log('ticket saved submitted')
     }
     catch(error){
@@ -126,11 +128,6 @@ export const Ticket = () => {
 
   const handleOnChangeComment =(e)=>{
     setComment(e.target.value);
-    socket.emit("sendNotification", {
-      senderName: user.user,
-      receiverName: post.username,
-      type,
-    });
   }
 
   return (

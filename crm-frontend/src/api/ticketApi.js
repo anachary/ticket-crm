@@ -51,7 +51,7 @@ export async function updateReplyTicket(_id, msgObj) {
   }
 };
 
-export async function updateTicket(_id, ticketObj) {
+export async function updateTicket(_id, ticketObj, sender='') {
   try {
     const response = await axios({
       method: 'post',
@@ -60,7 +60,7 @@ export async function updateTicket(_id, ticketObj) {
         'Content-Type': ' application/json',
         'Authorization': sessionStorage.getItem("accessJWT")
       },
-      data: { ...ticketObj }
+      data: { ...ticketObj, sender}
     })
     console.log(response)
     return response

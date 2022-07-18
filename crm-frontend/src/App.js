@@ -20,7 +20,6 @@ import {Company} from './pages/company/Company.page.js'
 import { AddCompany } from './pages/new-company/AddCompany.page.js';
 import { UserVerification } from "./pages/user-verification/UserVerification.page";
 import { PasswordOtpForm } from "./pages/password-reset/PasswordOtpForm.page";
-import { useNavigate } from 'react-router-dom';
 
 function App() {
   const {user} = useSelector(state => state.user)

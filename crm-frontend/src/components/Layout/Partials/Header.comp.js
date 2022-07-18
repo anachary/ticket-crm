@@ -7,33 +7,29 @@ import { faBars, faStar, faBell} from '@fortawesome/free-solid-svg-icons'
 import "./Header.style.css"
 import { useNavigate } from 'react-router-dom';
 import { userLogout } from "../../../api/userApi.js";
-import { useSelector } from 'react-redux'
+import { useSelector , useDispatch} from 'react-redux'
 import NotifyMe from 'react-notification-timeline'
+import { saveNotifications } from "../../../api/userApi";
+import { getUserProfile } from "../../../pages/DashboardPage/userAction.js";
 
 export const Header = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const {user} = useSelector(state => state.user)
-  const [notifications, setNotifications] = useState(!user?[]:user.notifications||[{
-    'message': 'Ticket has been updated',
-    'updatedBy': 'Akash Acharya',
-    'updatedDate' : Date.now(),
-    'read': false
-  }])
-  const [open, setOpen] = useState(false);
+  const [notifications, setNotifications] = useState([])
 
+  useEffect(()=>{
+    if(user && user.notifications){
+      setNotifications([... user.notifications])
+    }
 
-  const displayNotification = (notification) => {
-    return (
-      <div className="notification">{`${notification.message} by ${notification.updatedBy} on ${notification.updateDate}`}</div>
-    );
-  };
+  },[])
 
-  const handleRead = () => {
-   //InvokeEndpoint to setNotification to read for user
-    setNotifications([])
-    setOpen(false);
-  };
+  const markAllAsRead = async ()=>{
+   //await saveNotifications(user.email)
+    //dispatch(getUserProfile())
+  }
 
   const logMeOut = async () => {
     //call endpoint to remove access token from mongodb and redis.

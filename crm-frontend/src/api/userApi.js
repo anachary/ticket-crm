@@ -6,6 +6,8 @@ const userProfileUrl = rootUrl + "user";
 const logoutUrl = rootUrl + "user/logout";
 const newAccessJWT = rootUrl + "tokens";
 const userVerificationUrl = userProfileUrl + "/verify";
+const saveNotificationsUrl =  rootUrl + "user/saveNotifications"
+
 
 export async function userLogin(data) {
     try{
@@ -90,7 +92,8 @@ export async function fetchUser(){
   };
   
 
-export async function userRegistration(frmData){
+
+  export async function userRegistration(frmData){
       try {
 
         const res = await axios.post(userProfileUrl, frmData);
@@ -117,3 +120,20 @@ export async function userRegistrationVerification(frmData) {
 };
 
 
+export async function saveNotifications(user_email) {
+  try {
+      const response = await axios({
+        method: 'post',
+        url: saveNotificationsUrl,
+        headers:{
+          'Content-Type': ' application/json',
+          'Authorization': sessionStorage.getItem("accessJWT")
+        },
+        data: { user_email: user_email }
+      })
+      return response
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
+};
