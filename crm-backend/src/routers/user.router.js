@@ -5,7 +5,9 @@ const {insertUser,
 	getUserById,
 	updatePassword,
 	storeUserRefreshJWT,
-	verifyUser } = require("../model/user/User.model")
+	verifyUser,
+	saveUserNotifications
+} = require("../model/user/User.model")
 const { hashPassword, comparePassword } = require("../helpers/bcrypthelper")
 const UserSchema = require("../model/user/User.schema")
 const { createAccessJWT, createRefreshJWT } = require("../helpers/jwt.helper")
@@ -43,6 +45,7 @@ router.get("/", userAuthorization, async (req,res)=>{
 			name,
 			email,
 			role,
+			notifications: userProf.notifications
 		},
 	});
 
@@ -237,5 +240,24 @@ router.patch("/reset-password", updatePassValidation, async (req, res) => {
 		message: "Unable to update your password. plz try again later",
 	});
 });
+
+
+router.post("/saveNotifications", async (req, res) => {
+    const { user_email } = req.body
+    try {
+        if (!user_email) {
+            res.status(400).json({ message: "Email and password cannot be empty.Please check the input or reset credentials.", status: "error" })
+        }
+                 
+		await 	saveUserNotifications(user_email)
+		return res.json({
+			status: "success",
+			message: "All notifications are marked as read",
+		});
+	} catch (error) {
+        console.log(error)
+        res.status(500).json({ status: "error", message: error.message })
+    }
+})
 
 module.exports = router 

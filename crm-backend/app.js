@@ -99,15 +99,7 @@ io.on("connection", (socket) => {
     addNewUser(id, socket.id);
   });
 
-  socket.on("sendNotification", ({ senderId, ticketId }) => {
-    const receiver = getUser(ticketId);
-    io.to(receiver.socketId).emit("getNotification", {
-      senderName,
-      type,
-    });
-  });
-
-   socket.on("disconnect", () => {
+  socket.on("disconnect", () => {
     removeUser(socket.id);
   });
 });

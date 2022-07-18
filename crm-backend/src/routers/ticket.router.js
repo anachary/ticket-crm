@@ -118,7 +118,7 @@ router.post("/update-ticket/:_id", userAuthorization, async (req, res) => {
           priority,
           assignedTo: assignedTo ||'',
           assignedDate :assignedDate || Date.now(),
-          updatedBy:sender,
+          updatedBy:sender||'',
           updateDate: Date.now(),
         };
   
@@ -129,13 +129,13 @@ router.post("/update-ticket/:_id", userAuthorization, async (req, res) => {
          if(ticketUsers && ticketUsers.length>0){
            ticketUsers.forEach(async (ticketUserEmail)=>{
             
-            const notification = new {
+            const notification =  {
               message:`There's is an update on ticket ${_id}`,
-              updatedBy: sender,
-              read: (sender === ticketUserEmail)
+              updatedBy: sender||'',
+              read: false
             }
 
-            storeUserNotification(ticketUserEmail,notification)
+            await storeUserNotification(ticketUserEmail,notification)
 
             await emailProcessor({
               email: ticketUserEmail,

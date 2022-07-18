@@ -112,7 +112,7 @@ const verifyUser = (_id, email) => {
         let data = await UserSchema.findByIdAndUpdate(
             {_id},
             {
-                $push:{"notification":{...notification}},
+                $push:{notifications:{...notification}},
             },
             {
                 new:true
@@ -125,6 +125,32 @@ const verifyUser = (_id, email) => {
     }
 }
   
+
+const saveUserNotifications= async(email) =>{
+  try{
+      let user = await getUserByEmail(email)
+      if(user){
+      let _id = user._id
+      const newArray = []
+      user.notifications.forEach(notification=>{
+            notification.read = true;
+            newArray.push(notification)
+      })
+      user.notifications = newArray
+      UserSchema.findOneAndUpdate(
+        {_id},
+        {
+          ...user,
+        },
+        { new: false })
+      }
+  }
+  catch (err) {
+      throw err;
+  }
+}
+
+
 module.exports = {
     insertUser,
     getUserByEmail,
@@ -132,5 +158,6 @@ module.exports = {
     storeUserRefreshJWT,
     verifyUser,
     updatePassword,
-    storeUserNotification
+    storeUserNotification,
+    saveUserNotifications
 }
