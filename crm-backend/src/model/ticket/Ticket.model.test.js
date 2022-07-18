@@ -78,32 +78,6 @@ describe("Ticket_model.getTickets", () => {
 })
 
 
-describe("Ticket_model.getTicketUsers", () => {
-    test("0", async () => {
-        await Ticket_model.getTicketUsers("7289708e-b17a-477c-8a77-9ab575c4b4d8", "https://")
-    })
-
-    test("1", async () => {
-        await Ticket_model.getTicketUsers("7289708e-b17a-477c-8a77-9ab575c4b4d8", "http://www.croplands.org/account/confirm?t=")
-    })
-
-    test("2", async () => {
-        await Ticket_model.getTicketUsers("7289708e-b17a-477c-8a77-9ab575c4b4d8", "https://croplands.org/app/a/reset?token=")
-    })
-
-    test("3", async () => {
-        await Ticket_model.getTicketUsers("7289708e-b17a-477c-8a77-9ab575c4b4d8", "https://api.telegram.org/bot")
-    })
-
-    test("4", async () => {
-        await Ticket_model.getTicketUsers("03ea49f8-1d96-4cd0-b279-0684e3eec3a9", "http://www.example.com/route/123?foo=bar")
-    })
-
-    test("5", async () => {
-        await Ticket_model.getTicketUsers("", "")
-    })
-})
-
 describe("Ticket_model.updateClientReply", () => {
     test("0", () => {
         let result = Ticket_model.updateClientReply({ _id: "03ea49f8-1d96-4cd0-b279-0684e3eec3a9", message: "Counterparty sent error: %s", sender: false })
@@ -165,5 +139,88 @@ describe("Ticket_model.updateTicket", () => {
     test("5", () => {
         let result = Ticket_model.updateTicket({ _id: "", ticketObj: "" })
         expect(result).toMatchSnapshot()
+    })
+})
+
+describe("Ticket_model.followTicket", () => {
+    test("0", async () => {
+        expect.assertions(1)
+        try {
+            await Ticket_model.followTicket("03ea49f8-1d96-4cd0-b279-0684e3eec3a9", "Edmond")
+        } catch (e) {
+            expect(e.message).toBe("Cast to Number failed for value \"03ea49f8-1d96-4cd0-b279-0684e3eec3a9\" (type string) at path \"_id\" for model \"Ticket\"")
+        }
+    })
+
+    test("1", async () => {
+        expect.assertions(1)
+        try {
+            await Ticket_model.followTicket("7289708e-b17a-477c-8a77-9ab575c4b4d8", "Edmond")
+        } catch (e) {
+            expect(e.message).toBe("Cast to Number failed for value \"7289708e-b17a-477c-8a77-9ab575c4b4d8\" (type string) at path \"_id\" for model \"Ticket\"")
+        }
+    })
+
+    test("2", async () => {
+        expect.assertions(1)
+        try {
+            await Ticket_model.followTicket("a85a8e6b-348b-4011-a1ec-1e78e9620782", "George")
+        } catch (e) {
+            expect(e.message).toBe("Cast to Number failed for value \"a85a8e6b-348b-4011-a1ec-1e78e9620782\" (type string) at path \"_id\" for model \"Ticket\"")
+        }
+    })
+
+    test("3", async () => {
+        expect.assertions(1)
+        try {
+            await Ticket_model.followTicket("03ea49f8-1d96-4cd0-b279-0684e3eec3a9", "Jean-Philippe")
+        } catch (e) {
+            expect(e.message).toBe("Cast to Number failed for value \"03ea49f8-1d96-4cd0-b279-0684e3eec3a9\" (type string) at path \"_id\" for model \"Ticket\"")
+        }
+    })
+
+    test("4", async () => {
+        expect.assertions(1)
+        try {
+            await Ticket_model.followTicket("a85a8e6b-348b-4011-a1ec-1e78e9620782", "Edmond")
+        } catch (e) {
+            expect(e.message).toBe("Cast to Number failed for value \"a85a8e6b-348b-4011-a1ec-1e78e9620782\" (type string) at path \"_id\" for model \"Ticket\"")
+        }
+    })
+
+    test("5", async () => {
+        expect.assertions(1)
+        try {
+            await Ticket_model.followTicket("a85a8e6b-348b-4011-a1ec-1e78e9620782", "Anas")
+        } catch (e) {
+            expect(e.message).toBe("Cast to Number failed for value \"a85a8e6b-348b-4011-a1ec-1e78e9620782\" (type string) at path \"_id\" for model \"Ticket\"")
+        }
+    })
+
+    test("6", async () => {
+        expect.assertions(1)
+        try {
+            await Ticket_model.followTicket("7289708e-b17a-477c-8a77-9ab575c4b4d8", "George")
+        } catch (e) {
+            expect(e.message).toBe("Cast to Number failed for value \"7289708e-b17a-477c-8a77-9ab575c4b4d8\" (type string) at path \"_id\" for model \"Ticket\"")
+        }
+    })
+
+    test("7", async () => {
+        expect.assertions(1)
+        try {
+            await Ticket_model.followTicket("a85a8e6b-348b-4011-a1ec-1e78e9620782", "Michael")
+        } catch (e) {
+            expect(e.message).toBe("Cast to Number failed for value \"a85a8e6b-348b-4011-a1ec-1e78e9620782\" (type string) at path \"_id\" for model \"Ticket\"")
+        }
+    })
+
+    test("8", async () => {
+        expect.assertions(1)
+        try {
+            await Ticket_model.followTicket("03ea49f8-1d96-4cd0-b279-0684e3eec3a9", "George")
+        } catch (e) {
+            expect(e.message).toBe("Cast to Number failed for value \"03ea49f8-1d96-4cd0-b279-0684e3eec3a9\" (type string) at path \"_id\" for model \"Ticket\"")
+        }
     })
 })
