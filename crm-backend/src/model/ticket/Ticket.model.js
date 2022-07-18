@@ -107,6 +107,27 @@ const deleteTicket = async(_id) =>{
   }
 };
 
+const followTicket = async(ticket_id, user_email) =>{
+  return new Promise((resolve, reject) => {
+    try {
+      TicketSchema.findOneAndUpdate(
+        { _id: ticket_id },
+        {
+          $push: {
+            followers: { follower: user_email },
+          },
+        },
+        { new: false }
+      )
+        .then((data) => resolve(data))
+        .catch((error) => reject(error));
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+}
+
 module.exports = {
   getTickets,
   getTicketById,
@@ -114,5 +135,6 @@ module.exports = {
   updateTicket,
   updateClientReply,
   getTicketUsers,
-  deleteTicket
+  deleteTicket,
+  followTicket
 };
