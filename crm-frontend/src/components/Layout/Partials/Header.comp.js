@@ -63,6 +63,7 @@ export const Header = () => {
             <Nav.Link href="/dashboard" className='dashboard-content-link'>Dashboard</Nav.Link>
             {user.role === "admin" && (<Nav.Link href="/company" className='dashboard-content-link'>Company</Nav.Link>)}
             <Nav.Link href="/tickets"  className='dashboard-content-link'>Tickets</Nav.Link>
+            <Nav.Link href="/reports"  className='dashboard-content-link'>Reports</Nav.Link>
               <NotifyMe
               data={notifications}
               storageKey='notific_key'

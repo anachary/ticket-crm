@@ -15,11 +15,12 @@ import { Dashboard } from './pages/DashboardPage/Dashboard.page.js';
 import { TicketLists } from './pages/ticket-list/TicketLists.page.js';
 import { CompanyLists } from './pages/company-list/CompanyLists.page.js';
 import { AddTicket } from './pages/new-ticket/AddTicket.page.js';
-import {Ticket} from './pages/ticket/Ticket.page.js'
-import {Company} from './pages/company/Company.page.js'
+import { Ticket}  from './pages/ticket/Ticket.page.js'
+import { Company } from './pages/company/Company.page.js'
 import { AddCompany } from './pages/new-company/AddCompany.page.js';
 import { UserVerification } from "./pages/user-verification/UserVerification.page";
 import { PasswordOtpForm } from "./pages/password-reset/PasswordOtpForm.page";
+import { Report } from "./pages/report/Report.page.js"
 
 function App() {
   const {user} = useSelector(state => state.user)
@@ -71,6 +72,11 @@ function App() {
                 <PrivateRoute >{ user.role ==="admin" ? <AddCompany></AddCompany>:<Navigate to='/' />}</PrivateRoute>
               } 
               ></Route>
+              <Route
+              path="/reports"
+              element={
+                <PrivateRoute><Report></Report></PrivateRoute>
+              } />
         </Routes>
       </BrowserRouter>
     </div>
