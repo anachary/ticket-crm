@@ -58,6 +58,10 @@ export const Report = () => {
         
       };
 
+      const handleExport = (e)=>{
+        
+      }
+
     return (<div>
         <Form autoComplete="off">
             <Form.Group as={Row} className='mb-2'>
@@ -115,6 +119,7 @@ export const Report = () => {
                 </Form.Control>
                 </Col>
             </Form.Group>
+             <Button onClick={handleExport}>Excel Export</Button>
         </Form>
         <div> 
             <Table striped bordered hover>
