@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import "./Report.style.css"
 import { Table } from "react-bootstrap";
+import { ExportToCsv } from 'export-to-csv';
 import {
     Form,
     Row,
@@ -32,6 +33,21 @@ export const Report = () => {
     const [reportTickets, setReportTickets] = useState([])
     const [frmData, setFrmData] = useState(initialFrmDt);
     const [frmDtValid, setFrmDtValid] = useState(initialFrmDtValid);
+    const options = { 
+        fieldSeparator: ',',
+        quoteStrings: '"',
+        decimalSeparator: '.',
+        showLabels: true, 
+        showTitle: true,
+        title: 'Report',
+        useTextFile: false,
+        useBom: true,
+        useKeysAsHeaders: true,
+        // headers: ['Column 1', 'Column 2', etc...] <-- Won't work with useKeysAsHeaders present!
+      };
+     
+    const csvExporter = new ExportToCsv(options);
+
     useEffect(() => {
         fetchReportTickets(frmData).then((result)=>{
           if( result.data.result.length && result.data.result[0]){
@@ -59,7 +75,7 @@ export const Report = () => {
       };
 
       const handleExport = (e)=>{
-        
+        csvExporter.generateCsv(reportTickets);
       }
 
     return (<div>
