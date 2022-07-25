@@ -120,3 +120,21 @@ export async function followTicket(ticket_id, user_id) {
     throw error
   }
 };
+
+export async function fetchReportTickets(fmData) {
+  try {
+    const result =  await axios({
+      method: 'post',
+      url: ticketUrl + "reports",
+      headers: {
+        'Content-Type': ' application/json',
+        'Authorization': sessionStorage.getItem("accessJWT")
+      },
+      data: { ...fmData }
+    })
+    return result
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
+};
