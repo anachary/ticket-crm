@@ -222,4 +222,19 @@ router.post("/follow-ticket/",
 }
 )
 
+
+router.post("/reports", userAuthorization, async (req, res) => {
+  try {
+    const userId = req.userId;
+    const result = await getTickets(userId);
+    const {startDate, endDate} = req.body
+    return res.json({
+      status: "success",
+      result,
+    });
+  } catch (error) {
+    res.json({ status: "error", message: error.message });
+  }
+});
+
 module.exports = router 
