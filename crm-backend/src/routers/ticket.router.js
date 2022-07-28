@@ -14,7 +14,7 @@ const {
 const { userAuthorization} = require("../middleware/authorization.middleware");
 const {createNewTicketValidation, replyTicketMessageValidation} = require("../middleware/formValidation.middleware.js");
 const { emailProcessor } = require("../helpers/email.helper");
-const { storeUserNotification } = require("../model/user/User.model");
+const { storeUserNotification, getUserById } = require("../model/user/User.model");
 
 router.all("/", (req,res,next) =>{
  //res.json({message:"ticket router is healthy"})
@@ -26,7 +26,12 @@ router.all("/", (req,res,next) =>{
 router.get("/", userAuthorization, async (req, res) => {
     try {
       const userId = req.userId;
-      const result = await getTickets(userId);
+      const user = await getUserById(userId)
+      let result = await getTickets(userId)
+      
+      if(user && result && result.length>0 && user.role !== "admin"){
+        result = result.filter(v=>v.companyName === user.company);
+      }     
   
       return res.json({
         status: "success",
@@ -43,6 +48,7 @@ router.get("/", userAuthorization, async (req, res) => {
       const { _id } = req.params;
   
       const clientId = req.userId;
+      const user = await getUserById(userId)
       const result = await getTicketById(_id);
   
       return res.json({
@@ -65,6 +71,8 @@ router.post(
         const { subject, sender, description,issueDate, status, priority, message, assignedTo, assignedDate} = req.body;
   
         const userId = req.userId;
+
+        const user = await getUserById(userId)
   
         const ticketObj = {
           clientId: userId,
@@ -77,6 +85,7 @@ router.post(
           assignedDate: assignedDate||Date.now(),
           updatedBy:sender,
           conversations: [],
+          companyName: user.company
         };
   
         const result = await insertTicket(ticketObj);

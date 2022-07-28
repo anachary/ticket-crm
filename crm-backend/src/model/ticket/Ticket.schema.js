@@ -99,7 +99,13 @@ const TicketSchema = new Schema({
       default: Date.now(),
     }
   },
-]
+],
+ 
+ companyName: {
+  type: "String",
+  maxlength: 50,
+  required: true
+},
 
 });
 autoIncrement.initialize(mongoose.connection)
