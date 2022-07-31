@@ -14,6 +14,8 @@ import {
 import { openNewTicket } from "./addTicketAction";
 import { restSuccessMSg } from "./addTicketSlicer";
 import { useNavigate } from 'react-router-dom';
+import { getCompanyUsers } from "../../api/userApi.js"
+
 
 
 const initialFrmDt = {
@@ -36,13 +38,20 @@ const initialFrmDtValid = {
 export const AddTicketForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {
-    user: { name },
-  } = useSelector((state) => state.user);
+  // const {
+  //   user: { name },
+  // } = useSelector((state) => state.user);
 
-
+  const {user, socket} = useSelector(state=>state.user)
   const [frmData, setFrmData] = useState(initialFrmDt);
   const [frmDtValid, setFrmDtValid] = useState(initialFrmDtValid);
+  const [companyUsers, setCompanyUsers] = useState([])
+  useEffect (()=>{
+    getCompanyUsers().then((result)=>{
+      const companyUsers = result.users ? result.users.filter(v=>v.company === user.company):[]
+      setCompanyUsers(companyUsers)
+    })
+  },[])
   useEffect(() => {
   }, [dispatch, frmData, frmDtValid]);
 
@@ -67,7 +76,7 @@ export const AddTicketForm = () => {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-     dispatch(openNewTicket({ ...frmData, sender: name }));
+     dispatch(openNewTicket({ ...frmData, sender: user.name }));
      navigate("/dashboard")
   };
 
@@ -134,16 +143,15 @@ export const AddTicketForm = () => {
           <Form.Label column sm={3}>
          Assigned To
           </Form.Label>
-          <Col sm={5}>
-            <Form.Control
-              name="assignedTo"
-              value={frmData.assignedTo}
-              isInvalid={ !frmDtValid.assignedTo}
-              onChange={handleOnChange}
-              placeholder="Assigned To"
-              size="sm"
-            />
-        </Col>    
+           <Col sm={5}>
+             <Form.Control as="select" size="sm" name="assignedTo"
+                value={frmData.assignedTo}
+                isInvalid={ !frmDtValid.assignedTo}
+                placeholder="Assigned To"
+                onChange={handleOnChange}>
+                {companyUsers.map(v=>(<option value={v.email}>{v.name}</option>))}
+              </Form.Control>
+          </Col>  
         </Form.Group>
         <Form.Group as={Row} className='mb-2'>
           <Form.Label column sm={3}>

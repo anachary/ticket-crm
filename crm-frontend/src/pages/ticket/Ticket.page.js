@@ -13,6 +13,7 @@ import { fetchSingleTicket} from "../ticket-list/ticketsAction";
 import { resetResponseMsg, fetchTicketSuccess } from "../ticket-list/ticketsSlice";
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile } from "../DashboardPage/userAction.js";
+import { getCompanyUsers } from "../../api/userApi.js"
 
 import {
   getSingleTicket, updateReplyTicket, updateTicket, deleteTicket, followTicket
@@ -60,6 +61,14 @@ export const Ticket = () => {
   const [followMsg, setFollowMsg] = useState('')
   const [followErr, setFollowErr] = useState('')
   const disabled = user.role === 'client' && selectedTicket && selectedTicket.status.toLowerCase() === 'resolved'
+  const [companyUsers, setCompanyUsers] = useState([])
+
+  useEffect (()=>{
+    getCompanyUsers().then((result)=>{
+      const companyUsers = result.users ? result.users.filter(v=>v.company === ticket.companyName):[]
+      setCompanyUsers(companyUsers)
+    })
+  },[ticket])
 
   useEffect(() => {
     getSingleTicket(tId).then((result)=>{
@@ -214,15 +223,14 @@ export const Ticket = () => {
             Assigned To
           </Form.Label>
           <Col sm={4}>
-            <Form.Control 
-              name="assignedTo"
-              disabled ={disabled}
+             <Form.Control as="select" size="sm" name="assignedTo"
               value={ticket?ticket.assignedTo:''}
               isInvalid={!ticketValid.assignedTo}
-              onChange={handleOnChange}
+              disabled ={disabled}
               placeholder="Assigned To"
-              size="sm"
-            />
+              onChange={handleOnChange}>
+              {companyUsers.map(v=>(<option value={v.email}>{v.name}</option>))}
+              </Form.Control>
           </Col>
           <Form.Label column sm={2}>
             Assigned Date

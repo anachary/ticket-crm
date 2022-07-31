@@ -7,6 +7,7 @@ const logoutUrl = rootUrl + "user/logout";
 const newAccessJWT = rootUrl + "tokens";
 const userVerificationUrl = userProfileUrl + "/verify";
 const saveNotificationsUrl =  rootUrl + "user/saveNotifications"
+const usersUrl = rootUrl + "user/company-users"
 
 
 export async function userLogin(data) {
@@ -137,3 +138,24 @@ export async function saveNotifications(user_email) {
     throw error
   }
 };
+
+export async function getCompanyUsers() {
+  try {
+    const accessJWT = sessionStorage.getItem("accessJWT");
+
+    if (!accessJWT) {
+      return "Token not found!";
+    }
+
+    const res = await axios.get(usersUrl, {
+      headers: {
+        Authorization: accessJWT,
+      },
+    });
+
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    throw error
+  }
+}
