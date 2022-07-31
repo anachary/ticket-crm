@@ -41,7 +41,7 @@ export const TicketTable = () => {
                     <td>{row.assignedDate ? ((new Date(row.assignedDate)).toLocaleDateString('en-US')+" "+(new Date(row.assignedDate)).toLocaleTimeString('en-US')):''}</td>
                     <td>{row.priority}</td>
                     <td>{row.assignedTo}</td>
-                    <td>{row.company_name}</td>
+                    <td>{row.companyName}</td>
                 </tr>
                 ))) :
                     (<tr><td colSpan="8" className="text-center">No Rows to display</td></tr>)}
