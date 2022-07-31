@@ -6,7 +6,8 @@ const {insertUser,
 	updatePassword,
 	storeUserRefreshJWT,
 	verifyUser,
-	saveUserNotifications
+	saveUserNotifications,
+	getCompanyUsers,
 } = require("../model/user/User.model")
 const { hashPassword, comparePassword } = require("../helpers/bcrypthelper")
 const UserSchema = require("../model/user/User.schema")
@@ -26,6 +27,7 @@ const {
 	updatePassValidation,
 	newUserValidation,
 } = require("../middleware/formValidation.middleware");
+const { getTicketUsers } = require("../model/ticket/Ticket.model")
 
 router.all("/", (req, res, next) => {
     //res.json({message:"user router is healthy"})
@@ -259,5 +261,27 @@ router.post("/saveNotifications", async (req, res) => {
         res.status(500).json({ status: "error", message: error.message })
     }
 })
+
+ router.get("/users", userAuthorization, async (req,res)=>{
+    try {
+     
+		const _id = req.userId;
+
+		const user = await getUserById(_id);
+		let company = user.company
+		if(user.role === "admin") {
+			company = "admin"
+		}
+        const users = await getCompanyUsers(company)
+		res.json({
+			users: []
+		});
+		
+	} catch (error) {
+        console.log(error)
+        res.status(500).json({ status: "error", message: error.message })
+    }
+
+ })
 
 module.exports = router 
