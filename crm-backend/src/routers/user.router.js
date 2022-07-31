@@ -47,7 +47,8 @@ router.get("/", userAuthorization, async (req,res)=>{
 			name,
 			email,
 			role,
-			notifications: userProf.notifications
+			notifications: userProf.notifications,
+			company:userProf.company
 		},
 	});
 
@@ -262,11 +263,10 @@ router.post("/saveNotifications", async (req, res) => {
     }
 })
 
- router.get("/users", userAuthorization, async (req,res)=>{
+ router.get("/company-users", userAuthorization, async (req,res)=>{
     try {
      
 		const _id = req.userId;
-
 		const user = await getUserById(_id);
 		let company = user.company
 		if(user.role === "admin") {
@@ -274,7 +274,7 @@ router.post("/saveNotifications", async (req, res) => {
 		}
         const users = await getCompanyUsers(company)
 		res.json({
-			users: []
+			users: users
 		});
 		
 	} catch (error) {

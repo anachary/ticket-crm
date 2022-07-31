@@ -8,19 +8,19 @@ const morgan = require("morgan")
 const autoIncrement = require('mongoose-auto-increment');
 const {Server} = require("socket.io")
 const http = require("http")
-const swaggerUi = require("swagger-ui-express");
-const swaggerJsdoc = require("swagger-jsdoc");
-const options = {
-  swaggerDefinition: {
-    info: {
-      title: "JWT authentication & authorization in NodeJS",
-      version: "1.0.0",
-    },
-  },
-  apis: ["./src/routers/**/*.js"],
-};
-const swaggerSpecification = swaggerJsdoc(options);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecification));
+// const swaggerUi = require("swagger-ui-express");
+// const swaggerJsdoc = require("swagger-jsdoc");
+// const options = {
+//   swaggerDefinition: {
+//     info: {
+//       title: "JWT authentication & authorization in NodeJS",
+//       version: "1.0.0",
+//     },
+//   },
+//   apis: ["./src/routers/**/*.js"],
+// };
+// const swaggerSpecification = swaggerJsdoc(options);
+// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecification));
 
 //API Security 
 app.use(helmet())

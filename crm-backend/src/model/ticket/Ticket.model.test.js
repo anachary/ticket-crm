@@ -255,5 +255,6 @@ describe("Ticket_model.deleteTicket", () => {
 
     test("3", async () => {
         await Ticket_model.deleteTicket(undefined)
+
     })
 })

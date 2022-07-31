@@ -8,7 +8,8 @@ const {
   } = require("../model/company/Company.model");
 
 const { userAuthorization} = require("../middleware/authorization.middleware");
-const {createNewCompanyValidation } = require("../middleware/formValidation.middleware.js")
+const {
+  createNewCompanyValidation } = require("../middleware/formValidation.middleware.js")
 
 router.all("/", (req,res,next) =>{
   //res.json({message:"ticket router is healthy"})
