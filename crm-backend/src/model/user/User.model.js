@@ -125,6 +125,19 @@ const verifyUser = (_id, email) => {
     }
 }
   
+const getCompanyUsers = async(company) => {
+ 
+  if(!company) {
+    return  []
+  }
+
+  if(company === "admin"){
+    return await UserSchema.find()
+  }
+
+  return await UserSchema.find({company})
+
+}
 
 const saveUserNotifications= async(email) =>{
   try{
@@ -159,5 +172,6 @@ module.exports = {
     verifyUser,
     updatePassword,
     storeUserNotification,
-    saveUserNotifications
+    saveUserNotifications,
+    getCompanyUsers
 }
