@@ -61,59 +61,62 @@ export const CompanyUserTable = (props) => {
 
  
     if (error) return <h3>{error}</h3>;
-
+   
 
     return (<div>
-            <div style={{ display: 'flex', justifyContent:'space-between', marginBottom:'10px'}}>
-                <div>
-                    <div>Name:</div>
-                    <div>
-                    <input type='text'
-                        name="name"
-                        className='p-1'
-                        onChange={handleOnChange}
-                        placeholder='Search ...'
-                    />
+                {showRegistration && (<div className='registration-landing-page jumbotron form-box'>
+                        <RegistrationForm user={editUser} editMode={true}  handleCancel={()=>{setShowRegistration(false)}}/>
+                    </div>)
+                    }
+                {!showRegistration && (<div>
+                    <div style={{ display: 'flex', justifyContent:'space-between', marginBottom:'10px'}}>
+                        <div>
+                            <div>Name:</div>
+                            <div>
+                            <input type='text'
+                                name="name"
+                                className='p-1'
+                                onChange={handleOnChange}
+                                placeholder='Search ...'
+                            />
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            { showRegistration && (<div className='registration-landing-page jumbotron form-box'>
-                <RegistrationForm user={editUser} editMode={true}  handleCancel={()=>{setShowRegistration(false)}}/>
-            </div>)
-            }
-            <div>
-                <Table striped bordered hover>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Company</th>
-                    <th>User Email</th>
-                    <th>phone</th>
-                    <th>Address</th>
-                    <th>Role</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                {
-                    companyUsers.length ? (companyUsers.map(row => (<tr key={row._id}>
-                        <td>
-                            <div onClick = {(e)=>{handleEdit(row)}}>{row._id}</div>
-                        </td>
-                        <td>{row.name}</td>
-                        <td>{row.company}</td>
-                        <td>{row.email}</td>
-                        <td>{row.phone}</td>
-                        <td>{row.adress}</td>
-                        <td>{row.role}</td>
-                        <td><div className='text-center'><FontAwesomeIcon icon={faTrash} /></div></td>
+                
+                    <div>
+                        <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Company</th>
+                            <th>User Email</th>
+                            <th>phone</th>
+                            <th>Address</th>
+                            <th>Role</th>
+                            <th>Delete</th>
                         </tr>
-                    ))) :
-                        (<tr><td colSpan="8" className="text-center">No Rows to display</td></tr>)}
+                    </thead>
+                    <tbody>
+                        {
+                            companyUsers.length ? (companyUsers.map(row => (<tr key={row._id}>
+                                <td>
+                                    <div onClick = {(e)=>{handleEdit(row)}}>{row._id}</div>
+                                </td>
+                                <td>{row.name}</td>
+                                <td>{row.company}</td>
+                                <td>{row.email}</td>
+                                <td>{row.phone}</td>
+                                <td>{row.adress}</td>
+                                <td>{row.role}</td>
+                                <td><div className='text-center'><FontAwesomeIcon icon={faTrash} /></div></td>
+                                </tr>
+                            ))) :
+                                (<tr><td colSpan="8" className="text-center">No Rows to display</td></tr>)}
 
-            </tbody>
-                </Table>
-            </div>
-    </div> )
+                    </tbody>
+                        </Table>
+                    </div>
+                </div>)}
+            </div>)
 }

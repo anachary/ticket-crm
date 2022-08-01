@@ -12,6 +12,23 @@ const insertUser = async (userObj) => {
     }
 }
 
+const editUser = async (userObj) => {
+  try {
+      const data = await  UserSchema.findOneAndUpdate(
+        { email:userObj.email, company:userObj.company },
+        {
+          ...userObj,
+        },
+        { new: false })
+      console.log(data)
+      return data
+  }
+  catch (err) {
+      console.log(err)
+      throw err
+  }
+}
+
 const getUserByEmail = async email =>{
     try {
      if(!email){
@@ -173,5 +190,6 @@ module.exports = {
     updatePassword,
     storeUserNotification,
     saveUserNotifications,
-    getCompanyUsers
+    getCompanyUsers,
+    editUser
 }

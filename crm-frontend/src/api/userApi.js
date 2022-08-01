@@ -8,7 +8,7 @@ const newAccessJWT = rootUrl + "tokens";
 const userVerificationUrl = userProfileUrl + "/verify";
 const saveNotificationsUrl =  rootUrl + "user/saveNotifications"
 const usersUrl = rootUrl + "user/company-users"
-const userEditProfileUrl = rootUrl + "user-edit";
+const userEditProfileUrl = rootUrl + "user/edit-user";
 
 
 export async function userLogin(data) {

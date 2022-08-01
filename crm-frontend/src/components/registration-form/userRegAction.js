@@ -28,7 +28,7 @@ import {
     try {
       dispatch(editRegistrationPending());
   
-      const result = await userRegistration(frmDt);
+      const result = await userEditRegistration(frmDt);
       result.status === "success"
         ? dispatch(editRegistrationSuccess(result.message))
         : dispatch(editRegistrationError(result.message));
