@@ -193,7 +193,7 @@ export const RegistrationForm = (props) => {
                             <Button variant="primary" type="submit"  size="sm" disabled={Object.values(passwordError).includes(false) || Object.values(requiredError).includes(false) }>
                                 {!props.editMode ? 'Register' :'Update'} 
                             </Button>
-                            {props.editMode && (<Button variant="secondary" type="submit"  size="sm"  onClick={props.handleCancel}>Cacncel</Button>)}
+                            {(props.editMode||props.forceInsert )&& (<Button variant="secondary" type="submit"  size="sm"  className = "m-5" onClick={props.handleCancel}>Cancel</Button>)}
                             {isLoading && <Spinner variant="info" animation="border" />}
                         </Form.Group>
                     </Form>

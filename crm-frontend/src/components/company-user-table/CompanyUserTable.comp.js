@@ -1,11 +1,11 @@
 import React, { useEffect , useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Table } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 
 import { Link } from "react-router-dom";
 
-import {getCompanyUsers} from "../../api/userApi"
+import {deleteUser, getCompanyUsers} from "../../api/userApi"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash} from '@fortawesome/free-solid-svg-icons'
 import { RegistrationForm } from "../registration-form/RegistrationForm.comp";
@@ -27,10 +27,12 @@ export const CompanyUserTable = (props) => {
     const [name, setName] = useState('')
     const [showRegistration, setShowRegistration] = useState(false)
     const [editUser, setEditUser] = useState(initializeState)
-
+    const [editMode, setEditMode] = useState(false)
+    const [forceInsert, setForceInsert] = useState(false)
 
     const handleEdit = (row)=>{
         const newEditUser = {...initializeState}
+        if(row) {
         newEditUser.name = row.name,
         newEditUser.phone = row.phone,
         newEditUser.email = row.email
@@ -38,25 +40,54 @@ export const CompanyUserTable = (props) => {
         newEditUser.address= row.address
         newEditUser.password= row.password
         newEditUser.confirmPassword= row.confirmPassword
+        setEditMode(true)
+        setForceInsert(false)
+        
+       }
+        else{
+            setForceInsert(true)  
+            setEditMode(false)}
 
         setEditUser(newEditUser)
         setShowRegistration(true)
     }
-
+    
     const handleOnChange =(e)=>{
         setName(e.target.value)
     }
 
-    useEffect (()=>{
-      getCompanyUsers().then((result)=>{
+    const handleDelete = async (email, company)=>{
+       await deleteUser(email,company)
+       refreshGrid()
+    }
+    
+    const refreshGrid = () =>{
+    getCompanyUsers().then((result)=>{
         let companyUsers = result.users ? result.users.filter(v=>v.company === props.companyName):[]
         if(companyUsers && name){
             companyUsers = companyUsers.filter(v=>v.name.includes(name))
         }
         setCompanyUsers(companyUsers)
-      }).catch((err)=>{
+        }).catch((err)=>{
         setError('Network Error')
-      })
+        })
+    }
+    
+    const handleCancel = ()=>{
+        setShowRegistration(false) 
+        refreshGrid()
+    }
+
+    useEffect (()=>{
+        getCompanyUsers().then((result)=>{
+            let companyUsers = result.users ? result.users.filter(v=>v.company === props.companyName):[]
+            if(companyUsers && name){
+                companyUsers = companyUsers.filter(v=>v.name.includes(name))
+            }
+            setCompanyUsers(companyUsers)
+            }).catch((err)=>{
+            setError('Network Error')
+            })
     },[props.companyName, name])
 
  
@@ -65,11 +96,11 @@ export const CompanyUserTable = (props) => {
 
     return (<div>
                 {showRegistration && (<div className='registration-landing-page jumbotron form-box'>
-                        <RegistrationForm user={editUser} editMode={true}  handleCancel={()=>{setShowRegistration(false)}}/>
+                        <RegistrationForm user={editUser} editMode={editMode}  handleCancel={handleCancel} forceInsert={forceInsert}/>
                     </div>)
                     }
                 {!showRegistration && (<div>
-                    <div style={{ display: 'flex', justifyContent:'space-between', marginBottom:'10px'}}>
+                    <div style={{ display: 'flex', justifyContent:'space-between', marginBottom:'5px'}}>
                         <div>
                             <div>Name:</div>
                             <div>
@@ -81,6 +112,7 @@ export const CompanyUserTable = (props) => {
                             />
                             </div>
                         </div>
+                        <div><Button onClick = {(e)=>{handleEdit()}} variant="primary" size="md"> Register New User</Button></div>
                     </div>
                 
                     <div>
@@ -109,7 +141,7 @@ export const CompanyUserTable = (props) => {
                                 <td>{row.phone}</td>
                                 <td>{row.adress}</td>
                                 <td>{row.role}</td>
-                                <td><div className='text-center'><FontAwesomeIcon icon={faTrash} /></div></td>
+                                <td><div className='text-center' onClick={(e)=>{handleDelete(row.email, row.company)}} ><FontAwesomeIcon icon={faTrash} /></div></td>
                                 </tr>
                             ))) :
                                 (<tr><td colSpan="8" className="text-center">No Rows to display</td></tr>)}
