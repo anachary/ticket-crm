@@ -8,6 +8,7 @@ const newAccessJWT = rootUrl + "tokens";
 const userVerificationUrl = userProfileUrl + "/verify";
 const saveNotificationsUrl =  rootUrl + "user/saveNotifications"
 const usersUrl = rootUrl + "user/company-users"
+const userEditProfileUrl = rootUrl + "user-edit";
 
 
 export async function userLogin(data) {
@@ -92,7 +93,18 @@ export async function fetchUser(){
     }
   };
   
+  export async function userEditRegistration(frmData){
+    try {
 
+      const res = await axios.post(userEditProfileUrl, frmData);
+      return res.data
+  }
+  catch(error){
+      console.log(error.message)
+      return res.data
+  }
+  return
+}
 
   export async function userRegistration(frmData){
       try {

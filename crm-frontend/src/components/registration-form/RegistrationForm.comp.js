@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Row, Col, Form, Button, Spinner, Alert} from 'react-bootstrap'
-import { newUserRegistration } from "./userRegAction";
+import { editUserRegistration, newUserRegistration } from "./userRegAction";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllCompanies } from '../../pages/company-list/companiesAction';
 
@@ -29,13 +29,12 @@ const requiredVerificationError = {
     isValidCompany:false,
 }
 
-export const RegistrationForm = () => {
+export const RegistrationForm = (props) => {
     const dispatch = useDispatch();
-    const [newUser, setNewUser] = useState(initializeState)
+    const [newUser, setNewUser] = useState(props.user ||initializeState)
     const [passwordError, setPasswordError] = useState(passVerificationError)
     const [requiredError, setRequiredError] = useState(requiredVerificationError)
    
-
     const { isLoading, status, message } = useSelector(
         (state) => state.registration
       );
@@ -45,7 +44,16 @@ export const RegistrationForm = () => {
       );  
    
     useEffect(() => {
-       
+        if(newUser){
+         
+         const newRequiredError = {... requiredVerificationError}
+         newRequiredError.isValidName = newUser.name !== ""
+         newRequiredError.isValidCompany = newUser.company !== ""
+         newRequiredError.isValidEmail = newUser.email !== ""
+
+         setRequiredError(newRequiredError)
+
+        }
        }, [newUser])
 
     useEffect(() => {
@@ -104,7 +112,7 @@ export const RegistrationForm = () => {
           password,
           role:"client"
         };
-        dispatch(newUserRegistration(newRegistration));
+        !props.editMode ? dispatch(newUserRegistration(newRegistration)) : dispatch(editUserRegistration(newRegistration))
       };
     return (
         <Container>
@@ -183,18 +191,19 @@ export const RegistrationForm = () => {
                         
                         <Form.Group className='text-center'>
                             <Button variant="primary" type="submit"  size="sm" disabled={Object.values(passwordError).includes(false) || Object.values(requiredError).includes(false) }>
-                                Register 
+                                {!props.editMode ? 'Register' :'Update'} 
                             </Button>
+                            {props.editMode && (<Button variant="secondary" type="submit"  size="sm"  onClick={props.handleCancel}>Cacncel</Button>)}
                             {isLoading && <Spinner variant="info" animation="border" />}
                         </Form.Group>
                     </Form>
                 </Col>
             </Row>
-            <Row className='mt-1 text-center'>
+            {!props.editMode && (<Row className='mt-1 text-center'>
                 <Col>
-                    Already have an account ? <a href ='/'>Login Now</a>
+                  <div> Already have an account ? <a href ='/'>Login Now</a></div>
                 </Col>
-            </Row>
+            </Row>)}
         </Container>
     )
 }

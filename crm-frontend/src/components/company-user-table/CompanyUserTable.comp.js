@@ -8,12 +8,40 @@ import { Link } from "react-router-dom";
 import {getCompanyUsers} from "../../api/userApi"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash} from '@fortawesome/free-solid-svg-icons'
+import { RegistrationForm } from "../registration-form/RegistrationForm.comp";
+import "../../pages/registration/registrationPage.style.css"
 export const CompanyUserTable = (props) => {
+
+    const initializeState = {
+        name: '',
+        phone: '',
+        email: '',
+        company: '',
+        address: '',
+        password: '',
+        confirmPassword: ''
+    }
    
     const [companyUsers, setCompanyUsers] = useState([])
     const [error, setError] = useState('')
     const [name, setName] = useState('')
-    const [companyName, setCompanyName] = useState(props.companyName)
+    const [showRegistration, setShowRegistration] = useState(false)
+    const [editUser, setEditUser] = useState(initializeState)
+
+
+    const handleEdit = (row)=>{
+        const newEditUser = {...initializeState}
+        newEditUser.name = row.name,
+        newEditUser.phone = row.phone,
+        newEditUser.email = row.email
+        newEditUser. company= row.company
+        newEditUser.address= row.address
+        newEditUser.password= row.password
+        newEditUser.confirmPassword= row.confirmPassword
+
+        setEditUser(newEditUser)
+        setShowRegistration(true)
+    }
 
     const handleOnChange =(e)=>{
         setName(e.target.value)
@@ -49,6 +77,10 @@ export const CompanyUserTable = (props) => {
                     </div>
                 </div>
             </div>
+            { showRegistration && (<div className='registration-landing-page jumbotron form-box'>
+                <RegistrationForm user={editUser} editMode={true}  handleCancel={()=>{setShowRegistration(false)}}/>
+            </div>)
+            }
             <div>
                 <Table striped bordered hover>
             <thead>
@@ -67,8 +99,7 @@ export const CompanyUserTable = (props) => {
                 {
                     companyUsers.length ? (companyUsers.map(row => (<tr key={row._id}>
                         <td>
-                            {/* <Link to={`/user/${row._id}`}>{row._id}</Link> */}
-                            {row._id}
+                            <div onClick = {(e)=>{handleEdit(row)}}>{row._id}</div>
                         </td>
                         <td>{row.name}</td>
                         <td>{row.company}</td>
