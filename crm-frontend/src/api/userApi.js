@@ -9,7 +9,7 @@ const userVerificationUrl = userProfileUrl + "/verify";
 const saveNotificationsUrl =  rootUrl + "user/saveNotifications"
 const usersUrl = rootUrl + "user/company-users"
 const userEditProfileUrl = rootUrl + "user/edit-user";
-
+const userDeleteProfileUrl = rootUrl + "user/delete-user";
 
 export async function userLogin(data) {
     try{
@@ -171,3 +171,17 @@ export async function getCompanyUsers() {
     throw error
   }
 }
+
+export async function deleteUser(email,company){
+  try {
+    await axios.delete(userDeleteProfileUrl, {
+      headers: {
+        Authorization: sessionStorage.getItem("accessJWT"),
+      },
+      data: { email, company }
+    });
+  } catch (error) {
+    console.log(error);
+    throw error
+  }
+};
