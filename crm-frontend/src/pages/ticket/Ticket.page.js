@@ -253,12 +253,11 @@ export const Ticket = () => {
           </Form.Label>
           <Col sm={4}>
             <Form.Control
-              name="assignedTo"
+              name="updatedBy"
               disabled ={disabled}
               value={ticket?ticket.updatedBy:''}
               placeholder="Updated By"
               size="sm"
-              disabled
             />
           </Col>
           <Form.Label column sm={2}>
@@ -266,7 +265,7 @@ export const Ticket = () => {
           </Form.Label>
           <Col sm={4}>
             <Form.Control
-              name="assignedDate"
+              name="updatedDate"
               type="date"
               value={ticket?ticket.updatedDate:''}
               size="sm"
