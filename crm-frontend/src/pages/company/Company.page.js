@@ -9,6 +9,8 @@ import { useParams } from 'react-router-dom';
 import { fetchSingleCompany } from "../company-list/companiesAction";
 import { resetResponseMsg, fetchSingleCompanySuccess, fetchSingleCompanyFail } from "../company-list/companiesSlice";
 
+import { CompanyUserTable } from "../../components/company-user-table/CompanyUserTable.comp";
+
 import {
   getSingleCompany, updateCompany
 } from "../../api/companyApi"
@@ -133,6 +135,10 @@ export const Company = () => {
           </Row>
         </Form.Group>
       </Form>
+
+      <div>
+        <CompanyUserTable companyName={company ? company.name : ''} />
+      </div>
     </Container>
   )
 }
