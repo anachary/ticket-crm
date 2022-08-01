@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const {insertUser,
 	editUser,
+	deleteUser,
 	getUserByEmail,
 	getUserById,
 	updatePassword,
@@ -315,5 +316,31 @@ router.post("/saveNotifications", async (req, res) => {
     }
 
  })
+
+ router.delete("/delete-user", async (req, res) => {
+	const { authorization } = req.headers;
+	//this data coming form database
+	const _id = req.userId;
+	
+
+	// 2. delete accessJWT from redis database
+	await deleteJWT(authorization);
+
+	// 3. delete refreshJWT from mongodb
+	const result = await storeUserRefreshJWT(_id, "");
+
+	
+	await deleteUser(_id)
+
+	if (result._id) {
+		return res.json({ status: "success", message: "User Deleted"})
+	}
+
+	res.json({
+		status: "error",
+		message: "Unable to logg you out, plz try again later",
+	});
+    
+})
 
 module.exports = router 
