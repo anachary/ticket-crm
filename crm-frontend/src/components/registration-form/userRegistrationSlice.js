@@ -23,6 +23,19 @@ const userRegistrationSlice = createSlice({
       state.status = "error";
       state.message = payload;
     },
+    editRegistrationPending: (state) => {
+      state.isLoading = true;
+    },
+    editRegistrationSuccess: (state, { payload }) => {
+      state.isLoading = false;
+      state.status = "success";
+      state.message = payload;
+    },
+    editRegistrationError: (state, { payload }) => {
+      state.isLoading = false;
+      state.status = "error";
+      state.message = payload;
+    },
   },
 });
 
@@ -32,6 +45,9 @@ export const {
   registrationPending,
   registrationSuccess,
   registrationError,
+  editRegistrationPending,
+  editRegistrationSuccess,
+  editRegistrationError
 } = actions;
 
 export default reducer;
