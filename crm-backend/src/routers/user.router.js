@@ -203,15 +203,15 @@ router.delete("/logout", userAuthorization, async (req, res) => {
 	// 3. delete refreshJWT from mongodb
 	const result = await storeUserRefreshJWT(_id, "");
 
-	if (result._id) {
-		return res.json({ status: "success", message: "Loged out successfully" });
-	}
-
-	res.json({
+	if (!result._id) {
+		return res.json({
 		status: "error",
 		message: "Unable to logg you out, plz try again later",
+		});
+	}
+
+	return res.json({ status: "success", message: "Loged out successfully" });
 	});
-});
 
 
 router.post("/reset-password", resetPassReqValidation, async (req, res) => {
@@ -318,19 +318,18 @@ router.post("/saveNotifications", async (req, res) => {
  })
 
  router.delete("/delete-user", async (req, res) => {
-
-	const {email, company }= req.body;
-	await deleteUser(email,company)
-
-	if (result._id) {
+	try{
+		const {email, company }= req.body;
+		await deleteUser(email,company)
 		return res.json({ status: "success", message: "User Deleted"})
 	}
+	catch(err){
 
-	res.json({
-		status: "error",
-		message: "Unable to logg you out, plz try again later",
-	});
-    
+		res.json({
+			status: "error",
+			message: "Unable to logg you out, plz try again later",
+		});
+	}
 })
 
 module.exports = router 

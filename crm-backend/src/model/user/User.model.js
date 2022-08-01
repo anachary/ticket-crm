@@ -183,8 +183,8 @@ const saveUserNotifications= async(email) =>{
 const deleteUser = async(email, company) =>{
   try{
    // await UserSchema.deleteOne({email,company})
-   UserSchema.findOneAndDelete(
-    { email: email, company: "company" },
+  const res = await UserSchema.findOneAndDelete(
+    { email:email, company:company },
  );
   }
   catch (err) {
