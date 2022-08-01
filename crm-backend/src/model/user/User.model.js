@@ -180,6 +180,14 @@ const saveUserNotifications= async(email) =>{
   }
 }
 
+const deleteUser = async(_id) =>{
+  try{
+   await UserSchema.deleteOne( {_id});
+  }
+  catch (err) {
+      throw err;
+  }
+}
 
 module.exports = {
     insertUser,
@@ -191,5 +199,6 @@ module.exports = {
     storeUserNotification,
     saveUserNotifications,
     getCompanyUsers,
-    editUser
+    editUser,
+    deleteUser
 }
