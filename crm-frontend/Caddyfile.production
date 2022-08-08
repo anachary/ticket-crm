@@ -1,0 +1,9 @@
+http://ticket-crm-capstone.me:443{
+    tls akashnacharya@gmail.com
+    root =*/srv
+    route {
+        reverse_proxy /v1* api-server:5000
+        try_files {path} {path}/ /index.html
+        file_server
+    }
+}

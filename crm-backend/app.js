@@ -8,19 +8,6 @@ const morgan = require("morgan")
 const autoIncrement = require('mongoose-auto-increment');
 const {Server} = require("socket.io")
 const http = require("http")
-// const swaggerUi = require("swagger-ui-express");
-// const swaggerJsdoc = require("swagger-jsdoc");
-// const options = {
-//   swaggerDefinition: {
-//     info: {
-//       title: "JWT authentication & authorization in NodeJS",
-//       version: "1.0.0",
-//     },
-//   },
-//   apis: ["./src/routers/**/*.js"],
-// };
-// const swaggerSpecification = swaggerJsdoc(options);
-// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecification));
 
 //API Security 
 app.use(helmet())
@@ -65,10 +52,10 @@ const tokensRouter = require("./src/routers/tokens.router");
 const companyRouter = require("./src/routers/company.router");
 
 //User Router
-app.use('/v1/user', userRouter)
-app.use("/v1/ticket", ticketRouter)
-app.use("/v1/tokens", tokensRouter)
-app.use("/v1/company", companyRouter)
+app.use('/api/v1/user', userRouter)
+app.use("/api/v1/ticket", ticketRouter)
+app.use("/api/v1/tokens", tokensRouter)
+app.use("/api/v1/company", companyRouter)
 
 
 const handleError = require("./src/utils/errorHandler")
@@ -88,7 +75,7 @@ const server = http.createServer(app)
 
 const io = new Server(server, {
     cors:{
-        origin: "http://localhost:3000",
+        origin: `http://${process.env.REACT_APP_FRONTEND_SERVER_IP}:${process.env.REACT_FRONTEND_APP_PORT}`,
     }
 });
 

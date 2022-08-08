@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const rootUrl = `http://${process.env.REACT_APP_BACKEND_SERVER_IP}:${process.env.REACT_APP_PORT}/v1/`;
+const rootUrl = `http://${process.env.REACT_APP_BACKEND_SERVER_IP}:${process.env.REACT_APP_PORT}/api/v1/`;
 const ticketUrl = rootUrl + "ticket/";
 const updateTicketUrl = rootUrl + "ticket/update-ticket/";
 const deleteTicketUrl = rootUrl + "ticket/delete-ticket/";

@@ -1,18 +1,19 @@
 import axios from "axios";
 
-const rootUrl = `http://${process.env.REACT_APP_BACKEND_SERVER_IP}:${process.env.REACT_APP_PORT}/v1/`;
+const rootUrl = `http://${process.env.REACT_APP_BACKEND_SERVER_IP}:${process.env.REACT_APP_PORT}/api/v1/`;
 const companyUrl = rootUrl + "company/";
 const updateCompanyUrl = rootUrl + "company/update-company/";
 
 export async function getAllCompanies() {
     try {
-      const result = await axios.get(companyUrl, {
+      const result = await axios.get(companyUrl,{
         headers: {
-          Authorization: sessionStorage.getItem("accessJWT")
-        },
-      });
-      return result 
+        Authorization: sessionStorage.getItem("accessJWT")
+      }
+    });
+      return result
     } catch (error) {
+      console.log(error)
       throw error
     }
   }

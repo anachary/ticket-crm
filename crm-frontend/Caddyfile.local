@@ -1,0 +1,9 @@
+http://localhost:80 {
+  root * /srv
+  route {
+    reverse_proxy /v1* api-server:5000
+    reverse_proxy /v1* api-server:5000
+    try_files {path} {path}/ /index.html
+    file_server
+  }
+}
