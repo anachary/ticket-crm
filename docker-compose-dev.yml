@@ -1,0 +1,54 @@
+version: "3"
+services:
+  react-app:
+    image: react-app
+    build: ./crm-frontend
+    stdin_open: true
+    ports: 
+      - "3000:3000"
+    networks:
+      - mern-app
+    volumes:
+      - ./crm-frontend/:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - api-server
+  
+  api-server:
+    image: api-server
+    build: ./crm-backend
+    stdin_open: true
+    ports:
+      - "5000:5000"
+    networks:
+      - mern-app
+    depends_on:
+      - mongo
+      - redis
+    volumes:
+      - ./crm-backend/:/usr/src/app
+      - /usr/src/app/node_modules
+   
+  mongo:
+    image: mongo:3.6.19-xenial
+    ports:
+      - "27017:27017"
+    networks:
+      - mern-app
+    volumes:
+      - mongo-data:/data/db
+  
+  redis: 
+    image: redis:latest
+    ports:
+      - 6379:6379
+    networks:
+      - mern-app
+
+networks:
+  mern-app:
+    driver: bridge
+
+volumes:
+  mongo-data:
+    driver: local

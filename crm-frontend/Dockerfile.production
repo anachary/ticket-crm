@@ -1,0 +1,35 @@
+# Dockerfile for client
+
+# Stage 1: Build react client
+FROM node:14.15.3-alpine3.12 AS builder
+
+# Working directory be app
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install 
+
+# copy local files to app folder
+COPY . .
+
+ARG REACT_APP_BACKEND_SERVER_IP
+ENV REACT_APP_BACKEND_SERVER_IP = ${REACT_APP_BACKEND_SERVER_IP}
+
+
+ARG REACT_APP_PORT
+ENV REACT_APP_PORT = ${REACT_APP_PORT}
+
+RUN npm run-script build
+
+# second stage
+FROM caddy:2.1.1-alpine
+
+ARG CADDYFILE
+COPY ${CADDYFILE} /etc/caddy/Caddyfile
+
+COPY --from=builder /usr/src/app/build /srv
+
+EXPOSE 80
+EXPOSE 443

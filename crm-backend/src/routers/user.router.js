@@ -17,7 +17,7 @@ const { createAccessJWT, createRefreshJWT } = require("../helpers/jwt.helper")
 const {userAuthorization} =require ("../middleware/authorization.middleware.js")
 
 const { getJWT, deleteJWT } = require("../helpers/redis.helper")
-const verificationURL = "http://localhost:3000/verification/";
+const verificationURL = `http://${process.env.REACT_APP_FRONTEND_SERVER_IP}:${process.env.REACT_FRONTEND_APP_PORT}/verification/`;
 const {
 	setPasswordRestPin,
 	getPinByEmailPin,
