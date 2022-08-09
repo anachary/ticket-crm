@@ -164,7 +164,7 @@ export const Report = () => {
                     <td>{row.priority}</td>
                 </tr>
                 ))) :
-                    (<tr><td colSpan="8" className="text-center">No Rows to display</td></tr>)}
+                    (<tr><td colSpan="10" className="text-center">No Rows to display</td></tr>)}
 
         </tbody>
             </Table>

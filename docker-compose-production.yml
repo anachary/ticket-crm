@@ -16,7 +16,6 @@ services:
   
   api-server:
     image: api-server
-    stdin_open: true
     restart: unless-stopped
     ports:
       - "5000:5000"

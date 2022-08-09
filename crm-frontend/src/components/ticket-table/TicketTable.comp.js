@@ -44,7 +44,7 @@ export const TicketTable = () => {
                     <td>{row.companyName}</td>
                 </tr>
                 ))) :
-                    (<tr><td colSpan="8" className="text-center">No Rows to display</td></tr>)}
+                    (<tr><td colSpan="9" className="text-center">No Rows to display</td></tr>)}
 
         </tbody>
     </Table>

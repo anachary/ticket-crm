@@ -3,7 +3,7 @@ import io from "socket.io-client"
 
 const initialState = {
   user: {},
-  socket: io.connect("http://localhost:5000"),
+  socket: io.connect(`http://${process.env.REACT_APP_BACKEND_SERVER_IP}:${process.env.REACT_APP_PORT}/`),
   isLoading: false,
   error: "",
 };

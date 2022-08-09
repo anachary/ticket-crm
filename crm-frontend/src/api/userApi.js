@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const rootUrl = `http://${process.env.REACT_APP_BACKEND_SERVER_IP}:${process.env}/api/v1/`;
+const rootUrl = `http://${process.env.REACT_APP_BACKEND_SERVER_IP}:${process.env.REACT_APP_PORT}/api/v1/`;
 const loginUrl = rootUrl + "user/login";
 const userProfileUrl = rootUrl + "user";
 const logoutUrl = rootUrl + "user/logout";
