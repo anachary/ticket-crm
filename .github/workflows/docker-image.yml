@@ -39,10 +39,12 @@ jobs:
         IMAGE_TAG: 1
       run: |
        # Build a docker container and push it to ECR 
-       ENV=production docker-compose -f docker-compose-production.yml build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+       docker login $ECR_REGISTRY/$ECR_REPOSITORY
+       ENV=production docker-compose -f docker-compose-production.yml build 
        echo "Pushing image to ECR..."
-       ENV=production docker-compose -f docker-compose-production.yml build $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-       echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+       ENV=production docker-compose -f docker-compose-production.yml push
+       docker logout
+    
     
         
        
