@@ -1,6 +1,9 @@
 version: "3"
 services:
   react-app:
+    build: 
+      context: ./crm-frontend
+      dockerfile: Dockerfile
     image: react-app-production:${ENV}
     restart: unless-stopped
     ports: 
@@ -15,6 +18,9 @@ services:
       - api-server
   
   api-server:
+    build: 
+      context: ./crm-backend
+      dockerfile: Dockerfile
     image: api-server
     restart: unless-stopped
     ports:
