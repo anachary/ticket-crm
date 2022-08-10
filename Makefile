@@ -13,11 +13,9 @@ run-local:
 	ENV=local docker-compose -f docker-compose-production.yml up
 
 build-production:
+	ENV=production
 	cd crm-frontend && $(MAKE) build-production
 	cd crm-backend && $(MAKE) build
-	ENV=production docker-compose -f docker-compose-production.yml build
-	ENV=production docker-compose -f docker-compose-production.yml push
-		
 
 
 run-production:
