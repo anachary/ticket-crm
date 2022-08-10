@@ -7,7 +7,7 @@ services:
     image: react-app-production:${ENV}
     restart: unless-stopped
     ports: 
-      - "80:80"
+       - "3000:3000"
     networks:
       - mern-app
     volumes:
