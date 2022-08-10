@@ -41,12 +41,12 @@ jobs:
         # Build a docker container 
         ENV=Production
         cd crm-frontend 
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY_react_app:$IMAGE_TAG .
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:react_app_$IMAGE_TAG .
         cd ../crm-backend
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY_api_server:$IMAGE_TAG .
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:api_server_$IMAGE_TAG .
         # Pushing a docker container
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY_react_app:$IMAGE_TAG
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY_api_server:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:react_app_$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:api_server_$IMAGE_TAG
         
          
 
