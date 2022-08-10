@@ -40,8 +40,6 @@ jobs:
       run: |
         echo 'ECR $ECR_REGISTRY'
         make build-production
-        docker push react-app-production:production
-        docker push api-server
-        docker push redis
+    
         
        
