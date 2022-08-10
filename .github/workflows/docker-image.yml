@@ -42,7 +42,7 @@ jobs:
        docker login $ECR_REGISTRY/$ECR_REPOSITORY
        ENV=production docker-compose -f docker-compose-production.yml build 
        echo "Pushing image to ECR..."
-       ENV=production docker-compose -f docker-compose-production.yml push
+       ENV=production docker-compose -f docker-compose-production.yml push $ECR_REGISTRY/$ECR_REPOSITORY
        docker logout
     
     
