@@ -38,13 +38,19 @@ jobs:
         ECR_REPOSITORY: ticket-crm
         IMAGE_TAG: 1
       run: |
-       # Build a docker container and push it to ECR 
-       docker login $ECR_REGISTRY/$ECR_REPOSITORY
-       ENV=production docker-compose -f docker-compose-production.yml build 
-       echo "Pushing image to ECR..."
-       ENV=production docker-compose -f docker-compose-production.yml push $ECR_REGISTRY/$ECR_REPOSITORY
-       docker logout
-    
+        # Build a docker container 
+        ENV=Production
+        cd crm-frontend 
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY_react_app:$IMAGE_TAG .
+        cd ../crm-backend
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY_api_server:$IMAGE_TAG .
+        # Pushing a docker container
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY_react_app:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY_api_server:$IMAGE_TAG
+        
+         
+
+
     
         
        
