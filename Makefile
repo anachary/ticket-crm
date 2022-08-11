@@ -17,9 +17,11 @@ build-production:
 	cd crm-frontend && $(MAKE) build-production
 	cd crm-backend && $(MAKE) build
 
-
 run-production:
-	ENV=production docker-compose -f docker-compose-production.yml up
+	ENV=production docker-compose -f docker-compose-production.yml up  -d
+
+stop-production:
+	ENV=production docker-compose -f docker-compose-production.yml down 
 
 stop:
 	docker-compose down
