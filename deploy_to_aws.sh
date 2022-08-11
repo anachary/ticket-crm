@@ -5,5 +5,4 @@ ssh ubuntu@ec2-107-23-73-19.compute-1.amazonaws.com
         echo 'Stoped docker containers'
         echo 'Started docker containers'
         sudo make run-production
-        "
 echo 'Deployment completed successfully'
