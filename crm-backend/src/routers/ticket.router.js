@@ -234,8 +234,13 @@ router.post("/follow-ticket/",
 router.post("/reports", userAuthorization, async (req, res) => {
   try {
     const userId = req.userId;
-    const result = await getTickets(userId);
+    let result = await getTickets(userId);
     const {startDate, endDate} = req.body
+
+    if(startDate && endDate && result){
+      result = result.filter(v=>v.updatedDate>=new Date(startDate) && v.updatedDate<= new Date(endDate));
+    }     
+
     return res.json({
       status: "success",
       result,
