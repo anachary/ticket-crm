@@ -229,7 +229,7 @@ export const Ticket = () => {
               disabled ={disabled}
               placeholder="Assigned To"
               onChange={handleOnChange}>
-              {companyUsers.map(v=>(<option value={v.email}>{v.name}</option>))}
+              {companyUsers.map(v=>(<option value={v.email}>{v.email}</option>))}
               </Form.Control>
           </Col>
           <Form.Label column sm={2}>
