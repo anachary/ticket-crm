@@ -102,9 +102,10 @@ const TicketSchema = new Schema({
 ],
  
  companyName: {
-  type: "String",
+  type: String,
   maxlength: 50,
-  required: true
+  required: true,
+  default:"Ticket CRM System"
 },
 
 });

@@ -93,6 +93,9 @@ const getTicketUsers = async (_id, ticketObj) => {
       if (ticket && ticket.conversations){
           ticket.conversations.forEach(v=>result.push(v.sender))
       }
+      if (ticket && ticket.followers){
+        ticket.conversations.forEach(v=>result.push(v.follower))
+    }
       return [...new Set(result)];
     } catch (error) {
     throw error;
